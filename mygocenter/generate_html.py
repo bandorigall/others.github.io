@@ -101,8 +101,18 @@ def collect_members(results: list[dict]) -> list[str]:
     return known + unknown
 
 
+PRIVATE_VIDEO_IDS = {
+    "LLOD1ZGkPkE",
+    "s4Oss4cMacA",
+    "0HklC3CSufw",
+    "VM2fwBCQfjI",
+    "Tbu9x6gHEvI",
+}
+
+
 def build_html(results: list[dict]) -> str:
     today = date.today().strftime("%Y-%m-%d")
+    results = [r for r in results if r.get("video_id") not in PRIVATE_VIDEO_IDS]
     # 회차 번호 기준 정렬
     results = sorted(results, key=lambda r: parse_ep_number(r.get("title", "")), reverse=True)
 
@@ -133,7 +143,7 @@ def build_html(results: list[dict]) -> str:
         url = f"https://www.youtube.com/watch?v={vid}" if vid else "#"
 
         member_list = split_members(personality) if personality else []
-        data_members = " ".join(member_list)
+        data_members = "|".join(member_list)
 
         badges = ""
         for name in member_list:
@@ -666,7 +676,7 @@ let selected = new Set();
 function applyFilter() {{
   tableRows.forEach(row => {{
     if (selected.size === 0) {{ row.style.display = ''; return; }}
-    const rowMembers = (row.dataset.members || '').split(' ').filter(Boolean);
+    const rowMembers = (row.dataset.members || '').split('|').filter(Boolean);
     const match = filterMode === 'or'
       ? [...selected].some(m => rowMembers.includes(m))
       : [...selected].every(m => rowMembers.includes(m));

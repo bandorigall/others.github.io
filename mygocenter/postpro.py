@@ -18,6 +18,15 @@ OUTPUT_JSON = "personality_results_postpro.json"
 
 YT_DLP = shutil.which("yt-dlp") or "yt-dlp"
 
+# 비공개 영상 — yt-dlp fetch 불가, postpro/HTML 양쪽에서 제외
+PRIVATE_VIDEO_IDS = {
+    "LLOD1ZGkPkE",
+    "s4Oss4cMacA",
+    "0HklC3CSufw",
+    "VM2fwBCQfjI",
+    "Tbu9x6gHEvI",
+}
+
 # 正規化後の표기に統一するエイリアスマップ
 # normalize_name() 적용 후 키와 照合する
 ALIAS_MAP = {
@@ -93,7 +102,7 @@ def process_personality(personality: str) -> str | None:
 
 def backfill_dates(results: list[dict]) -> int:
     """upload_date 없는 항목을 yt-dlp로 보충하고 원본 JSON에도 저장한다."""
-    missing = [r for r in results if not r.get("upload_date")]
+    missing = [r for r in results if not r.get("upload_date") and r.get("video_id") not in PRIVATE_VIDEO_IDS]
     if not missing:
         return 0
     print(f"upload_date 없는 항목 {len(missing)}개 취득 중...")
