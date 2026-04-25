@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "WebSearch",
+      "WebFetch(domain:bandori.fandom.com)",
+      "WebFetch(domain:bandori.miraheze.org)",
+      "WebFetch(domain:www.color-hex.com)"
+    ]
+  }
+}
