@@ -15,6 +15,7 @@ import os
 import re
 import webbrowser
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
 MEMBER_ORDER = [
@@ -101,6 +102,7 @@ def collect_members(results: list[dict]) -> list[str]:
 
 
 def build_html(results: list[dict]) -> str:
+    today = date.today().strftime("%Y-%m-%d")
     # 회차 번호 기준 정렬
     results = sorted(results, key=lambda r: parse_ep_number(r.get("title", "")), reverse=True)
 
@@ -594,6 +596,7 @@ canvas {{ width: 100% !important; }}
     <span class="summary-badge">총 <strong>{total}</strong>회차</span>
     <span class="summary-badge">정보 있음 <strong>{found}</strong></span>
     <span class="summary-badge">정보 없음 <strong>{total - found}</strong></span>
+    <span class="summary-badge" style="margin-left:auto">updated <strong>{today}</strong></span>
   </div>
 </div>
 
