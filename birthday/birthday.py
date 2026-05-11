@@ -154,6 +154,13 @@ def generate_html_from_csv(input_csv, output_html):
             html_lines.append('    </tr>')
 
     html_lines.append('  </tbody>\n</table>')
+    html_lines.append('  <img src="birthday_detail.png" style="max-width: 100%; height: auto; display: block; margin: 32px auto 0;">')
+    html_lines.append('  <div style="margin: 20px 0 8px;">')
+    html_lines.append('    <a href="https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&no=6162054" '
+                       'style="display: inline-block; padding: 10px 24px; background-color: #555; color: #fff; '
+                       'text-decoration: none; border-radius: 6px; font-size: 13px; font-family: \'Malgun Gothic\', sans-serif;">'
+                       '사진 원본 링크</a>')
+    html_lines.append('  </div>')
     html_lines.append('  </div>')
     html_lines.append('</body>')
     html_lines.append('</html>')
