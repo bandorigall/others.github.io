@@ -90,6 +90,19 @@
     var floatWrap = document.createElement("div");
     floatWrap.innerHTML = FLOAT_HTML;
     document.body.appendChild(floatWrap.firstElementChild);
+
+    var existingFooter = document.querySelector(".site-footer");
+    var credit = document.createElement("div");
+    credit.className = "site-credit";
+    credit.textContent = "Made by Bangbung Kim";
+    if (existingFooter) {
+      existingFooter.appendChild(credit);
+    } else {
+      var footer = document.createElement("footer");
+      footer.className = "site-footer";
+      footer.appendChild(credit);
+      document.body.appendChild(footer);
+    }
   }
 
   if (document.readyState === "loading") {

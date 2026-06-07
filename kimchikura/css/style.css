@@ -609,6 +609,15 @@ tr:last-child td { border-bottom: none; }
   text-align: center;
   color: var(--text-muted);
   font-size: .85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.site-credit {
+  font-size: .78rem;
+  color: var(--border);
+  letter-spacing: .04em;
 }
 
 /* ---------- 플로팅 버튼 ---------- */
