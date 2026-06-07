@@ -8,7 +8,7 @@ window.DATA_cast = [
     "name": "Ayaka Ohashi",
     "nameJa": "大橋彩香",
     "img": "Ayaka Ohashi",
-    "description": "성우 겸 가수. 아이돌 마스터 신데렐라 걸즈 호시 쇼코 역. Lantis 소속.",
+    "description": "성우 겸 가수. 뱅드림 포핀파티 야마부키 사아야 및 아이돌 마스터 신데렐라 걸즈 호시 쇼코 역. Lantis 소속.",
     "songs": [
       { "title": "HOWL",             "youtube": "https://www.youtube.com/watch?v=lofM7YEDLgw" },
       { "title": "#HASHTAG ME",      "youtube": "https://www.youtube.com/watch?v=pxgUJhHie9k" },
