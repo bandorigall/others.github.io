@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>출연진 · KIMCHIKURA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/include.js"></script>
+  <script src="data/cast.js"></script>
+  <script src="js/render.js" defer></script>
+</head>
+<body>
+
+  <main class="container">
+    <section>
+      <h2 class="section-title">출연진</h2>
+      <p class="subtitle">출연진 소개와 대표곡입니다. 유튜브 링크는 각 곡 옆에서 확인하세요.</p>
+    </section>
+
+    <section>
+      <!-- render.js 가 data/cast.json 을 읽어 채운다 -->
+      <div data-render="cast"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    마지막 업데이트: 2026-06-06
+  </footer>
+
+</body>
+</html>

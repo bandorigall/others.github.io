@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모르포니카 곡 · KIMCHIKURA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/include.js"></script>
+  <script src="data/morfonica.js"></script>
+  <script src="js/render.js" defer></script>
+</head>
+<body>
+
+  <main class="container">
+    <section>
+      <h2 class="section-title">모르포니카 곡</h2>
+      <p class="subtitle">Morfonica 발매곡 목록입니다. 곡명·수록 앨범·유튜브 링크를 확인하세요.</p>
+    </section>
+
+    <section>
+      <!-- render.js 가 data/morfonica.json 을 읽어 채운다 -->
+      <div data-render="morfonica"></div>
+    </section>
+
+    <section>
+      <h2 class="section-title">콜 가이드</h2>
+      <p class="subtitle">공연 콜(응원) 가이드 외부 링크입니다.</p>
+      <div class="btn-row">
+        <!-- TODO: 콜 가이드 외부 링크 URL 로 교체 -->
+        <a class="btn ghost" href="#" target="_blank" rel="noopener">콜 가이드 (준비 중)</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    마지막 업데이트: 2026-06-06
+  </footer>
+
+</body>
+</html>

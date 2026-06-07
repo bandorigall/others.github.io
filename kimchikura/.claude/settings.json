@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c 'import json,sys; json.load\\(open\\('\\\\''__TRACKED_VAR__'\\\\'',encoding='\\\\''utf-8'\\\\''\\)\\); print\\('\\\\''OK  __TRACKED_VAR__'\\\\''\\)')",
+      "Bash(ls -la *.jpg *.jpeg *.png *.webp)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(rm -f data/lineup.json data/cast.json data/morfonica.json components/header.html)",
+      "Bash(rmdir components *)",
+      "PowerShell($ErrorActionPreference='SilentlyContinue'; foreach\\($n in 'node','deno','python'\\){ $c=\\(Get-Command $n\\).Source; if\\($c\\){ \"$n -> $c\" } })",
+      "Bash(python -)"
+    ]
+  }
+}
