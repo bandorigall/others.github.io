@@ -1894,7 +1894,6 @@ function renderReadme() {
       <p>${t.readmeThanksIntro}</p>
       <ul class="readme-link-list">
         <li><a href="https://github.com/bitterndumpling/bangdream_mbti" target="_blank" rel="noreferrer">원작 — bitterndumpling/bangdream_mbti</a></li>
-        <li><a href="https://github.com/bandorigall/others.github.io" target="_blank" rel="noreferrer">한국어판 이식·번역 — bandorigall/others.github.io</a></li>
         <li><a href="${APP_DATA.meta.referenceSite}" target="_blank" rel="noreferrer">jcver.github.io/Gakumas-idolmaster-MBTI-test</a></li>
         <li><a href="${APP_DATA.meta.ojtsSource}" target="_blank" rel="noreferrer">OpenPsychometrics OJTS v2.1</a></li>
         <li><a href="${APP_DATA.meta.fandomWiki}" target="_blank" rel="noreferrer">BanG Dream! Wikia</a></li>
