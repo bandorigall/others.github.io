@@ -1,0 +1,678 @@
+{
+  "band:popipa:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "band:popipa:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "band:afglo:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "band:afglo:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "band:pasupare:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "band:pasupare:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "band:roselia:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "band:roselia:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  },
+  "band:hhw:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "band:hhw:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "band:morfo:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "band:morfo:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "band:ras:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "band:ras:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "band:mygo:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "band:mygo:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "band:ave:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "band:ave:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "band:sumimi:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a4/Sumimi_logo.png/revision/latest/scale-to-width-down/150?cb=20240806011453",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332e00205.png"
+  },
+  "band:sumimi:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a4/Sumimi_logo.png/revision/latest/scale-to-width-down/150?cb=20240806011453",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332e00205.png"
+  },
+  "band:bangdream:logo": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "band:bangdream:icon": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_ako_ako:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a0/024.png/revision/latest?cb=20230321083211",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332f3c1ec.png"
+  },
+  "char_ako_ako:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "char_ako_ako:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  },
+  "char_anon_anon:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/8/89/037.png/revision/latest?cb=20230915155934",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332fc1f75.png"
+  },
+  "char_anon_anon:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "char_anon_anon:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "char_arisa_arisa:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/20/005.png/revision/latest?cb=20230321061357",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332fc1fd7.png"
+  },
+  "char_arisa_arisa:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "char_arisa_arisa:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "char_asuka_asuka:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/ee/Toyama_Asuka_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20220324022232",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332fb31af.png"
+  },
+  "char_asuka_asuka:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_asuka_asuka:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_aya_aya:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/5/5c/016.png/revision/latest?cb=20230321082906",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333012d7d.png"
+  },
+  "char_aya_aya:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "char_aya_aya:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "char_chisato_chisato:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/d1/018.png/revision/latest?cb=20230321082944",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333147a6f.png"
+  },
+  "char_chisato_chisato:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "char_chisato_chisato:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "char_chiyu_chiyu:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/05/035.png/revision/latest?cb=20230321083645",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3331a156a.png"
+  },
+  "char_chiyu_chiyu:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "char_chiyu_chiyu:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "char_eve_eve:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/8/8d/020.png/revision/latest?cb=20230321083021",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3331c9b16.png"
+  },
+  "char_eve_eve:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "char_eve_eve:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "char_hagumi_hagumi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/c/cf/013.png/revision/latest?cb=20230321082721",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3331a93df.png"
+  },
+  "char_hagumi_hagumi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "char_hagumi_hagumi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "char_himari_himari:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/17/008.png/revision/latest?cb=20230321080643",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3331e50a7.png"
+  },
+  "char_himari_himari:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "char_himari_himari:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "char_hina_hina:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/c/cf/017.png/revision/latest?cb=20230321082924",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33331a058.png"
+  },
+  "char_hina_hina:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "char_hina_hina:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "char_kanon_kanon:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/5/52/014.png/revision/latest?cb=20230321082746",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333382f57.png"
+  },
+  "char_kanon_kanon:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "char_kanon_kanon:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "char_kaoru_kaoru:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b8/012.png/revision/latest?cb=20230321082658",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3333b88e0.png"
+  },
+  "char_kaoru_kaoru:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "char_kaoru_kaoru:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "char_kasumi_kasumi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/03/001.png/revision/latest?cb=20230321060047",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3333d95d3.png"
+  },
+  "char_kasumi_kasumi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "char_kasumi_kasumi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "char_kokoro_kokoro:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/9/96/011.png/revision/latest?cb=20230321082312",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3333ef8b1.png"
+  },
+  "char_kokoro_kokoro:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "char_kokoro_kokoro:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "char_lisa_lisa:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/ee/023.png/revision/latest?cb=20230321083152",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3334ec2c8.png"
+  },
+  "char_lisa_lisa:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "char_lisa_lisa:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  },
+  "char_mana_mana:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1a/Sumita_Mana_-_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20250205162918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333531413.png"
+  },
+  "char_mana_mana:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a4/Sumimi_logo.png/revision/latest/scale-to-width-down/150?cb=20240806011453",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332e00205.png"
+  },
+  "char_mana_mana:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a4/Sumimi_logo.png/revision/latest/scale-to-width-down/150?cb=20240806011453",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332e00205.png"
+  },
+  "char_marina_marina:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/c/ca/Tsukishima_Marina_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20220324015242",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33358a889.png"
+  },
+  "char_marina_marina:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_marina_marina:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_mashiro_mashiro:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b3/026.png/revision/latest?cb=20230321083311",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3335b7fe0.png"
+  },
+  "char_mashiro_mashiro:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "char_mashiro_mashiro:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "char_masuki_masuki:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/17/033.png/revision/latest?cb=20230321083609",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3335a707f.png"
+  },
+  "char_masuki_masuki:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "char_masuki_masuki:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "char_maya_maya:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/01/019.png/revision/latest?cb=20230321083003",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3336d90e0.png"
+  },
+  "char_maya_maya:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/Pastel%2APalettes_logo.png/revision/latest/scale-to-width-down/228?cb=20230828140441",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332d56589.png"
+  },
+  "char_maya_maya:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/bb/Icon_pasupare.svg/revision/latest/scale-to-width-down/40?cb=20210328073625",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3329e667b.png"
+  },
+  "char_misaki_misaki:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/5/5e/015.png/revision/latest?cb=20230321082806",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33370d710.png"
+  },
+  "char_misaki_misaki:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/Hello%2C_Happy_World%21_logo.png/revision/latest/scale-to-width-down/231?cb=20211201110149",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3f.png"
+  },
+  "char_misaki_misaki:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e4/Icon_hhw.svg/revision/latest/scale-to-width-down/35?cb=20210328073349",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286186f.png"
+  },
+  "char_moca_moca:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e8/007.png/revision/latest?cb=20230321064837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333758a09.png"
+  },
+  "char_moca_moca:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "char_moca_moca:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "char_mutsumi_mutsumi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/c/c6/Wakaba_Mutsumi_-_Casual_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20240311211222",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33378036d.png"
+  },
+  "char_mutsumi_mutsumi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "char_mutsumi_mutsumi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "char_nanami_nanami:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e7/028.png/revision/latest?cb=20230321083400",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3337c0a89.png"
+  },
+  "char_nanami_nanami:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "char_nanami_nanami:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "char_nyamu_nyamu:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/00/Yuutenji_Nyamu_-_Casual_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20240311211558",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3338b6e3b.png"
+  },
+  "char_nyamu_nyamu:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "char_nyamu_nyamu:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "char_owner_livehouse:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/c/c3/Tsuzuki_Shifune_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20220324023027",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3338d6a5c.png"
+  },
+  "char_owner_livehouse:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_owner_livehouse:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/4/4b/BanG_Dream%21_Logo.svg/revision/latest?cb=20180922150901",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c10887.png"
+  },
+  "char_ran_ran:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/18/006.png/revision/latest?cb=20230321064811",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333963190.png"
+  },
+  "char_ran_ran:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "char_ran_ran:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "char_rana_rana:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/ef/038.png/revision/latest?cb=20230915155933",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33396fc52.png"
+  },
+  "char_rana_rana:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "char_rana_rana:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "char_rei_rei:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/61/031.png/revision/latest?cb=20230321083520",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3339a6f45.png"
+  },
+  "char_rei_rei:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "char_rei_rei:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "char_reona_reona:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7d/034.png/revision/latest?cb=20230321083628",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333a7b3ea.png"
+  },
+  "char_reona_reona:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "char_reona_reona:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "char_rimi_rimi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b0/003.png/revision/latest?cb=20230321061237",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333a9d475.png"
+  },
+  "char_rimi_rimi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "char_rimi_rimi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "char_rinko_rinko:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/0a/025.png/revision/latest?cb=20230321083230",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333b56253.png"
+  },
+  "char_rinko_rinko:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "char_rinko_rinko:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  },
+  "char_rokka_rokka:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2e/032.png/revision/latest?cb=20230321083549",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333b54697.png"
+  },
+  "char_rokka_rokka:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7f/RAISE_A_SUILEN_logo.png/revision/latest/scale-to-width-down/221?cb=20200810080553",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332ddd5e3.png"
+  },
+  "char_rokka_rokka:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/24/Icon_ras.svg/revision/latest/scale-to-width-down/40?cb=20210215040854",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a2e8fc.png"
+  },
+  "char_rui_rui:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/9/94/030.png/revision/latest?cb=20230321083436",
+    "local": "https://free.picui.cn/free/2026/04/14/69de333b721e5.png"
+  },
+  "char_rui_rui:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "char_rui_rui:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "char_saaya_saaya:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/d5/004.png/revision/latest?cb=20230321061300",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33409062b.png"
+  },
+  "char_saaya_saaya:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "char_saaya_saaya:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "char_sakiko_sakiko:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/3d/Togawa_Sakiko_-_Casual_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20240311211835",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33407ace3.png"
+  },
+  "char_sakiko_sakiko:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "char_sakiko_sakiko:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "char_sayo_sayo:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/27/022.png/revision/latest?cb=20230321083135",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3340cf89d.png"
+  },
+  "char_sayo_sayo:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "char_sayo_sayo:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  },
+  "char_soyo_soyo:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/039.png/revision/latest?cb=20230915155933",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33409650a.png"
+  },
+  "char_soyo_soyo:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "char_soyo_soyo:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "char_tae_tae:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b0/002.png/revision/latest?cb=20230321061202",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33409fa45.png"
+  },
+  "char_tae_tae:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/2/2a/Poppin%27Party_logo.png/revision/latest/scale-to-width-down/250?cb=20200327142717",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de0818.png"
+  },
+  "char_tae_tae:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/b6/Icon_popipa.svg/revision/latest/scale-to-width-down/40?cb=20210407055615",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a1606d.png"
+  },
+  "char_taki_taki:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/9/9c/040.png/revision/latest?cb=20230915155932",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3342434ba.png"
+  },
+  "char_taki_taki:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "char_taki_taki:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "char_tomoe_tomoe:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/d2/009.png/revision/latest?cb=20230321080708",
+    "local": "https://free.picui.cn/free/2026/04/14/69de334285988.png"
+  },
+  "char_tomoe_tomoe:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "char_tomoe_tomoe:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "char_tomori_tomori:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/0/08/036.png/revision/latest?cb=20230915155935",
+    "local": "https://free.picui.cn/free/2026/04/14/69de334285333.png"
+  },
+  "char_tomori_tomori:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/6/65/MyGO%21%21%21%21%21_logo.png/revision/latest/scale-to-width-down/205?cb=20230915160317",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c2eba6.png"
+  },
+  "char_tomori_tomori:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/ac/Icon_mygo.png/revision/latest/scale-to-width-down/40?cb=20230916120900",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33285ecbc.png"
+  },
+  "char_touko_touko:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/e/e3/027.png/revision/latest?cb=20230321083343",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3342bcc6e.png"
+  },
+  "char_touko_touko:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "char_touko_touko:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "char_tsugumi_tsugumi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/5/5c/010.png/revision/latest?cb=20230321080735",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3342c5daf.png"
+  },
+  "char_tsugumi_tsugumi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/f/f9/Afterglow_logo.png/revision/latest/scale-to-width-down/250?cb=20211201105320",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a38ba6.png"
+  },
+  "char_tsugumi_tsugumi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/1/1f/Icon_afterglow.svg/revision/latest/scale-to-width-down/20?cb=20210328073813",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33283a7eb.png"
+  },
+  "char_tsukushi_tsukushi:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/a7/029.png/revision/latest?cb=20230321083416",
+    "local": "https://free.picui.cn/free/2026/04/14/69de334409d41.png"
+  },
+  "char_tsukushi_tsukushi:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/7/7a/Morfonica_logo.png/revision/latest/scale-to-width-down/231?cb=20200810080918",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png"
+  },
+  "char_tsukushi_tsukushi:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg/revision/latest/scale-to-width-down/40?cb=20210215040928",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286273e.png"
+  },
+  "char_uika_uika:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/b/be/Misumi_Uika_-_Casual_Live2D_Model.png/revision/latest/scale-to-width-down/268?cb=20240311210508",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33447b20d.png"
+  },
+  "char_uika_uika:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "char_uika_uika:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "char_umiri_umiri:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/9/90/Yahata_Umiri_-_Casual_Live2D_model.png/revision/latest/scale-to-width-down/268?cb=20240311211427",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33447002f.png"
+  },
+  "char_umiri_umiri:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/3/37/Ave_Mujica_logo.png/revision/latest/scale-to-width-down/242?cb=20250122144511",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332bb7b5c.png"
+  },
+  "char_umiri_umiri:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/dd/Ave_Mujica_icon.svg/revision/latest/scale-to-width-down/37?cb=20230605093732",
+    "local": "https://free.picui.cn/free/2026/04/14/69de33286e14f.png"
+  },
+  "char_yukina_yukina:portraitUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/8/82/021.png/revision/latest?cb=20230321083114",
+    "local": "https://free.picui.cn/free/2026/04/14/69de3344c0f32.png"
+  },
+  "char_yukina_yukina:bandLogoUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/a/aa/Roselia_logo.png/revision/latest/scale-to-width-down/229?cb=20211201105701",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332de28a4.png"
+  },
+  "char_yukina_yukina:bandIconUrl": {
+    "source": "https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg/revision/latest/scale-to-width-down/40?cb=20210710030837",
+    "local": "https://free.picui.cn/free/2026/04/14/69de332a31f36.png"
+  }
+}

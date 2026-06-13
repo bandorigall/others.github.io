@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BanG Dream! 캐릭터 성격 적합도 테스트</title>
+  <meta name="description" content="OJTS 문항 기반 BanG Dream! 캐릭터 성격 적합도 테스트. 한국어·中文·English·日本語 지원.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BanG Dream! 캐릭터 성격 적합도 테스트">
+  <meta property="og:description" content="48문항에 답하고 당신과 가장 닮은 BanG Dream! 캐릭터를 찾아보세요.">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="backdrop backdrop-a"></div>
+  <div class="backdrop backdrop-b"></div>
+  <div class="noise-layer"></div>
+
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#hero">BanG Dream! MBTI Match</a>
+      <div class="topbar-actions">
+        <button class="ghost-btn topbar-btn" id="readme-btn" type="button">Readme</button>
+        <button class="ghost-btn topbar-btn" id="gallery-btn" type="button">Characters</button>
+        <div class="lang-switcher" id="lang-switcher" aria-label="Language Switcher"></div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="hero-card section-card page-view" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" id="hero-eyebrow"></p>
+          <h1 id="hero-title"></h1>
+          <p class="hero-lead" id="hero-lead"></p>
+
+          <div class="hero-meta">
+            <div class="hero-pill" id="hero-pill-count"></div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="primary-btn" id="start-btn" type="button"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-card section-card page-view" id="quiz-section" hidden>
+        <div class="quiz-head">
+          <div>
+            <p class="section-label" id="question-label"></p>
+            <h2 class="section-title" id="question-title"></h2>
+          </div>
+          <div class="progress-wrap">
+            <span id="progress-text"></span>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <article class="question-panel" id="question-panel">
+          <div class="question-meta">
+            <span class="question-order" id="question-order"></span>
+            <span class="question-format" id="question-format"></span>
+          </div>
+
+          <h3 class="question-text" id="question-text"></h3>
+          <div class="question-hints" id="question-hints"></div>
+
+          <div class="bipolar-scale" id="bipolar-scale" hidden>
+            <span id="bipolar-left"></span>
+            <span id="bipolar-right"></span>
+          </div>
+
+          <div class="answer-list" id="answer-list"></div>
+        </article>
+
+        <div class="quiz-actions">
+          <button class="ghost-btn" id="prev-btn" type="button"></button>
+          <button class="ghost-btn" id="next-btn" type="button"></button>
+        </div>
+      </section>
+
+      <section class="results-card section-card page-view" id="results-section" hidden>
+        <div class="results-header">
+          <div>
+            <p class="section-label" id="results-label"></p>
+            <h2 class="section-title" id="results-title"></h2>
+          </div>
+          <div class="results-actions">
+            <button class="ghost-btn" id="share-result-btn" type="button">Share</button>
+            <button class="ghost-btn" id="save-result-btn" type="button">Save Image</button>
+            <button class="ghost-btn" id="retake-btn-bottom" type="button">重新测试</button>
+          </div>
+        </div>
+
+        <div class="user-result" id="user-result"></div>
+        <div class="top-matches" id="top-matches"></div>
+      </section>
+
+      <section class="gallery-card section-card page-view" id="gallery-section" hidden>
+        <div class="gallery-header">
+          <div>
+            <p class="section-label" id="gallery-label"></p>
+            <h2 class="section-title" id="gallery-title"></h2>
+          </div>
+        </div>
+
+        <div class="gallery-groups" id="gallery-groups"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-shell" id="readme-modal" hidden>
+    <div class="modal-backdrop" id="readme-backdrop"></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-label="Readme">
+      <div class="modal-header">
+        <button class="ghost-btn topbar-btn" id="readme-close" type="button">Close</button>
+      </div>
+      <div class="modal-content" id="readme-content"></div>
+    </section>
+  </div>
+
+  <div class="modal-shell" id="result-preview-modal" hidden>
+    <div class="modal-backdrop" id="result-preview-backdrop"></div>
+    <section class="modal-card result-preview-card" role="dialog" aria-modal="true" aria-label="Result Image Preview">
+      <div class="modal-header result-preview-header">
+        <p class="result-preview-hint" id="result-preview-hint"></p>
+        <div class="result-preview-actions">
+          <button class="ghost-btn topbar-btn" id="result-preview-rotate" type="button"></button>
+          <button class="result-preview-icon-btn" id="result-preview-close-icon" type="button" aria-label="Close preview">×</button>
+          <button class="ghost-btn topbar-btn" id="result-preview-close" type="button">Close</button>
+        </div>
+      </div>
+      <div class="modal-content result-preview-content">
+        <div class="result-preview-stage" id="result-preview-stage">
+          <img id="result-preview-image" alt="Result preview">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="hover-tooltip" id="hover-tooltip" hidden></div>
+
+  <script src="./site-data.js"></script>
+  <script src="./asset-map.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

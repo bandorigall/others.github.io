@@ -1,0 +1,521 @@
+{
+  "character_count": 49,
+  "mean_point": {
+    "EI": 0.1094,
+    "SN": -0.0065,
+    "FT": 0.2501,
+    "JP": 0.2
+  },
+  "algorithms": {
+    "current_linear_8d": {
+      "average_point_best": {
+        "id": "char_nanami_nanami",
+        "name_zh": "广町七深",
+        "band": "morfo"
+      },
+      "uniform": {
+        "max_share": 0.055225,
+        "effective_count": 39.896535507131254,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0552
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0496
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.0453
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0421
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.0417
+          },
+          {
+            "id": "char_umiri_umiri",
+            "share": 0.0401
+          },
+          {
+            "id": "char_kasumi_kasumi",
+            "share": 0.0361
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0352
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.18163333333333334,
+        "effective_count": 9.545347318702921,
+        "winners_used": 29,
+        "top_winners": [
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.1816
+          },
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.1774
+          },
+          {
+            "id": "char_eve_eve",
+            "share": 0.1453
+          },
+          {
+            "id": "char_hagumi_hagumi",
+            "share": 0.1396
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.1189
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0628
+          },
+          {
+            "id": "char_misaki_misaki",
+            "share": 0.0524
+          },
+          {
+            "id": "char_tomoe_tomoe",
+            "share": 0.0393
+          }
+        ]
+      }
+    },
+    "four_linear": {
+      "average_point_best": {
+        "id": "char_nanami_nanami",
+        "name_zh": "广町七深",
+        "band": "morfo"
+      },
+      "uniform": {
+        "max_share": 0.055225,
+        "effective_count": 39.896535507131254,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0552
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0496
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.0453
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0421
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.0417
+          },
+          {
+            "id": "char_umiri_umiri",
+            "share": 0.0401
+          },
+          {
+            "id": "char_kasumi_kasumi",
+            "share": 0.0361
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0352
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.18163333333333334,
+        "effective_count": 9.545347318702921,
+        "winners_used": 29,
+        "top_winners": [
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.1816
+          },
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.1774
+          },
+          {
+            "id": "char_eve_eve",
+            "share": 0.1453
+          },
+          {
+            "id": "char_hagumi_hagumi",
+            "share": 0.1396
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.1189
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0628
+          },
+          {
+            "id": "char_misaki_misaki",
+            "share": 0.0524
+          },
+          {
+            "id": "char_tomoe_tomoe",
+            "share": 0.0393
+          }
+        ]
+      }
+    },
+    "four_gaussian": {
+      "average_point_best": {
+        "id": "char_nanami_nanami",
+        "name_zh": "广町七深",
+        "band": "morfo"
+      },
+      "uniform": {
+        "max_share": 0.0498625,
+        "effective_count": 40.406366818382374,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0499
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.0437
+          },
+          {
+            "id": "char_umiri_umiri",
+            "share": 0.0416
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0407
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0407
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.0401
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0378
+          },
+          {
+            "id": "char_chiyu_chiyu",
+            "share": 0.0358
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.18526666666666666,
+        "effective_count": 8.883868128333628,
+        "winners_used": 29,
+        "top_winners": [
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.1853
+          },
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.1849
+          },
+          {
+            "id": "char_eve_eve",
+            "share": 0.1461
+          },
+          {
+            "id": "char_hagumi_hagumi",
+            "share": 0.1433
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.1233
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0615
+          },
+          {
+            "id": "char_tomoe_tomoe",
+            "share": 0.0555
+          },
+          {
+            "id": "char_misaki_misaki",
+            "share": 0.0446
+          }
+        ]
+      }
+    },
+    "four_gaussian_penalized": {
+      "average_point_best": {
+        "id": "char_nanami_nanami",
+        "name_zh": "广町七深",
+        "band": "morfo"
+      },
+      "uniform": {
+        "max_share": 0.047925,
+        "effective_count": 40.974728225333244,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0479
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0434
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.042
+          },
+          {
+            "id": "char_umiri_umiri",
+            "share": 0.0411
+          },
+          {
+            "id": "char_hina_hina",
+            "share": 0.0391
+          },
+          {
+            "id": "char_chiyu_chiyu",
+            "share": 0.0376
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0369
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0362
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.19593333333333332,
+        "effective_count": 8.958405631680634,
+        "winners_used": 31,
+        "top_winners": [
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.1959
+          },
+          {
+            "id": "char_eve_eve",
+            "share": 0.1866
+          },
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.178
+          },
+          {
+            "id": "char_hagumi_hagumi",
+            "share": 0.1441
+          },
+          {
+            "id": "char_arisa_arisa",
+            "share": 0.0649
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0622
+          },
+          {
+            "id": "char_tomoe_tomoe",
+            "share": 0.0544
+          },
+          {
+            "id": "char_misaki_misaki",
+            "share": 0.0413
+          }
+        ]
+      }
+    },
+    "four_balanced": {
+      "average_point_best": {
+        "id": "char_nanami_nanami",
+        "name_zh": "广町七深",
+        "band": "morfo"
+      },
+      "uniform": {
+        "max_share": 0.0548875,
+        "effective_count": 40.29717811588426,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0549
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.05
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0494
+          },
+          {
+            "id": "char_chiyu_chiyu",
+            "share": 0.0423
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0415
+          },
+          {
+            "id": "char_umiri_umiri",
+            "share": 0.0396
+          },
+          {
+            "id": "char_kasumi_kasumi",
+            "share": 0.0363
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0354
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.2002,
+        "effective_count": 10.098348610762788,
+        "winners_used": 32,
+        "top_winners": [
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.2002
+          },
+          {
+            "id": "char_eve_eve",
+            "share": 0.1983
+          },
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.172
+          },
+          {
+            "id": "char_hagumi_hagumi",
+            "share": 0.109
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0729
+          },
+          {
+            "id": "char_reona_reona",
+            "share": 0.0484
+          },
+          {
+            "id": "char_sakiko_sakiko",
+            "share": 0.0329
+          },
+          {
+            "id": "char_misaki_misaki",
+            "share": 0.0292
+          }
+        ]
+      }
+    },
+    "directional_stretched": {
+      "average_point_best": {
+        "id": "char_eve_eve",
+        "name_zh": "若宫伊芙",
+        "band": "pasupare"
+      },
+      "uniform": {
+        "max_share": 0.063525,
+        "effective_count": 37.20825395226918,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_ran_ran",
+            "share": 0.0635
+          },
+          {
+            "id": "char_yukina_yukina",
+            "share": 0.0579
+          },
+          {
+            "id": "char_chiyu_chiyu",
+            "share": 0.0565
+          },
+          {
+            "id": "char_rui_rui",
+            "share": 0.0523
+          },
+          {
+            "id": "char_kasumi_kasumi",
+            "share": 0.0441
+          },
+          {
+            "id": "char_tsugumi_tsugumi",
+            "share": 0.0403
+          },
+          {
+            "id": "char_maya_maya",
+            "share": 0.0383
+          },
+          {
+            "id": "char_moca_moca",
+            "share": 0.0383
+          }
+        ]
+      },
+      "mean_centered": {
+        "max_share": 0.17026666666666668,
+        "effective_count": 22.90534992655305,
+        "winners_used": 49,
+        "top_winners": [
+          {
+            "id": "char_eve_eve",
+            "share": 0.1703
+          },
+          {
+            "id": "char_reona_reona",
+            "share": 0.0999
+          },
+          {
+            "id": "char_nanami_nanami",
+            "share": 0.0879
+          },
+          {
+            "id": "char_rimi_rimi",
+            "share": 0.0611
+          },
+          {
+            "id": "char_aya_aya",
+            "share": 0.0551
+          },
+          {
+            "id": "char_himari_himari",
+            "share": 0.0458
+          },
+          {
+            "id": "char_lisa_lisa",
+            "share": 0.0413
+          },
+          {
+            "id": "char_ako_ako",
+            "share": 0.0358
+          }
+        ]
+      }
+    }
+  }
+}

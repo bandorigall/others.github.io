@@ -1,0 +1,14 @@
+.idea/
+__pycache__/
+*.pyc
+
+tmp_*.png
+tmp_*.json
+tmp_pdb_assets/
+tmp_pdb_driver/
+
+chrome_dom.txt
+chrome_dom_v2.txt
+
+*.rar
+deploy/
