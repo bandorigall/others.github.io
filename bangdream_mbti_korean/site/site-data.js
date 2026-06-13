@@ -4758,7 +4758,7 @@ window.BANGDREAM_MBTI_DATA = {
         "zh": "桐谷透子",
         "en": "Toko Kirigaya",
         "ja": "桐ヶ谷 透子",
-        "ko": "키리가야 토코"
+        "ko": "키리가야 토우코"
       },
       "bandKey": "morfo",
       "bandName": "Morfonica",
@@ -4780,7 +4780,7 @@ window.BANGDREAM_MBTI_DATA = {
         "zh": "透子经常显得随性甚至有点任性，但其实很会观察场面，也很清楚怎样把自己放在会发光的位置上。表面上的轻浮感下面，其实藏着不愿随便把时间浪费在无意义事情上的认真。她很少让场子冷下来，情绪、热度和行动几乎总是同时到场，因此也特别容易把别人一起卷进自己的节奏。真到关系被拉近之后，这一面往往会更清楚。只是凭着感觉往前冲的时候，偶尔也会显得有些冒进。",
         "en": "Toko often seems casual and even a little willful, but in fact she is very good at observing the scene and knows how to put herself in a position to shine. Beneath the superficial frivolity, there is actually a seriousness that does not want to waste time on meaningless things. She rarely lets the scene cool down, and her emotions, heat, and actions are almost always present at the same time, so she is particularly easy to involve others in her own rhythm. This aspect often becomes clearer after the relationship is really drawn closer. When I just rush forward based on my feelings, I sometimes seem a little aggressive.",
         "ja": "透子 は、カジュアルで少しワガママに見えることが多いですが、実際には現場を観察するのがとても上手で、自分を輝かせる立場に置く方法を知っています。表面的な軽薄さの裏には、実は意味のないことに時間を費やしたくないという真剣さがあるんです。彼女は場を冷めさせることがほとんどなく、感情、熱量、行動がほぼ常に同時に存在するため、特に他の人を自分のリズムに巻き込むのが簡単です。この側面は、関係が本当に緊密になった後に明らかになることもよくあります。自分の気持ちだけで突き進んでしまうと、少し強引に見えることもあります。",
-        "ko": "토코는 종종 무심하고 제멋대로처럼 보이지만, 사실 분위기를 읽는 데 매우 능하고 자신을 돋보일 자리에 둘 줄 안다. 겉보기의 가벼움 아래에는, 무의미한 일에 시간을 낭비하기 싫어하는 진지함이 깔려 있다. 좀처럼 분위기를 식히지 않고 감정·열기·행동이 거의 동시에 나타나, 주변을 자기 리듬에 끌어들이기 쉽다. 이런 면은 관계가 정말 가까워진 뒤에 더 분명해진다. 다만 느낌만으로 앞만 보고 달릴 때면, 가끔 조금 막무가내처럼 보이기도 한다."
+        "ko": "토우코는 종종 무심하고 제멋대로처럼 보이지만, 사실 분위기를 읽는 데 매우 능하고 자신을 돋보일 자리에 둘 줄 안다. 겉보기의 가벼움 아래에는, 무의미한 일에 시간을 낭비하기 싫어하는 진지함이 깔려 있다. 좀처럼 분위기를 식히지 않고 감정·열기·행동이 거의 동시에 나타나, 주변을 자기 리듬에 끌어들이기 쉽다. 이런 면은 관계가 정말 가까워진 뒤에 더 분명해진다. 다만 느낌만으로 앞만 보고 달릴 때면, 가끔 조금 막무가내처럼 보이기도 한다."
       },
       "bandLogoUrl": "https://free.picui.cn/free/2026/04/14/69de332c0bd3e.png",
       "bandIconUrl": "https://free.picui.cn/free/2026/04/14/69de33286273e.png",
