@@ -51,8 +51,13 @@
     var ul = el("ul", { className: "song-list" });
     (songs || []).forEach(function (s) {
       var li = el("li");
-      li.appendChild(el("span", { text: isTBD(s.title) ? "TBD" : s.title }));
-      if (!isTBD(s.youtube)) li.appendChild(ytLink(s.youtube));
+      var titleRow = el("span", { className: "song-title-row" });
+      titleRow.appendChild(el("span", { text: isTBD(s.title) ? "TBD" : s.title }));
+      if (!isTBD(s.youtube)) titleRow.appendChild(ytLink(s.youtube));
+      li.appendChild(titleRow);
+      if (!isTBD(s.note)) {
+        li.appendChild(el("span", { className: "song-note", text: s.note }));
+      }
       ul.appendChild(li);
     });
     return ul;
@@ -132,6 +137,18 @@
       if (songs.length) {
         info.appendChild(el("div", { className: "songs-label", text: "대표곡" }));
         info.appendChild(songListEl(songs));
+      }
+
+      // 특정 멤버 전용 외부 링크(있을 때만 곡 목록 아래에 표시)
+      if (item.link && !isTBD(item.link.url)) {
+        var linkRow = el("div", { className: "member-link" });
+        linkRow.appendChild(el("a", {
+          className: "yt-link",
+          text: item.link.label || "자세히 보기",
+          href: item.link.url,
+          attrs: { target: "_blank", rel: "noopener" }
+        }));
+        info.appendChild(linkRow);
       }
 
       card.appendChild(info);
