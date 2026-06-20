@@ -119,7 +119,7 @@ window.DATA_cast = [
       { "title": "DreamRiser",                                       "youtube": "https://www.youtube.com/watch?v=_hi7okG2wCE", "note": "「소녀와 전차」 OP" },
       { "title": "カワルミライ (Kawaru Mirai / 변하는 미래)",           "youtube": "https://www.youtube.com/watch?v=Un9UiVL6Dms", "note": "「신님의 메모장」 OP (메이저 데뷔곡)" },
       { "title": "BLESS YoUr NAME",                                  "youtube": "https://www.youtube.com/watch?v=OsunNN02t4Y", "note": "「하이스쿨 D×D BorN」 OP" },
-      { "title": "Starlog",                                          "youtube": "https://youtu.be/oeWxEFq5U7k", "note": "「Fate/kaleid liner 프리즈마☆이리야」 1기 OP" }
+      { "title": "Starlog",                                          "youtube": "https://www.youtube.com/watch?v=4hnn9BywgTQ", "note": "「Fate/kaleid liner 프리즈마☆이리야」 1기 OP" }
     ],
     "link": {
       "url": "https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&no=6252503",
