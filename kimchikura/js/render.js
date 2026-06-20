@@ -199,8 +199,16 @@
     if (!song.lyrics) {
       body.appendChild(el("p", { className: "lyrics-none", text: "가사 데이터가 없습니다." }));
     } else {
+      // 빌드 sentinel(<<<END>>>) 제거 + HTML 엔티티(&amp; 등) 디코드
+      var lyricsText = song.lyrics
+        .replace(/\s*<<<END>>>\s*$/, "")
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
       // 3행 묶음(원문/발음/번역)을 한 블록으로 렌더링
-      var blocks = song.lyrics.split(/\n{2,}/);
+      var blocks = lyricsText.split(/\n{2,}/);
       blocks.forEach(function (block) {
         var lines = block.split("\n").filter(Boolean);
         var div = el("div", { className: "lyrics-block" });

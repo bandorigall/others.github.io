@@ -15,39 +15,74 @@
   <main class="container">
     <section>
       <h2 class="section-title">예매 안내</h2>
-      <p class="subtitle">예매 관련 정보입니다. 가격·일정은 확정 시 업데이트됩니다.</p>
+      <p class="subtitle">KIMCHIKURA Fes'26 (ANISONG &amp; DJ EVENT) 예매 정보입니다.</p>
     </section>
 
+    <!-- 가격 · 예매 안내 -->
     <section>
+      <h2 class="section-title">가격 · 예매 안내</h2>
+      <p style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">S석 178,000원 · A석 128,000원</p>
+      <p style="color:var(--text-muted);font-size:.82rem;margin-bottom:20px;">예매수수료 장당 2,000원 · 배송료 현장수령 무료 · 군 장병 30% 할인 (사회복무요원 포함, 본인 한정)</p>
       <ul class="info-list">
         <li>
-          <span class="label">예매처</span>
-          <span>티켓링크 (TicketLink)</span>
+          <span class="label">티켓 오픈</span>
+          <span>2026년 6월 26일 (금) 20:00 <span id="ticket-countdown" style="color:var(--text-muted);font-size:.8rem;font-weight:400;"></span></span>
         </li>
         <li>
-          <span class="label">가격</span>
-          <span><span class="badge">추후 공개 예정</span></span>
+          <span class="label">구매 제한</span>
+          <span>1인 2매</span>
         </li>
         <li>
-          <span class="label">예매 일정</span>
-          <span><span class="badge">추후 공개 예정</span></span>
+          <span class="label">결제 안내</span>
+          <span>예매 시 무통장 입금 결제 수단이 제한됩니다.</span>
         </li>
       </ul>
+      <p style="color:var(--text-muted);font-size:.78rem;margin-top:12px;">※ 군 장병 할인은 당일 신분증과 증명서(휴가증·공무원증 등) 제시 필수. 미제시 시 차액 현장 지불, 미지불 시 티켓 교환·환불 불가.</p>
+      <div class="btn-row" style="margin-top:14px;">
+        <a class="btn" href="https://www.ticketlink.co.kr/product/63969" target="_blank" rel="noopener">티켓링크 예매 페이지 바로가기</a>
+      </div>
     </section>
 
+    <!-- 도움말 -->
     <section>
       <h2 class="section-title">도움말</h2>
       <div class="btn-row">
         <a class="btn ghost" href="https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&no=6237827" target="_blank" rel="noopener">티켓팅 가이드 (뱅드림 갤러리)</a>
-        <!-- TODO: 실제 가이드 URL 로 교체 -->
-        <a class="btn ghost" href="#" target="_blank" rel="noopener">취켓팅 안내</a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    마지막 업데이트: 2026-06-06
+    마지막 업데이트: 2026-06-20
   </footer>
+
+  <script>
+    (function () {
+      var el = document.getElementById('ticket-countdown');
+      if (!el) return;
+      // 티켓 오픈: 2026-06-26 20:00 (KST, UTC+9)
+      var open = new Date('2026-06-26T20:00:00+09:00');
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function update() {
+        var now = new Date();
+        var stamp = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) +
+                    ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+        var diff = open - now;
+        if (diff <= 0) {
+          el.textContent = '· 예매 오픈됨';
+          return;
+        }
+        var mins = Math.floor(diff / 60000);
+        var days = Math.floor(mins / 1440);
+        var hours = Math.floor((mins % 1440) / 60);
+        var minutes = mins % 60;
+        var left = (days > 0 ? days + '일 ' : '') + hours + '시간 ' + minutes + '분 남음';
+        el.textContent = '· ' + stamp + ' 기준 ' + left;
+      }
+      update();
+      setInterval(update, 60000);
+    })();
+  </script>
 
 </body>
 </html>

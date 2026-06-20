@@ -17,7 +17,10 @@ lyric_map = {}
 for block in re.split(r'\n(?=제목: )', content.strip()):
     title = block.split('\n')[0].replace('제목: ', '').strip()
     parts = block.split('\n가사:\n', 1)
-    lyric_map[title] = parts[1].strip() if len(parts) > 1 else ''
+    lyrics = parts[1].strip() if len(parts) > 1 else ''
+    # 빌드 sentinel(<<<END>>>) 제거 — 렌더 시 가사 끝에 노출되지 않도록
+    lyrics = re.sub(r'\s*<<<END>>>\s*$', '', lyrics)
+    lyric_map[title] = lyrics
 
 print(f'캐시: {len(lyric_map)}곡')
 
