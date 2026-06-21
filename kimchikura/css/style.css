@@ -673,5 +673,64 @@ tr:last-child td { border-bottom: none; }
   .float-btn-icon  { font-size: 1.2rem; }
 }
 
+/* ---------- 티켓팅 체크리스트 ---------- */
+.checklist-mascot {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 96px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .4));
+  z-index: 1;
+}
+@media (max-width: 600px) {
+  .checklist-mascot { width: 64px; top: -4px; opacity: .9; }
+}
+.checklist li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color .15s, background .15s;
+}
+.checklist li:has(input:checked) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.checklist label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 4px 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.checklist input[type="checkbox"] {
+  grid-row: 1 / span 2;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.checklist .ck-title {
+  font-weight: 700;
+  font-size: .95rem;
+  line-height: 1.4;
+}
+.checklist input:checked ~ .ck-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.checklist .ck-help {
+  grid-column: 2;
+  font-size: .8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.checklist .ck-help a { color: var(--accent-strong); }
+
 /* ---------- 접근성 ---------- */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

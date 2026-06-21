@@ -43,6 +43,104 @@
       </div>
     </section>
 
+    <!-- 티켓팅 사전 점검표 -->
+    <section style="position:relative;">
+      <img src="imgs/djmashiro.png" alt="DJ 마시로" class="checklist-mascot">
+      <h2 class="section-title">티켓팅 사전 점검표</h2>
+      <p class="subtitle" style="margin-bottom:14px;">티켓팅 전에 아래 항목을 확인하세요. 체크 상태는 이 기기에 자동 저장됩니다.</p>
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="flex:1;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;">
+          <div id="check-progress-bar" style="height:100%;width:0;background:var(--accent);transition:width .25s;"></div>
+        </div>
+        <span id="check-progress-text" style="font-size:.85rem;font-weight:700;color:var(--text-muted);white-space:nowrap;">0 / 0</span>
+        <button id="check-reset" type="button" class="btn ghost" style="padding:6px 12px;font-size:.78rem;">초기화</button>
+      </div>
+
+      <ul id="ticket-checklist" class="checklist" style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li>
+          <label>
+            <input type="checkbox" data-ck="join">
+            <span class="ck-title">티켓링크를 가입했는가?</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="login">
+            <span class="ck-title">티켓링크에 로그인이 된 상태인가?</span>
+            <span class="ck-help">확인방법: 티켓링크 상단에 본인 이메일 주소가 나오고 있는지 확인</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="site">
+            <span class="ck-title">티켓팅 사이트에 접속한 상태인가?</span>
+            <span class="ck-help">확인방법: <a href="https://www.ticketlink.co.kr/product/63969" target="_blank" rel="noopener">ticketlink.co.kr/product/63969</a></span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="single">
+            <span class="ck-title">티켓링크에 1대의 기기만 로그인이 됐는가? (다중접속 불가능)</span>
+            <span class="ck-help">조치방법: 티켓팅 직전(5~10분 전) 실제로 예매할 기기에서만 로그인하기 (이러면 실제 예매할 기기를 제외한 모든 기기의 세션이 풀림)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="os-dark">
+            <span class="ck-title">사용하는 컴퓨터의 다크모드를 해제했는가?</span>
+            <span class="ck-help">확인방법: 설정-개인 설정-색-모드 선택:라이트 (윈도우 11 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="browser-dark">
+            <span class="ck-title">사용하는 브라우저의 다크모드를 해제했는가?</span>
+            <span class="ck-help">확인방법: 설정-브라우저 및 디스플레이-전체적인 모양:밝게 (Edge 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="popup">
+            <span class="ck-title">브라우저 팝업차단을 해제했는가?</span>
+            <span class="ck-help">확인방법: 설정-개인정보, 검색 및 서비스-사이트 사용 권한-모든 사용 권한-팝업 및 리디렉션-차단됨(권장) 해제, 티켓팅 완료 후 다시 차단됨(권장) 설정 (Edge 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="ext">
+            <span class="ck-title">브라우저의 확장 프로그램을 모두 비활성화 했는가?</span>
+            <span class="ck-help">확인방법: 확장-확장 관리-모든 확장프로그램 끄고-새로고침 (Edge 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="time">
+            <span class="ck-title">사용하는 컴퓨터/기기의 시간을 정확하게 동기화했는가?</span>
+            <span class="ck-help">확인방법: 설정-시간 및 언어-날짜 및 시간-지금 동기화 (윈도우 11 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="keyboard">
+            <span class="ck-title">캡차 입력을 위해 키보드 언어를 영어로 설정했는가?</span>
+            <span class="ck-help">확인방법: 작업표시줄에 '가'가 아닌 'A'로 적혀있으면 됨 (윈도우 11, Microsoft 입력기 기준)</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" data-ck="mouse">
+            <span class="ck-title">마우스의 불필요한 버튼을 모두 비활성화했는가?</span>
+            <span class="ck-help">확인방법: 마우스 관리 프로그램(G Hub, 시냅스 등)에서 키 할당에 기본적인 클릭(좌클릭, 우클릭, 휠)빼고 키 할당된거 모두 없애기</span>
+          </label>
+        </li>
+      </ul>
+      <p style="color:var(--text-muted);font-size:.78rem;margin-top:14px;">
+        출처:
+        <a href="https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&amp;no=6256565" target="_blank" rel="noopener">뱅드림 갤러리 티켓팅 점검표</a>
+      </p>
+    </section>
+
     <!-- 도움말 -->
     <section>
       <h2 class="section-title">도움말</h2>
@@ -81,6 +179,48 @@
       }
       update();
       setInterval(update, 60000);
+    })();
+  </script>
+
+  <!-- 티켓팅 점검표: 체크 상태 저장 -->
+  <script>
+    (function () {
+      var KEY = 'kimchikura_ticket_checklist';
+      var list = document.getElementById('ticket-checklist');
+      if (!list) return;
+      var boxes = list.querySelectorAll('input[type="checkbox"][data-ck]');
+      var bar = document.getElementById('check-progress-bar');
+      var text = document.getElementById('check-progress-text');
+      var resetBtn = document.getElementById('check-reset');
+
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { saved = {}; }
+
+      function save() {
+        var state = {};
+        boxes.forEach(function (b) { if (b.checked) state[b.dataset.ck] = 1; });
+        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      }
+      function updateProgress() {
+        var done = 0;
+        boxes.forEach(function (b) { if (b.checked) done++; });
+        var total = boxes.length;
+        if (bar) bar.style.width = (total ? (done / total * 100) : 0) + '%';
+        if (text) text.textContent = done + ' / ' + total;
+      }
+
+      boxes.forEach(function (b) {
+        if (saved[b.dataset.ck]) b.checked = true;
+        b.addEventListener('change', function () { save(); updateProgress(); });
+      });
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          boxes.forEach(function (b) { b.checked = false; });
+          save();
+          updateProgress();
+        });
+      }
+      updateProgress();
     })();
   </script>
 
