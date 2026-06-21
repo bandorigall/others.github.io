@@ -736,7 +736,7 @@ tr:last-child td { border-bottom: none; }
 .mini-player {
   display: none;
   position: fixed;
-  right: 20px;
+  left: 20px;
   bottom: 20px;
   width: 340px;
   max-width: calc(100vw - 40px);
@@ -794,7 +794,7 @@ tr:last-child td { border-bottom: none; }
   border: 0;
 }
 @media (max-width: 600px) {
-  .mini-player { right: 10px; bottom: 10px; width: calc(100vw - 20px); }
+  .mini-player { left: 10px; bottom: 10px; width: calc(100vw - 20px); }
 }
 
 /* ---------- 접근성 ---------- */
