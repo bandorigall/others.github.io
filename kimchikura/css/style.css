@@ -732,5 +732,70 @@ tr:last-child td { border-bottom: none; }
 }
 .checklist .ck-help a { color: var(--accent-strong); }
 
+/* ---------- 하단 미니 플레이어 (유튜브 임베드) ---------- */
+.mini-player {
+  display: none;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-hover);
+  z-index: 1500;
+  animation: miniPlayerUp .25s ease;
+}
+.mini-player.open { display: block; }
+@keyframes miniPlayerUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.mini-player-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px 8px 14px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.mini-player-title {
+  flex: 1;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mini-player-close {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.mini-player-close:hover { color: var(--text); }
+.mini-player-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.mini-player-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+@media (max-width: 600px) {
+  .mini-player { right: 10px; bottom: 10px; width: calc(100vw - 20px); }
+}
+
 /* ---------- 접근성 ---------- */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

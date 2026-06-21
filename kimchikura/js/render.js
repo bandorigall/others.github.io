@@ -32,13 +32,65 @@
     return v == null || v === "" || String(v).trim().toUpperCase() === "TBD";
   }
 
-  function ytLink(url, label) {
-    return el("a", {
+  // 유튜브 URL → 영상 ID (youtu.be / watch?v= / embed 모두 대응)
+  function youtubeId(url) {
+    if (!url) return "";
+    var m = String(url).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+    return m ? m[1] : "";
+  }
+
+  // ---------- 하단 미니 플레이어 (유튜브 임베드) ----------
+  function ensureMiniPlayer() {
+    if (document.getElementById("mini-player")) return;
+    var p = document.createElement("div");
+    p.id = "mini-player";
+    p.className = "mini-player";
+    p.innerHTML =
+      '<div class="mini-player-bar">' +
+        '<span id="mini-player-title" class="mini-player-title"></span>' +
+        '<button class="mini-player-close" aria-label="닫기">&times;</button>' +
+      '</div>' +
+      '<div class="mini-player-frame" id="mini-player-frame"></div>';
+    document.body.appendChild(p);
+    p.querySelector(".mini-player-close").addEventListener("click", closePlayer);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePlayer(); });
+  }
+
+  function playSong(vid, title) {
+    ensureMiniPlayer();
+    var player = document.getElementById("mini-player");
+    document.getElementById("mini-player-title").textContent = title || "";
+    var src = "https://www.youtube.com/embed/" + vid + "?autoplay=1&rel=0";
+    document.getElementById("mini-player-frame").innerHTML =
+      '<iframe src="' + src + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    player.classList.add("open");
+  }
+
+  function closePlayer() {
+    var player = document.getElementById("mini-player");
+    if (!player) return;
+    player.classList.remove("open");
+    document.getElementById("mini-player-frame").innerHTML = ""; // 재생 중지
+  }
+
+  // 유튜브면 미니 플레이어, 아니면 새 탭 링크
+  function ytLink(url, label, title) {
+    var vid = youtubeId(url);
+    var a = el("a", {
       className: "yt-link",
-      text: label || "YouTube",
+      text: label || "▶ YouTube",
       href: url,
-      attrs: { target: "_blank", rel: "noopener" }
+      attrs: { rel: "noopener" }
     });
+    if (vid) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        playSong(vid, title || "");
+      });
+    } else {
+      a.setAttribute("target", "_blank");
+    }
+    return a;
   }
 
   function setState(container, cls, msg) {
@@ -52,8 +104,11 @@
     (songs || []).forEach(function (s) {
       var li = el("li");
       var titleRow = el("span", { className: "song-title-row" });
-      titleRow.appendChild(el("span", { text: isTBD(s.title) ? "TBD" : s.title }));
-      if (!isTBD(s.youtube)) titleRow.appendChild(ytLink(s.youtube));
+      var songTitle = isTBD(s.title) ? "TBD" : s.title;
+      titleRow.appendChild(el("span", { text: songTitle }));
+      if (!isTBD(s.youtube)) {
+        titleRow.appendChild(ytLink(s.youtube, "▶ YouTube", songTitle));
+      }
       li.appendChild(titleRow);
       if (!isTBD(s.note)) {
         li.appendChild(el("span", { className: "song-note", text: s.note }));
@@ -278,7 +333,16 @@
       var tdLink = el("td");
       var linkWrap = el("div", { className: "morf-links" });
       if (!isTBD(s.youtube)) {
-        linkWrap.appendChild(el("a", { className: "btn btn-yt", text: "▶ Listen", href: s.youtube, attrs: { target: "_blank", rel: "noopener" } }));
+        var vid = youtubeId(s.youtube);
+        var ytBtn = el("a", { className: "btn btn-yt", text: "▶ Listen", href: s.youtube, attrs: { rel: "noopener" } });
+        if (vid) {
+          (function (id, title) {
+            ytBtn.addEventListener("click", function (e) { e.preventDefault(); playSong(id, title); });
+          })(vid, s.title);
+        } else {
+          ytBtn.setAttribute("target", "_blank");
+        }
+        linkWrap.appendChild(ytBtn);
       }
       if (s.namu) {
         linkWrap.appendChild(el("a", { className: "btn btn-namu", text: "출처", href: s.namu, attrs: { target: "_blank", rel: "noopener" } }));
