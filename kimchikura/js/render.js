@@ -324,9 +324,13 @@
       // 발매일 + 뱃지 셀
       var tdMeta = el("td");
       var typeCls = s.type === "타이업" ? "badge-tieup" : "badge-original";
-      tdMeta.innerHTML =
+      var metaHtml =
         '<span class="morf-badge ' + typeCls + '">' + (s.type || "오리지널") + "</span>" +
         '<span class="morf-date">' + (s.date || "") + "</span>";
+      if (!isTBD(s.artist)) {
+        metaHtml += '<span class="morf-artist">with ' + s.artist + "</span>";
+      }
+      tdMeta.innerHTML = metaHtml;
       tr.appendChild(tdMeta);
 
       // 링크 셀

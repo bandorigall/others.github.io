@@ -512,6 +512,7 @@ tr:last-child td { border-bottom: none; }
 .morf-title-ko { font-size: .78rem; color: var(--text-muted); }
 
 .morf-date { display: block; font-family: monospace; font-size: .82rem; color: var(--text-muted); margin-top: 3px; }
+.morf-artist { display: block; font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
 .morf-badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: .7rem; font-weight: 800; text-transform: uppercase; }
 .badge-original { background: var(--accent-soft); color: var(--accent-strong); }
 .badge-tieup { background: #1e3a1e; color: #7ccc7c; }
