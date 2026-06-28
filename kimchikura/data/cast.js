@@ -40,7 +40,7 @@ window.DATA_cast = [
       { "title": "Complication (コンプリケイション)", "youtube": "https://www.youtube.com/watch?v=HkQ_mzbC_WY", "note": "「듀라라라!!」 1기 OP" },
       { "title": "IN MY WORLD",                      "youtube": "https://www.youtube.com/watch?v=DIz23tAEZaE", "note": "「청의 엑소시스트」 OP" },
       { "title": "Song For...",                      "youtube": "https://www.youtube.com/watch?v=WTruNGxi1UU", "note": "「블리치」 ED" },
-      { "title": "リクライム (Reclimb / 리클라임)",  "youtube": "https://www.youtube.com/watch?v=cTEuzlB8gQc", "note": "「약충 페달」 1기 OP" },
+      { "title": "リクライム (Reclimb / 리클라임)",  "youtube": "https://www.youtube.com/watch?v=cTEuzlB8gQc", "note": "「겁쟁이 페달」 1기 OP" },
       { "title": "BUMP ON da STYLE",                 "youtube": "https://www.youtube.com/watch?v=A1--JBUm7Ps" }
     ]
   },
