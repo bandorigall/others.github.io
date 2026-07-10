@@ -1,0 +1,39 @@
+================================================================
+others — 개발일지
+================================================================
+(레포: bandorigall/others.github.io / GitHub Pages)
+
+■ 배경/동기
+  단독 레포로 만들기엔 규모가 작은 뱅드림 관련 페이지들이 하나둘 생겼다.
+  레포가 난립하는 걸 막으려고 이 레포 하나에 하위 폴더로 몰아넣고
+  others.github.io/{경로}/ 로 각각 서빙하기로 결정.
+
+■ 하위 프로젝트 요약
+  - bangdream_mbti_korean: MBTI 캐릭터 적합도 테스트 한국어 이식판
+    (중국어 원작 번역·이식). site/가 빌드 없는 완성 정적본.
+  - birthday: 캐릭터 생일 달력. 축전/스토리/대사를 디시 글번호로 링크,
+    캐릭터 색상은 '디시 색상 인코딩' 라이브러리로 적용.
+  - mygocenter: MyGO/AveMujica 웹라디오 회차별 진행(パーソナリティ) 출연 통계.
+    yt-dlp로 재생목록 긁어 JSON 누적 → HTML 리포트.
+  - our_notes_profile: 캐릭터 프로필 대시보드(밴드별 테마색). CSV→HTML.
+  - kimchikura: 오프라인 공연(김치쿠라) 안내 사이트. fetch 없이 JS 전역주입이라
+    file:// 로도 열림.
+
+■ 주요 결정 및 이유
+  - "작은 것들은 한 레포"로 정리 → 관리/배포 단순화.
+  - 프로젝트마다 성격이 달라 빌드 방식 혼재 허용:
+    데이터형(birthday/our_notes/mygocenter)은 파이썬 생성기로 HTML 산출,
+    mbti는 아예 완성 정적본(site/)을 두는 식.
+  - mbti는 원작 크레딧/출처를 명시(비영리 팬 콘텐츠 원칙).
+
+■ 이력(커밋 흐름 요약)
+  - init 이후 다수 "Auto commit": 하위 프로젝트들 순차 추가·갱신.
+  - bangdream_mbti 한국어판 원작/이식 크레딧 출처 표기 추가.
+  - (중간 stash/wip 커밋 흔적 있음 — rewrite 전 백업 성격)
+  - 마지막: 공통 네비게이션 바(nav.js) 추가.
+
+■ 운영 메모
+  - 각 하위 폴더에서 해당 생성기(run.bat / *.bat / python 스크립트) 실행 후
+    루트에서 git_auto.sh 로 커밋/푸시.
+  - mygocenter는 로컬 venv(d:\venv_dev) 전제(run.bat). yt-dlp 필요.
+  - mbti site/는 빌드 불필요(데이터 갱신 시에만 build_site_data.py).
