@@ -1,0 +1,78 @@
+================================================================
+others (others.github.io) — 모듈 개요 (기술 명세)
+================================================================
+
+0. 목적
+  단독 레포로 분리하기엔 작은 뱅드림 관련 정적 페이지들을 한 레포에
+  하위 폴더로 모아 GitHub Pages 프로젝트 페이지로 서빙한다.
+  (others.github.io/{하위경로}/ 형태로 각 도구 접근)
+  총 5개 하위 프로젝트 + 공통 nav.js/git_auto.sh.
+
+1. 저장소 구성(하위 프로젝트)
+  bangdream_mbti_korean/   MBTI 캐릭터 적합도 테스트(한국어판).
+  birthday/                캐릭터 생일 달력/축전 정리 페이지.
+  mygocenter/              MyGO/AveMujica '퍼스널리티' 회차 통계 리포트.
+  our_notes_profile/       뱅드림 캐릭터 프로필 대시보드.
+  kimchikura/              오프라인 공연(김치쿠라) 안내 정적 사이트.
+  nav.js                   공통 상단 네비게이션 바.
+  git_auto.sh              add→commit→pull→push 자동화.
+
+--------------------------------------------------------------
+2. bangdream_mbti_korean/
+--------------------------------------------------------------
+  - OJTS(Open Jungian Type Scales) 48문항 기반 성격 테스트. 8차원(EI/SN/FT/JP)
+    프로필을 계산해 49명 캐릭터 중 가장 가까운 Top 3 산출. 다국어(ko/zh/en/ja).
+  - 원작(중국어판 bitterndumpling/bangdream_mbti)을 한국어로 번역·이식.
+  - site/ 가 그 자체로 완성된 정적 사이트(빌드 불필요).
+  - build_site_data.py: fandom API/BeautifulSoup으로 캐릭터 도시에·자산 수집 →
+    site/site-data.js 생성. download_site_assets.py/optimize_character_portraits.py:
+    초상 이미지 수집·최적화.
+  - analysis_match_algorithms.py: 매칭 알고리즘(선형 8D 등) 비교·분포 분석
+    (analysis_*.png / analysis_algorithm_summary.json 산출).
+  - deploy-pages.yml: 하위 Pages 배포 워크플로.
+
+--------------------------------------------------------------
+3. birthday/
+--------------------------------------------------------------
+  - 입력: birthday.csv (날짜, 생일자, 공식 생일 축전, 생일 스토리, 생일 축하 대사;
+    뒤 3개는 디시 글번호). BASE_URL 템플릿으로 글번호→디시 링크 생성.
+  - birthday.py: CSV → index.html 생성. '디시 색상 인코딩/replace_colour.py'의
+    char_to_rgb로 캐릭터별 색상 적용(테이블 스타일 인라인).
+  - birthday.bat 실행. nav.js에서 '생일페이지' 링크로 노출.
+
+--------------------------------------------------------------
+4. mygocenter/
+--------------------------------------------------------------
+  - 목적: MyGO!!!!!/Ave Mujica 웹라디오·영상의 회차별 'パーソナリティ(진행)'
+    출연 기록을 집계.
+  - extract_personality.py: yt-dlp로 유튜브 재생목록의 회차별 제목/설명에서
+    パーソナリティ 줄을 전체 추출, 회차마다 즉시 JSON 저장(중단 이어받기).
+    → personality_results.json. postpro.py로 후처리(personality_results_postpro.json).
+  - generate_html.py: 결과 JSON → personality_report.html.
+    탭1 전체 회차(멤버 필터), 탭2 멤버별 통계(출연 횟수/월별 그래프). MEMBER_ORDER 고정.
+  - run.bat: 로컬 venv 활성화 후 generate_html.py 실행.
+
+--------------------------------------------------------------
+5. our_notes_profile/
+--------------------------------------------------------------
+  - 입력: our_notes.csv (이름 한/일, 밴드, 악기, CV, 소속, 반, 생일, 좋아하는 음식,
+    취미, 이미지 URL, 성우/밴드/캐릭터 설명, 라이브복/일상복 이미지 등).
+  - generate_html.py: CSV → index.html(캐릭터 프로필 대시보드).
+    BAND_ORDER 고정, 밴드별 테마 색(BAND_THEMES: primary/accent/bg/dark) 적용.
+  - 대상 밴드: MyGO!!!!!, Ave Mujica, 무겐다이 뮤타입, millsage, 일가 DumbRock!.
+  - run.bat 실행.
+
+--------------------------------------------------------------
+6. kimchikura/
+--------------------------------------------------------------
+  - Morfonica·센고쿠 유노(무한대 뮤타입) 등 출연 오프라인 공연 안내 정적 사이트.
+  - 여러 HTML(index/lineup/cast/ticket/access/fan/morfonica) + css/js/imgs/data.
+  - 헤더 삽입(include.js)·데이터(data/*.js)를 fetch 없이 JS 전역변수로 주입 →
+    file:// 더블클릭으로도 동작(배포는 Pages).
+  - _build_lyrics.py: 가사 등 데이터 빌드 보조.
+
+7. 설계 결정/제약
+  - 잡다한 소규모 도구를 한 레포로 모아 관리(레포 난립 방지). 각자 정적 서빙.
+  - 데이터 소스별로 생성기(파이썬/노트북)가 index.html을 만들거나, site/처럼
+    빌드 없는 완성 정적본을 두는 방식이 혼재.
+  - git_auto.sh 로 add→commit→pull(--no-rebase --no-edit)→push 일괄.
