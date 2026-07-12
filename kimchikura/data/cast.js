@@ -154,7 +154,7 @@ window.DATA_cast = [
     "name": "DJ Yuno Sengoku",
     "nameJa": "千石ユノ / 夢限大みゅーたいぷ",
     "img": "DJ Yuno Sengoku",
-    "description": "BanG Dream! 소속 버추얼 밴드 「무한대 뮤타입(夢限大みゅーたいぷ)」DJ·조작 담당. TV 애니메이션 2026년 7월 방영 예정.",
+    "description": "BanG Dream! 소속 버추얼 밴드 「무한대 뮤타입(夢限大みゅーたいぷ)」DJ·조작 담당. TV 애니메이션 2026년 7월 방영 중.",
     "songs": [
       { "title": "夢現妄想世界 (무한 마이 월드)",   "youtube": "https://www.youtube.com/watch?v=GB2MEvY2sQk" },
       { "title": "コミュ着火Fire! (커뮤착화 파이어!)", "youtube": "https://www.youtube.com/watch?v=rfA_P10FGQQ" },
