@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyGO!!!!! ライブ全記録 — 데이터로 읽는 迷子들의 여정</title>
+<style>
+  :root{
+    --bg:#0a0c12; --panel:#12151f; --panel2:#171b28; --surface:#1a1a19;
+    --ink:#f3f4f8; --ink2:#b9bccb; --muted:#7c8098; --hair:#242838;
+    --line:#2c2c2a;
+    /* MyGO atmosphere: smoky teal-blue primary + amber for 앙코르 */
+    --c1:#3987e5; --c2:#199e70; --c3:#c98500; --c5:#9085e9; --c6:#e66767; --c7:#d55181; --c8:#d95926;
+    --accent:#5ec8e0;      /* MyGO 시그니처 청록 */
+    --encore:#f0a63c;      /* 앙코르 */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:
+     radial-gradient(1200px 700px at 80% -10%, rgba(94,200,224,.10), transparent 60%),
+     radial-gradient(900px 600px at 10% 10%, rgba(144,133,233,.08), transparent 55%),
+     var(--bg);
+    color:var(--ink);
+    font-family:"Helvetica Neue","Segoe UI",system-ui,-apple-system,"Malgun Gothic","Yu Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.55}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  a{color:var(--accent)}
+  h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0}
+  .mono{font-variant-numeric:tabular-nums}
+  .muted{color:var(--muted)} .ink2{color:var(--ink2)}
+
+  /* HERO */
+  header.hero{padding:70px 0 34px;position:relative;overflow:hidden}
+  .kicker{font-size:12.5px;letter-spacing:.34em;color:var(--accent);font-weight:700;text-transform:uppercase}
+  .hero h1{font-size:clamp(30px,6vw,58px);font-weight:800;margin:14px 0 6px}
+  .hero h1 .band{background:linear-gradient(92deg,#5ec8e0,#9085e9 60%,#f0a63c);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lead{font-size:clamp(15px,2.1vw,19px);color:var(--ink2);max-width:640px;margin-top:12px}
+  .hero .sub{color:var(--muted);font-size:13.5px;margin-top:14px}
+
+  /* STAT ROW */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:30px 0 6px}
+  .stat{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--hair);border-radius:14px;padding:16px 16px 14px}
+  .stat .v{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em}
+  .stat .v small{font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:3px}
+  .stat .l b{color:var(--accent);font-weight:700}
+
+  section{padding:40px 0 6px}
+  .sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .sec-h h2{font-size:clamp(21px,3.4vw,29px);font-weight:800}
+  .sec-h .n{font-family:mono;color:var(--accent);font-weight:800;font-size:14px;opacity:.8}
+  .sec-desc{color:var(--ink2);max-width:760px;margin:8px 0 22px;font-size:15px}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--hair);border-radius:16px;padding:20px}
+
+  /* generic */
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);margin-top:10px}
+  .legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  figure{margin:0}
+  .cap{font-size:12.5px;color:var(--muted);margin-top:10px}
+  .tip{position:fixed;pointer-events:none;z-index:50;background:#0b0e16;border:1px solid var(--hair);
+    border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink);box-shadow:0 8px 30px rgba(0,0,0,.5);
+    opacity:0;transition:opacity .1s;max-width:280px}
+  .tip b{color:var(--accent)}
+  .tip .en{color:var(--encore)}
+
+  /* growth chart */
+  .growth-svg{width:100%;height:auto;display:block;overflow:visible}
+  .milestone{font-size:11.5px;fill:var(--ink2)}
+
+  /* heatmap */
+  .hm-scroll{overflow-x:auto;padding-bottom:6px}
+  table.hm{border-collapse:separate;border-spacing:3px;font-size:11px}
+  table.hm th.song{position:sticky;left:0;background:var(--panel);text-align:right;white-space:nowrap;
+    padding-right:10px;color:var(--ink2);font-weight:600;z-index:2}
+  table.hm th.colh{writing-mode:vertical-rl;text-orientation:mixed;font-weight:600;color:var(--muted);
+    height:118px;vertical-align:bottom;font-size:10.5px;padding-bottom:4px}
+  table.hm td{width:20px;height:20px;border-radius:5px;background:#161a26;text-align:center}
+  table.hm td.on{background:var(--c1)}
+  table.hm td.enc{background:var(--encore)}
+  table.hm td.op{outline:2px solid var(--accent);outline-offset:-2px}
+  table.hm .grp{color:var(--accent);font-weight:800;font-size:10px;letter-spacing:.05em}
+
+  /* bars */
+  .bar-row{display:grid;grid-template-columns:210px 1fr 42px;align-items:center;gap:10px;margin:5px 0;font-size:12.5px}
+  .bar-row .nm{color:var(--ink2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{background:#161a26;border-radius:6px;height:16px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--c1),var(--accent))}
+  .bar-row .vv{color:var(--ink);font-weight:700;text-align:right}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+  /* trivia */
+  .triv{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--hair);
+    border-left:3px solid var(--accent);border-radius:12px;padding:15px 16px}
+  .triv .big{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .triv .t{font-size:13px;color:var(--ink2);margin-top:4px}
+  .triv.enc{border-left-color:var(--encore)} .triv.enc .big{color:var(--encore)}
+  .triv.rn{border-left-color:var(--c1)} .triv.rn .big{color:var(--accent)}
+
+  /* weather dots */
+  .wx-svg{width:100%;height:auto;display:block;overflow:visible}
+
+  /* debut timeline */
+  .deb-scroll{overflow-x:auto}
+
+  /* unplayed cards */
+  .up-card{background:#141826;border:1px solid var(--hair);border-radius:12px;padding:13px 14px}
+  .up-card .jp{font-size:15px;font-weight:700}
+  .up-card .kr{color:var(--accent);font-size:12.5px;font-weight:600}
+  .up-card .meta{color:var(--muted);font-size:11.5px;margin-top:5px;font-variant-numeric:tabular-nums}
+  .up-card .tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;margin-left:6px;
+    background:rgba(94,200,224,.15);color:var(--accent);vertical-align:1px}
+  .up-card .tag.tie{background:rgba(240,166,60,.16);color:var(--encore)}
+  .cover-chip{background:#141826;border:1px solid var(--hair);border-radius:20px;padding:3px 11px;font-size:12px;color:var(--ink2)}
+  .cover-chip b{color:var(--muted);font-weight:400;font-size:11px}
+  /* closer table */
+  .closer-tbl .cr{display:grid;grid-template-columns:1fr repeat(4,auto);gap:8px;align-items:center;
+    padding:9px 0;border-bottom:1px solid var(--hair);font-size:12.5px}
+  .closer-tbl .cr.h{color:var(--muted);font-size:11px;font-weight:700;border-bottom:1px solid var(--line)}
+  .closer-tbl .sw2{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .closer-tbl .mono{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+  .fac{border-left:3px solid var(--hair);padding:8px 0 8px 12px;margin-bottom:12px;font-size:13px;color:var(--ink2)}
+  .fac b{color:var(--ink)} .fac .h{font-weight:700;color:var(--accent);font-size:12px;display:block;margin-bottom:2px}
+  footer{padding:44px 0 60px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--hair);margin-top:40px}
+  footer b{color:var(--ink2)}
+
+  @media(max-width:760px){
+    .stats{grid-template-columns:1fr 1fr}
+    .grid2,.grid3{grid-template-columns:1fr}
+    .bar-row{grid-template-columns:140px 1fr 38px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">MyGO!!!!! · Live Data Story</div>
+    <h1>迷子들의 <span class="band">발자취</span>, 데이터로 다시 걷다</h1>
+    <p class="lead">700명 라이브하우스에서 2만 명 아레나까지. MyGO!!!!!의 모든 라이브·세트리스트·그날의 날씨까지, 흩어진 기록을 한 장에 모아 분석했습니다.</p>
+    <p class="sub" id="heroSub"></p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stats" id="statRow"></div>
+
+  <!-- 1. GROWTH -->
+  <section id="growth">
+    <div class="sec-h"><span class="n">01</span><h2>700 → 20,000, 4년의 성장 곡선</h2></div>
+    <p class="sec-desc">데뷔 단독 <b>1st</b>의 시부야 라이브하우스(약 700석)에서 시작해, 아레나·야외·해외까지. 회장 <b>공칭 최대 수용인원</b>을 시간순으로 찍었습니다. 세로축은 <b>로그 스케일</b>(성장 배율을 보기 위함), 점 색은 공연 성격입니다. 점에 마우스를 올리면 상세가 나옵니다.</p>
+    <div class="card">
+      <figure><div id="growthChart"></div></figure>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--c1)"></span>단독(solo)</span>
+        <span><span class="sw" style="background:var(--c5)"></span>합동·투맨(joint)</span>
+        <span><span class="sw" style="background:var(--c3)"></span>Zepp 투어</span>
+        <span><span class="sw" style="background:var(--c7)"></span>프로젝트·페스·게스트</span>
+        <span><span class="sw" style="background:var(--accent);border-radius:50%"></span>해외 공연 ◇</span>
+      </div>
+      <p class="cap">※ 캐퍼시티는 회장 공칭치로 실제 라이브 배치(스탠딩/지정석)와 다를 수 있음. 상하이 虹館·타이베이 야외 등 일부는 비공개(누락).</p>
+    </div>
+  </section>
+
+  <!-- 2. HEATMAP -->
+  <section id="heatmap">
+    <div class="sec-h"><span class="n">02</span><h2>세트리스트 히트맵 — 무엇이 '고정 레퍼토리'인가</h2></div>
+    <p class="sec-desc">세로는 곡(연주 횟수 순), 가로는 공연(시간순). 칸이 <b style="color:var(--c1)">파랑</b>이면 본편, <b style="color:var(--encore)">주황</b>이면 앙코르, <span style="outline:2px solid var(--accent);border-radius:3px;padding:0 3px">테두리</span>는 그 공연의 <b>오프닝 곡</b>입니다. 세트리스트가 확인된 공연만 포함했고, 로마자만 있던 해외/페스는 한국·일본어 곡명으로 정규화했습니다.</p>
+    <div class="card">
+      <div class="hm-scroll"><div id="heatmap"></div></div>
+      <p class="cap">가로 스크롤 가능 · 곡명은 최다 연주 순으로 정렬 · 회색 칸 = 미연주</p>
+    </div>
+  </section>
+
+  <!-- 3. RANK + OPENER -->
+  <section id="rank">
+    <div class="sec-h"><span class="n">03</span><h2>최다 연주곡 & 오프닝의 제왕</h2></div>
+    <p class="sec-desc">세트리스트가 확인된 전체 공연 기준. 왼쪽은 <b>총 연주 횟수</b>, 오른쪽은 <b>몇 번 공연의 첫 곡</b>이었는지입니다.</p>
+    <div class="grid2">
+      <div class="card"><h3 style="font-size:15px;margin-bottom:14px">🎸 최다 연주 TOP 12</h3><div id="rankBars"></div></div>
+      <div class="card"><h3 style="font-size:15px;margin-bottom:14px">🚀 오프닝 곡 랭킹</h3><div id="openBars"></div>
+        <p class="cap" style="margin-top:14px">그리고 <b class="ink2">앙코르 마지막 곡</b>(라이브를 닫는 곡)은 아래.</p>
+        <div id="closeBars" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DEBUT -->
+  <section id="debut">
+    <div class="sec-h"><span class="n">04</span><h2>곡의 데뷔 — 레퍼토리는 어떻게 쌓였나</h2></div>
+    <p class="sec-desc">각 곡이 <b>세트리스트에 처음 등장</b>한 공연. 초기 라이브하우스 시절의 곡들이 지금까지 살아남는지, 최신곡이 얼마나 빠르게 자리를 잡는지 볼 수 있습니다.</p>
+    <div class="card deb-scroll"><div id="debutTl"></div></div>
+  </section>
+
+  <!-- 5. WEATHER -->
+  <section id="weather">
+    <div class="sec-h"><span class="n">05</span><h2>그날의 하늘 — MyGO는 정말 '비의 밴드'일까</h2></div>
+    <p class="sec-desc">『春日影』『迷星叫』… 비 오는 노래가 많다는 팬들의 농담을 실제 기상데이터로 확인해봤습니다. 각 공연 당일 회장 인근의 <b>최고기온</b>과 <b>강수량</b>입니다. 가로축은 기온, 원 크기는 강수량, 색이 진하면 비가 왔습니다.</p>
+    <div class="card">
+      <div id="triviaWx" class="grid3" style="margin-bottom:20px"></div>
+      <figure><div id="wxChart"></div></figure>
+      <div class="legend">
+        <span><span class="sw" style="background:#2c3550;border-radius:50%"></span>맑음·흐림</span>
+        <span><span class="sw" style="background:var(--c1);border-radius:50%"></span>비·눈</span>
+        <span class="muted">· 원 크기 = 강수량(mm)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. UNPLAYED -->
+  <section id="unplayed">
+    <div class="sec-h"><span class="n">06</span><h2>아직 무대에 오르지 않은 곡</h2></div>
+    <p class="sec-desc"><b>발매곡목록/mygo.csv</b>의 전 음원과, 위에서 집계한 세트리스트를 대조했습니다. 음원은 나왔지만 <b>확인된 라이브에서 아직 한 번도 연주되지 않은 곡</b>입니다. 오리지널/타이업을 앞에, 커버는 목록으로 정리했습니다.</p>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:4px">🎼 오리지널·타이업 미공개곡</h3>
+      <p class="cap" style="margin:0 0 14px">발매일 순 · 언제 라이브 데뷔할지 지켜볼 곡들</p>
+      <div class="grid3" id="unplayedOrig"></div>
+      <h3 style="font-size:15px;margin:22px 0 10px">🎧 미연주 커버곡 <span class="muted mono" id="coverCnt" style="font-size:13px;font-weight:400"></span></h3>
+      <div id="unplayedCover" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+      <p class="cap" style="margin-top:16px">※ 세트리스트가 미확보된 공연(9th·LuckyFes·타이베이·일부 Zepp 등)에서 연주됐을 가능성은 제외하지 못함 — <b>"확인된 세트리스트 기준 미등장"</b>으로 해석.</p>
+    </div>
+  </section>
+
+  <!-- 7. CLOSER REGRESSION -->
+  <section id="closer">
+    <div class="sec-h"><span class="n">07</span><h2>마지막 곡은 누구의 몫인가 — 클로저 세대교체 분석</h2></div>
+    <p class="sec-desc">라이브를 닫는 <b>앙코르 마지막 곡</b>을 두고 팬들 사이 논쟁이 있죠 — 오토이치에(音一会)냐, 타네비(焚音打)냐, 오우라이(往欄印)냐. 앙코르가 있는 <b>단독·투어 정규 공연</b>만 골라, 클로저 선택이 <b>시기·회장규모·실내외·공연성격·양일차</b> 등과 어떻게 얽히는지 분석했습니다.</p>
+
+    <div class="card" style="margin-bottom:18px">
+      <h3 style="font-size:15px;margin-bottom:2px">📈 시간 → 클로저 회귀</h3>
+      <p class="cap" style="margin:0 0 10px">가로축 공연일, 세로축은 그 곡의 <b>발매순 세대(1→4)</b>. 점은 각 공연의 실제 클로저, 직선은 최소제곱 회귀선입니다.</p>
+      <figure><div id="closerReg"></div></figure>
+      <div id="regStat" style="display:flex;gap:22px;flex-wrap:wrap;margin-top:8px"></div>
+      <p class="cap" style="margin-top:10px">표본 n은 작습니다(정규 앙코르 공연만). 통계적 검정이 아닌 <b>탐색적 분석</b>으로 봐주세요 — 그래도 경향은 뚜렷합니다.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:12px">🔁 클로저별 프로필</h3>
+        <div class="closer-tbl" id="closerTbl"></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:12px">🧭 요인별 소견</h3>
+        <div id="closerFactors"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SONG POSITION -->
+  <section id="slot">
+    <div class="sec-h"><span class="n">08</span><h2>곡의 정위치 — 세트리스트 어디에 앉는가</h2></div>
+    <p class="sec-desc">같은 곡이라도 <b>세트리스트의 앞·중간·끝</b> 중 어디에 놓이는지는 곡마다 습관이 있습니다. 각 공연의 세트를 <b>오프닝(0) → 클로징(1)</b>으로 정규화해, 4회 이상 연주된 곡이 <b>매번 어디쯤에 앉았는지</b>를 점으로 찍었습니다. 다이아(◆)는 평균 위치, 가로 막대는 최소~최대 범위입니다.</p>
+    <div class="card">
+      <figure><div id="slotChart"></div></figure>
+      <div id="slotNote" style="display:flex;gap:22px;flex-wrap:wrap;margin-top:6px"></div>
+    </div>
+  </section>
+
+  <!-- 9. TRIVIA -->
+  <section id="trivia">
+    <div class="sec-h"><span class="n">09</span><h2>숫자로 보는 잡학</h2></div>
+    <div class="grid3" id="triviaGrid"></div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>데이터 출처</b> · BanG Dream! 공식(bang-dream.com), 부시로드뮤직 프레스릴리스, LiveFans, setlist.fm, 각 회장 공칭 자료. 날씨는 Open-Meteo 아카이브 기준(회장 인근·당일 최고/최저·강수). 로마자 세트리스트는 <b>발매곡목록/mygo.csv</b>의 한자·한글 발음 대조표로 정규화(예: Melody=迷路日々, Kokyuu=処救生). 표시명은 한글 발음, 한자 원제는 마우스 오버로 확인.</p>
+    <p style="margin-top:8px">조사·정리 2026-07-13 · 이 페이지의 모든 수치는 브라우저에서 원본 데이터로 실시간 계산됩니다. · MyGO!!!!! 名義 라이브/합동/주요 페스 출연 기준(소규모 이벤트·TV 제외).</p>
+  </div>
+</footer>
+
+<div class="tip" id="tip"></div>
+
+<script>
+/* ===== DATA (embedded) ===== */
+const LIVES = [
+{no:1,type:"solo",title:"1st LIVE",subtitle:"僕たちはここで叫ぶ",date:"2022-07-03",venue:"渋谷 duo MUSIC EXCHANGE",city:"도쿄",capacity:700,setlist:["ティアドロップス","二息歩行(Reloaded)","swim","イニシャル","Time Lapse","猛独が襲う","Happy Happy Party!","カサブタ","Yes! BanG_Dream!","迷星叫"],encore:["二息歩行(Reloaded)","迷星叫"],weather:{tmax_c:32.8,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:2,type:"solo",title:"2nd LIVE",subtitle:"そのままを抱きしめて",date:"2022-09-10",venue:"飛行船シアター",city:"도쿄",capacity:300,setlist:["迷星叫","イニシャル","猛独が襲う","二息歩行(Reloaded)","君の神様になりたい。","Time Lapse","ティアドロップス","swim","カサブタ","名無声"],encore:["迷星叫","名無声"],weather:{tmax_c:28.3,precip_mm:0.0,desc:"흐림"}},
+{no:3,type:"solo",title:"3rd LIVE",subtitle:"声を抱えて生きる",date:"2022-11-26",venue:"COOL JAPAN PARK OSAKA WWホール",city:"오사카",capacity:1148,setlist:["名無声","猛独が襲う","Happy Happy Party!","swim","カサブタ","影色舞","二息歩行(Reloaded)","迷星叫","ティアドロップス","君の神様になりたい。","潜在表明"],encore:["影色舞","迷星叫"],weather:{tmax_c:17.9,precip_mm:0.3,desc:"약한 이슬비"}},
+{no:4,type:"solo",title:"4th LIVE",subtitle:"前へ進む音の中で",date:"2023-04-09",venue:"TACHIKAWA STAGE GARDEN",city:"도쿄",capacity:2500,setlist:["名無声","ティアドロップス","影色舞","潜在表明","無路矢","二息歩行(Reloaded)","Henceforth","猛独が襲う","swim","迷星叫","音一会"],encore:["無路矢","壱雫空","音一会"],weather:{tmax_c:17.2,precip_mm:0.0,desc:"맑음"}},
+{no:5,type:"solo",title:"5th LIVE",subtitle:"迷うことに迷わない",date:"2023-08-12",venue:"KT Zepp Yokohama",city:"요코하마",capacity:2146,setlist:["壱雫空","迷星叫","無路矢","Time Lapse","栞","音一会 ～Acoustic Ver.～","迷星叫 ～Acoustic Ver.～","君の神様になりたい。","潜在表明","影色舞","swim","碧天伴走","焚音打"],encore:["名無声","音一会"],weather:{tmax_c:32.4,precip_mm:1.2,desc:"이슬비"}},
+{no:null,type:"solo",title:"BanG Dream! 12th☆LIVE Day2",date:"2023-11-04",venue:"東京ガーデンシアター",city:"도쿄",capacity:8000,milestone:"Day2 전체가 MyGO 단독 스테이지",setlist:[],encore:[],weather:{tmax_c:25.0,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"MyGO!!!!!×トゲナシトゲアリ「Avoid Note」",date:"2025-01-12",venue:"TOKYO DOME CITY HALL",city:"도쿄",capacity:3000,setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","処救生","影色舞","無路矢","潜在表明","孤壊牢","音一会"],encore:[],weather:{tmax_c:6.4,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:null,type:"guest",title:"LisAni! LIVE 2024",date:"2024-01-28",venue:"日本武道館",city:"도쿄",capacity:14500,milestone:"첫 무도관·첫 리스아니",setlist:["迷星叫","壱雫空","影色舞","碧天伴走","音一会"],encore:[],weather:{tmax_c:10.3,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"guest",title:"LisAni! LIVE 2025",date:"2025-01-24",venue:"日本武道館",city:"도쿄",capacity:14500,setlist:["Kokyuu","Sasurai","Utaimashou Narashimashou","Kokoro","Silhouette Dance","Panorama"],encore:[],weather:{tmax_c:13.1,precip_mm:5.5,desc:"비"}},
+{no:null,type:"festival",title:"JAPAN JAM 2024",date:"2024-05-03",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["Mayoi Uta","Hitoshizuku","Silhouette Dance","Hekitenbansou","Sasurai","Utaimashou Narashimashou","Otoichie"],encore:[],weather:{tmax_c:22.2,precip_mm:0.0,desc:"구름 조금"}},
+{no:null,type:"guest",title:"ROCK IN JAPAN 2024",date:"2024-08-10",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["Panorama","Sasurai","Melody","Mayoi Uta","Tanebi"],encore:[],weather:{tmax_c:32.9,precip_mm:0.2,desc:"약한 이슬비"}},
+{no:null,type:"guest",title:"Animelo Summer Live 2024",date:"2024-08-31",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["Noroshi","Sasurai/Utaimashou Narashimashou","Mayoi Uta"],encore:[],weather:{tmax_c:31.0,precip_mm:6.6,desc:"비"}},
+{no:null,type:"guest",title:"Animelo Summer Live 2025",date:"2025-08-29",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["Ichijitsu Senshuu","Otoichie","Tanebi"],encore:[],weather:{tmax_c:35.5,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 東京",date:"2024-02-12",venue:"Zepp Haneda",city:"도쿄",capacity:2925,setlist:["碧天伴走","影色舞","迷星叫","名無声","壱雫空","二息歩行(Reloaded)","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","砂寸奏"],encore:["無路矢","焚音打"],weather:{tmax_c:11.5,precip_mm:2.0,desc:"눈"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 福岡",date:"2024-03-19",venue:"Zepp Fukuoka",city:"후쿠오카",capacity:1526,setlist:[],encore:[],weather:{tmax_c:13.3,precip_mm:1.6,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 大阪",date:"2024-03-22",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["砂寸奏","影色舞","迷星叫","碧天伴走","壱雫空","名無声","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","回層浮"],encore:["無路矢","焚音打"],weather:{tmax_c:11.5,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 愛知",date:"2024-04-11",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:[],encore:[],weather:{tmax_c:18.5,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"Poppin'Party×MyGO!!!!!「Divide/Unite」",date:"2024-04-29",venue:"横浜アリーナ",city:"요코하마",capacity:17000,setlist:["壱雫空","迷星叫","無路矢","回層浮","砂寸奏","影色舞","碧天伴走","迷路日々","音一会"],encore:["歌いましょう鳴らしましょう(합동)","ティアドロップス(합동)"],weather:{tmax_c:23.5,precip_mm:0.0,desc:"흐림"}},
+{no:6,type:"solo",title:"6th LIVE Day1",subtitle:"見つけた景色、たずさえて",date:"2024-07-27",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,milestone:"첫 아레나급 단독",setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","処救生","影色舞","潜在表明","輪符雨","無路矢","回層浮","名無声","詩超絆","端程山"],encore:["壱雫空","音一会"],weather:{tmax_c:34.9,precip_mm:2.9,desc:"약한 비"}},
+{no:6,type:"solo",title:"6th LIVE Day2",subtitle:"見つけた景色、たずさえて",date:"2024-07-28",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,setlist:["処救生","無路矢","影色舞","輪符雨","潜在表明","回層浮","迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","名無声","詩超絆","端程山"],encore:["壱雫空","焚音打"],weather:{tmax_c:37.1,precip_mm:0.3,desc:"약한 이슬비"}},
+{no:6,type:"solo_overseas",title:"6th LIVE 上海追加",subtitle:"見つけた景色、たずさえて",date:"2024-09-21",venue:"国家会展中心(上海) 虹館EH",city:"상하이",capacity:null,milestone:"첫 해외 단독공연",setlist:["Mayoi Uta","Utaimashou Narashimashou","Sasurai","Melody","Hekitenbansou","Kokyuu","Silhouette Dance","Senzai Hyoumei","Refrain","Noroshi","Kaisou","Namonaki"],encore:[],weather:{tmax_c:27.8,precip_mm:7.0,desc:"비"}},
+{no:7,type:"solo",title:"7th LIVE",subtitle:"こたえなんてなくても",date:"2024-12-22",venue:"日比谷野外大音楽堂",city:"도쿄",capacity:3053,milestone:"첫 야외 단독공연",setlist:["砂寸奏","処救生","歌いましょう鳴らしましょう","迷星叫","壱雫空","無路矢","輪符雨","潜在表明","孤壊牢","影色舞","碧天伴走","歩拾道","端程山"],encore:["音一会","焚音打"],weather:{tmax_c:9.6,precip_mm:0.0,desc:"맑음"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D1",date:"2025-04-26",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Ichijitsu Senshuu","Melody","Mayoi Uta","Hitoshizuku","Hekitenbansou","Haruhikage","Utakotoba"],encore:[],weather:{tmax_c:17.7,precip_mm:0.2,desc:"약한 이슬비"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D2",date:"2025-04-27",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Hitoshizuku","Melody","Mayoi Uta","Hekitenbansou","Utakotoba","Ichijitsu Senshuu","Tanebi"],encore:[],weather:{tmax_c:22.2,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 東京",date:"2025-07-01",venue:"Zepp DiverCity",city:"도쿄",capacity:2473,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Senzai Hyoumei","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:31.8,precip_mm:0.7,desc:"약한 이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 大阪",date:"2025-07-12",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Noroshi","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:35.4,precip_mm:2.8,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 愛知",date:"2025-07-30",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Kaisou","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:38.3,precip_mm:0.6,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 北海道",date:"2025-08-07",venue:"Zepp Sapporo",city:"삿포로",capacity:2009,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Senzai Hyoumei","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:26.1,precip_mm:16.1,desc:"비"}},
+{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/11)",date:"2025-10-11",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["Ichijitsu Senshuu","Melody","Mayoi Uta","Hitoshizuku","Hekitenbansou","Haruhikage","Utakotoba"],encore:[],weather:{tmax_c:34.2,precip_mm:0.0,desc:"맑음"}},
+{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/12)",date:"2025-10-12",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["Hitoshizuku","Melody","Mayoi Uta","Hekitenbansou","Utakotoba","Ichijitsu Senshuu","Tanebi"],encore:[],weather:{tmax_c:33.1,precip_mm:0.0,desc:"흐림"}},
+{no:8,type:"solo",title:"8th LIVE",subtitle:"想いのかたちが積もるとき",date:"2025-12-06",venue:"京王アリーナTOKYO",city:"도쿄 조후",capacity:10000,milestone:"과거 최다 17곡·신곡 3개 초연",setlist:["名無声","孤壊牢","掌心正銘","処救生","影色舞","エガクミライ","端程山","迷星叫","砂寸奏","回層浮","無路矢","碧天伴走","明弦音","聿日箋秋","静降想"],encore:["歩拾道","往欄印"],weather:{tmax_c:11.3,precip_mm:0.0,desc:"구름 조금"}},
+{no:null,type:"project",title:"BanG Dream! 10th Anniversary LIVE",date:"2026-02-28",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Mayoi Uta","Hitoshizuku","Silhouette Dance","Ourai"],encore:[],weather:{tmax_c:18.3,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「moment / memory」",date:"2026-03-01",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["回層浮","無路矢","端程山","掌心正銘","迷星叫","夜隠染","孤壊牢","影色舞","壱雫空","歌いましょう鳴らしましょう","砂寸奏","往欄印"],encore:[],weather:{tmax_c:15.1,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint_overseas",title:"Special LIVE in TAIPEI D1",date:"2026-04-11",venue:"大佳河濱公園",city:"타이베이",capacity:null,setlist:[],encore:[],weather:{tmax_c:30.8,precip_mm:0.8,desc:"약한 이슬비"}},
+{no:null,type:"project",title:"MUSIC AWARDS JAPAN WEEK SP LIVE",date:"2026-06-09",venue:"Toyota Arena Tokyo",city:"도쿄",capacity:10000,setlist:[],encore:[],weather:{tmax_c:22.3,precip_mm:18.9,desc:"비"}},
+{no:9,type:"solo",title:"9th LIVE Day1",subtitle:"つなぎ目の向こうに",date:"2026-07-18",venue:"ぴあアリーナMM",city:"요코하마",capacity:12000,setlist:[],encore:[],weather:null},
+{no:9,type:"solo",title:"9th LIVE Day2",subtitle:"つなぎ目の向こうに",date:"2026-07-19",venue:"ぴあアリーナMM",city:"요코하마",capacity:12000,setlist:[],encore:[],weather:null},
+{no:null,type:"festival",title:"LuckyFes'26",date:"2026-08-09",venue:"国営ひたち海浜公園",city:"이바라키",capacity:null,setlist:[],encore:[],weather:null}
+];
+
+/* ===== SONG NORMALIZATION (romaji → 한자 canonical, 발매곡목록/mygo.csv 기준) ===== */
+const R2J = {
+ "Mayoi Uta":"迷星叫","Hitoshizuku":"壱雫空","Utaimashou Narashimashou":"歌いましょう鳴らしましょう",
+ "Sasurai":"砂寸奏","Hekitenbansou":"碧天伴走","Silhouette Dance":"影色舞","Senzai Hyoumei":"潜在表明",
+ "Namonaki":"名無声","Noroshi":"無路矢","Refrain":"輪符雨","Kaisou":"回層浮","Otoichie":"音一会",
+ "Tanebi":"焚音打","Panorama":"端程山","Melody":"迷路日々","Moudoku ga Osou":"猛独が襲う",
+ "Shoushin Shoumei":"掌心正銘","Haruhikage":"春日影","Utakotoba":"詩超絆","Ourai":"往欄印",
+ "Ichijitsu Senshuu":"聿日箋秋","Kokoro":"孤壊牢","Kokyuu":"処救生","swim":"swim"
+};
+/* 한자 → 한글 발음(표시용) */
+const KR = {
+ "迷星叫":"마요이우타","名無声":"나모나키","影色舞":"실루엣댄스","潜在表明":"센자이효메","音一会":"오토이치에",
+ "無路矢":"노로시","壱雫空":"히토시즈쿠","栞":"시오리","春日影":"하루히카게","焚音打":"타네비",
+ "碧天伴走":"헤키텐반소","詩超絆":"우타코토바","迷路日々":"멜로디","歌いましょう鳴らしましょう":"우타이마쇼 나라시마쇼",
+ "処救生":"코큐(호흡)","輪符雨":"리프레인","砂寸奏":"사스라이","回層浮":"카이소우","端程山":"파노라마",
+ "孤壊牢":"코코로","明弦音":"어게인","歩拾道":"스피드","夜隠染":"요카제","聿日箋秋":"이치지츠센슈",
+ "掌心正銘":"쇼신소메","往欄印":"오우라이","エガクミライ":"에가쿠 미라이","静降想":"사일렌트",
+ "二息歩行":"이식보행","君の神様になりたい。":"너의 신이 되고 싶어","Henceforth":"헨스포스",
+ "ティアドロップス":"티어드롭스","swim":"스윔","猛独が襲う":"거센 외로움","Time Lapse":"타임랩스",
+ "イニシャル":"이니셜","Happy Happy Party!":"해피해피파티","カサブタ":"딱지","Yes! BanG_Dream!":"예스 뱅드림"
+};
+const krName = s => KR[s] || s;
+/* 표시 라벨: 한자 (한글발음) */
+const disp = s => KR[s] ? `${s} (${KR[s]})` : s;
+
+/* ===== 발매곡목록/mygo.csv (jp=정규화 한자, kr=한글명, t=orig/tie/cover, d=발매일) ===== */
+const SONGS_CSV = [
+ {jp:"迷星叫",kr:"마요이우타",t:"orig",d:"2022-11-09"},{jp:"名無声",kr:"나모나키",t:"orig",d:"2022-11-09"},
+ {jp:"影色舞",kr:"실루엣댄스",t:"orig",d:"2022-11-23"},{jp:"潜在表明",kr:"센자이효메",t:"orig",d:"2022-12-25"},
+ {jp:"音一会",kr:"오토이치에",t:"orig",d:"2023-04-12"},{jp:"無路矢",kr:"노로시",t:"orig",d:"2023-04-29"},
+ {jp:"碧天伴走",kr:"헤키텐반소",t:"orig",d:"2023-07-28"},{jp:"壱雫空",kr:"히토시즈쿠",t:"orig",d:"2023-07-30"},
+ {jp:"栞",kr:"시오리",t:"orig",d:"2023-08-09"},{jp:"焚音打",kr:"타네비",t:"orig",d:"2023-08-09"},
+ {jp:"詩超絆",kr:"우타코토바",t:"orig",d:"2023-08-18"},{jp:"迷路日々",kr:"멜로디",t:"orig",d:"2023-09-01"},
+ {jp:"春日影",kr:"하루히카게",t:"orig",d:"2023-11-01"},{jp:"歌いましょう鳴らしましょう",kr:"우타이마쇼 나라시마쇼",t:"orig",d:"2023-11-01"},
+ {jp:"処救生",kr:"코큐",t:"orig",d:"2023-11-19"},{jp:"輪符雨",kr:"리프레인",t:"orig",d:"2024-02-28"},
+ {jp:"砂寸奏",kr:"사스라이",t:"orig",d:"2024-03-20"},{jp:"回層浮",kr:"카이소우",t:"orig",d:"2024-03-20"},
+ {jp:"端程山",kr:"파노라마",t:"orig",d:"2024-07-24"},{jp:"孤壊牢",kr:"코코로",t:"orig",d:"2024-07-24"},
+ {jp:"過惰幻",kr:"아다유메",t:"orig",d:"2024-09-28"},{jp:"霧周途",kr:"미스트",t:"orig",d:"2024-11-02"},
+ {jp:"歩拾道",kr:"스피드",t:"orig",d:"2024-11-09"},{jp:"明弦音",kr:"어게인",t:"orig",d:"2024-12-18"},
+ {jp:"夜隠染",kr:"요카제",t:"orig",d:"2024-12-18"},{jp:"聿日箋秋",kr:"이치지츠센슈",t:"orig",d:"2025-03-27"},
+ {jp:"掌心正銘",kr:"쇼신소메",t:"orig",d:"2025-04-23"},{jp:"残痕字",kr:"페이지",t:"orig",d:"2025-08-06"},
+ {jp:"往欄印",kr:"오우라이",t:"orig",d:"2025-08-06"},{jp:"エガクミライ",kr:"에가쿠 미라이",t:"tie",d:"2025-09-19"},
+ {jp:"静降想",kr:"사일렌트",t:"orig",d:"2025-12-03"},{jp:"証命讃歌",kr:"쇼메산카",t:"orig",d:"2026-03-02"},
+ // 커버
+ {jp:"二息歩行",kr:"이식보행",t:"cover",d:"2022-05-02"},{jp:"社会距離",kr:"사회거리",t:"cover",d:"2022-05-11"},
+ {jp:"君の神様になりたい。",kr:"너의 신이 되고 싶어",t:"cover",d:"2022-05-28"},{jp:"Henceforth",kr:"헨스포스",t:"cover",d:"2022-06-04"},
+ {jp:"ティアドロップス",kr:"티어드롭스",t:"cover",d:"2022-06-19"},{jp:"swim",kr:"스윔",t:"cover",d:"2022-06-26"},
+ {jp:"猛独が襲う",kr:"거센 외로움",t:"cover",d:"2022-07-16"},{jp:"遠心力",kr:"원심력",t:"cover",d:"2022-08-14"},
+ {jp:"ないばいたりてぃ",kr:"없어 바이탈리티",t:"cover",d:"2022-08-28"},{jp:"キリトリセン",kr:"키리토리센",t:"cover",d:"2022-10-02"},
+ {jp:"もしも命が描けたら",kr:"만약 생명을 그릴 수 있다면",t:"cover",d:"2022-12-10"},{jp:"TEENAGE RIOT",kr:"틴에이지 라이엇",t:"cover",d:"2023-02-25"},
+ {jp:"パメラ",kr:"파멜라",t:"cover",d:"2023-03-12"},{jp:"シンデレラボーイ",kr:"신데렐라 보이",t:"cover",d:"2023-07-23"},
+ {jp:"少女レイ",kr:"소녀레이",t:"cover",d:"2023-09-30"},{jp:"正しくなれない",kr:"올바르게 될 수 없어",t:"cover",d:"2023-12-27"},
+ {jp:"ホワイトノイズ",kr:"화이트 노이즈",t:"cover",d:"2023-12-29"},{jp:"恋してる自分すら愛せるんだ",kr:"사랑하는 자신조차",t:"cover",d:"2024-01-30"},
+ {jp:"ノンブレス・オブリージュ",kr:"논브레스 오블리주",t:"cover",d:"2024-03-19"},{jp:"「僕は...」",kr:"나는…",t:"cover",d:"2024-04-29"},
+ {jp:"雑踏、僕らの街",kr:"혼잡한 길, 우리의 도시",t:"cover",d:"2024-09-17"},{jp:"遥か彼方",kr:"머나먼 저편",t:"cover",d:"2024-11-20"},
+ {jp:"Subtitle",kr:"서브타이틀",t:"cover",d:"2024-12-24"},{jp:"だれかの心臓になれたなら",kr:"누군가의 심장이 될 수 있다면",t:"cover",d:"2025-03-23"},
+ {jp:"Velonica",kr:"베로니카",t:"cover",d:"2025-09-17"},{jp:"過去を喰らう",kr:"과거를 먹다",t:"cover",d:"2026-03-21"}
+];
+function normSong(raw){
+  let s = raw.replace(/\s*[（(].*?[)）]\s*/g,"")      // (Reloaded),(합동)
+             .replace(/\s*～.*?～\s*/g,"")            // ～Acoustic Ver.～
+             .replace(/。$/,"。").trim();            // 君の神様になりたい。는 그대로
+  return R2J[s] || s;
+}
+function normList(arr){
+  const out=[];
+  (arr||[]).forEach(x=>{ String(x).split("/").forEach(p=>{ const n=normSong(p.trim()); if(n) out.push(n); }); });
+  return out;
+}
+
+const fmtN = n => n==null?"–":n.toLocaleString();
+const parseD = d => new Date(d+"T00:00:00");
+const tip = document.getElementById('tip');
+function showTip(html,e){tip.innerHTML=html;tip.style.opacity=1;moveTip(e);}
+function moveTip(e){const p=12;let x=e.clientX+p,y=e.clientY+p;
+  if(x+tip.offsetWidth>innerWidth-8)x=e.clientX-tip.offsetWidth-p;
+  if(y+tip.offsetHeight>innerHeight-8)y=e.clientY-tip.offsetHeight-p;
+  tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.style.opacity=0;}
+
+const TYPE_LABEL={solo:"단독",solo_overseas:"단독·해외",joint:"합동/투맨",joint_overseas:"합동·해외",tour:"Zepp 투어",project:"프로젝트",guest:"게스트",festival:"페스"};
+const TYPE_COLOR=t=>({solo:'var(--c1)',solo_overseas:'var(--c1)',joint:'var(--c5)',joint_overseas:'var(--c5)',tour:'var(--c3)'}[t]||'var(--c7)');
+const isOverseas=t=>t.includes('overseas');
+
+/* ============ HERO SUB + STATS ============ */
+(function(){
+  const done = LIVES.filter(l=>l.setlist.length);
+  const today = new Date("2026-07-14");
+  const past = LIVES.filter(l=>parseD(l.date)<=today);
+  const solo = LIVES.filter(l=>l.type.startsWith('solo'));
+  const numbered = new Set(LIVES.filter(l=>l.no!=null).map(l=>l.no)).size;
+  const caps = LIVES.filter(l=>l.capacity!=null);
+  const minCap = Math.min(...caps.map(l=>l.capacity));
+  const maxCap = Math.max(...caps.map(l=>l.capacity));
+  const overseas = LIVES.filter(l=>isOverseas(l.type)).length;
+  // unique songs
+  const songs=new Set(); done.forEach(l=>{normList(l.setlist).concat(normList(l.encore)).forEach(s=>songs.add(s));});
+  document.getElementById('heroSub').textContent =
+    `총 ${LIVES.length}개 공연 기록 · 단독 ${solo.length} · 세트리스트 확인 ${done.length} · 데뷔부터 ${((parseD("2026-07-18")-parseD("2022-07-03"))/31557600000).toFixed(1)}년`;
+  const stats=[
+    {v:LIVES.length,s:'',l:'집계된 <b>총 공연</b> (2022–2026)'},
+    {v:numbered,s:'회',l:'넘버링 <b>단독 라이브</b> (1st→9th)'},
+    {v:(maxCap/minCap).toFixed(0),s:'배',l:`캐퍼시티 성장 <b>700→20,000</b>`},
+    {v:songs.size,s:'곡',l:'라이브에서 <b>연주된 고유곡</b> 수'}
+  ];
+  document.getElementById('statRow').innerHTML = stats.map(s=>
+    `<div class="stat"><div class="v mono">${s.v}<small>${s.s}</small></div><div class="l">${s.l}</div></div>`).join('');
+})();
+
+/* ============ 01 GROWTH ============ */
+(function(){
+  const data = LIVES.filter(l=>l.capacity!=null).sort((a,b)=>parseD(a.date)-parseD(b.date));
+  const W=1000,H=380,mL=54,mR=18,mT=24,mB=54;
+  const t0=parseD(data[0].date).getTime(), t1=parseD("2026-08-20").getTime();
+  const x=t=>mL+(t-t0)/(t1-t0)*(W-mL-mR);
+  const lo=Math.log10(250), hi=Math.log10(40000);
+  const y=c=>mT+(1-(Math.log10(c)-lo)/(hi-lo))*(H-mT-mB);
+  let g='';
+  // gridlines
+  [500,1000,2000,5000,10000,20000].forEach(v=>{
+    g+=`<line x1="${mL}" x2="${W-mR}" y1="${y(v)}" y2="${y(v)}" stroke="var(--hair)" stroke-width="1"/>`;
+    g+=`<text x="${mL-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" class="mono">${v>=1000?v/1000+'k':v}</text>`;
+  });
+  // year ticks
+  [2022,2023,2024,2025,2026].forEach(yr=>{
+    const tx=x(parseD(yr+"-01-01").getTime());
+    g+=`<line x1="${tx}" x2="${tx}" y1="${mT}" y2="${H-mB}" stroke="var(--hair)" stroke-width="1" stroke-dasharray="2 4"/>`;
+    g+=`<text x="${tx}" y="${H-mB+20}" text-anchor="middle" font-size="11" fill="var(--muted)" class="mono">${yr}</text>`;
+  });
+  // connecting line through solo lives only (career backbone)
+  const solo=data.filter(l=>l.type.startsWith('solo'));
+  let path=solo.map((l,i)=>`${i?'L':'M'}${x(parseD(l.date).getTime()).toFixed(1)} ${y(l.capacity).toFixed(1)}`).join(' ');
+  g+=`<path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2" opacity=".55"/>`;
+  // milestones
+  const ms={"2022-07-03":"첫 단독 700석","2024-01-28":"첫 무도관","2024-07-27":"첫 아레나 1만","2024-09-21":"첫 해외","2024-12-22":"첫 야외","2025-04-26":"K아레나 2만"};
+  // dots
+  data.forEach(l=>{
+    const cx=x(parseD(l.date).getTime()),cy=y(l.capacity),ov=isOverseas(l.type);
+    const col=TYPE_COLOR(l.type);
+    const dot = ov
+      ? `<rect x="${cx-5}" y="${cy-5}" width="10" height="10" transform="rotate(45 ${cx} ${cy})" fill="${col}" stroke="var(--accent)" stroke-width="1.5"/>`
+      : `<circle cx="${cx}" cy="${cy}" r="5.5" fill="${col}" stroke="var(--bg)" stroke-width="1.5"/>`;
+    const info=`<b>${l.title}</b>${l.subtitle?' 「'+l.subtitle+'」':''}<br>${l.date} · ${l.venue}<br>캐퍼 <b>${fmtN(l.capacity)}</b> · ${TYPE_LABEL[l.type]}`;
+    g+=`<g class="dot" data-tip="${info.replace(/"/g,'&quot;')}" style="cursor:pointer">${dot}</g>`;
+    if(ms[l.date]) g+=`<text x="${cx}" y="${cy-13}" text-anchor="middle" class="milestone" font-weight="700">${ms[l.date]}</text>`;
+  });
+  document.getElementById('growthChart').innerHTML=
+    `<svg viewBox="0 0 ${W} ${H}" class="growth-svg" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
+  document.querySelectorAll('#growthChart .dot').forEach(el=>{
+    el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));
+    el.addEventListener('mouseleave',hideTip);
+  });
+})();
+
+/* ============ compute song stats (shared) ============ */
+const SET = LIVES.filter(l=>l.setlist.length).sort((a,b)=>parseD(a.date)-parseD(b.date));
+const freq={}, openCnt={}, closeCnt={}, debut={};
+SET.forEach(l=>{
+  const main=normList(l.setlist), enc=normList(l.encore);
+  const all=main.concat(enc);
+  all.forEach(s=>{ freq[s]=(freq[s]||0)+1; if(!debut[s])debut[s]={date:l.date,title:l.title}; });
+  if(main[0]) openCnt[main[0]]=(openCnt[main[0]]||0)+1;
+  const last = enc.length?enc[enc.length-1]:(main.length?main[main.length-1]:null);
+  if(last) closeCnt[last]=(closeCnt[last]||0)+1;
+});
+const freqSorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+
+/* ============ 02 HEATMAP ============ */
+(function(){
+  const songs=freqSorted.map(d=>d[0]);          // rows by freq
+  const cols=SET;                               // shows by date
+  let h='<table class="hm"><thead><tr><th class="song"></th>';
+  cols.forEach(l=>{
+    const label=(l.title.replace('ZEPP TOUR ','Zepp').replace(' LIVE','')).slice(0,16);
+    h+=`<th class="colh">${label}</th>`;
+  });
+  h+='</tr></thead><tbody>';
+  songs.forEach(s=>{
+    h+=`<tr><th class="song"><span title="${s}">${disp(s)}</span> <span class="grp">${freq[s]}</span></th>`;
+    cols.forEach(l=>{
+      const main=normList(l.setlist), enc=normList(l.encore);
+      const inMain=main.includes(s), inEnc=enc.includes(s);
+      const isOpen=main[0]===s;
+      let cls=inEnc?'enc':(inMain?'on':'');
+      if(isOpen)cls+=' op';
+      const tipTxt = (inMain||inEnc)?`<b>${krName(s)}</b> <span style="color:var(--muted)">${s}</span><br>${l.title} · ${l.date}${isOpen?'<br>🚀 오프닝':''}${inEnc?'<br><span class="en">앙코르</span>':''}`:'';
+      h+=`<td class="${cls}" ${tipTxt?`data-tip="${tipTxt.replace(/"/g,'&quot;')}"`:''}></td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  document.getElementById('heatmap').innerHTML=h;
+  document.querySelectorAll('#heatmap td[data-tip]').forEach(el=>{
+    el.style.cursor='pointer';
+    el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));
+    el.addEventListener('mouseleave',hideTip);
+  });
+})();
+
+/* ============ 03 BARS ============ */
+function drawBars(elId,entries,max,fillEnc){
+  const el=document.getElementById(elId);
+  el.innerHTML=entries.map(([nm,v])=>{
+    const w=(v/max*100).toFixed(1);
+    const fill=fillEnc?'background:linear-gradient(90deg,var(--encore),#ffd089)':'';
+    return `<div class="bar-row"><span class="nm" title="${nm}">${disp(nm)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;${fill}"></div></div>
+      <span class="vv mono">${v}</span></div>`;
+  }).join('');
+}
+drawBars('rankBars',freqSorted.slice(0,12),freqSorted[0][1],false);
+const openS=Object.entries(openCnt).sort((a,b)=>b[1]-a[1]).slice(0,6);
+drawBars('openBars',openS,openS[0][1],false);
+const closeS=Object.entries(closeCnt).sort((a,b)=>b[1]-a[1]).slice(0,5);
+drawBars('closeBars',closeS,closeS[0][1],true);
+
+/* ============ 04 DEBUT TIMELINE ============ */
+(function(){
+  const byShow={};
+  SET.forEach(l=>{ byShow[l.date]={title:l.title,songs:[]}; });
+  Object.entries(debut).forEach(([s,d])=>{ byShow[d.date].songs.push(s); });
+  const rows=Object.entries(byShow).filter(([d,o])=>o.songs.length)
+    .sort((a,b)=>parseD(a[0])-parseD(b[0]));
+  let cum=0;
+  let h='<div style="display:flex;flex-direction:column;gap:2px;min-width:560px">';
+  rows.forEach(([date,o])=>{
+    cum+=o.songs.length;
+    h+=`<div style="display:grid;grid-template-columns:150px 46px 1fr;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--hair)">
+      <div><div style="font-weight:700;font-size:12.5px">${o.title}</div><div class="muted mono" style="font-size:11px">${date}</div></div>
+      <div class="mono" style="color:var(--accent);font-weight:800;font-size:15px">+${o.songs.length}</div>
+      <div style="font-size:12px;color:var(--ink2)">${o.songs.map(s=>`<span title="${s}" style="display:inline-block;background:#1b2133;border:1px solid var(--hair);border-radius:6px;padding:1px 7px;margin:2px 3px 2px 0">${disp(s)}</span>`).join('')}
+        <span class="muted mono" style="font-size:10.5px;margin-left:4px">누적 ${cum}곡</span></div>
+    </div>`;
+  });
+  h+='</div>';
+  document.getElementById('debutTl').innerHTML=h;
+})();
+
+/* ============ 05 WEATHER ============ */
+(function(){
+  const wx=LIVES.filter(l=>l.weather).map(l=>({...l,...l.weather}));
+  const rain=wx.filter(l=>l.precip_mm>=1.0);
+  const rainRate=(rain.length/wx.length*100).toFixed(0);
+  const hot=wx.filter(l=>l.tmax_c>=33).length;
+  const avgT=(wx.reduce((a,l)=>a+l.tmax_c,0)/wx.length).toFixed(1);
+  document.getElementById('triviaWx').innerHTML=`
+    <div class="triv rn"><div class="big mono">${rainRate}%</div><div class="t">공연 당일 <b>비·이슬비 이상</b>(≥1mm) 비율 — ${wx.length}일 중 ${rain.length}일</div></div>
+    <div class="triv"><div class="big mono">${avgT}°</div><div class="t">공연일 평균 <b>최고기온</b> · 한여름 아레나가 많아 높음</div></div>
+    <div class="triv enc"><div class="big mono">${hot}</div><div class="t"><b>33°C 이상</b> 폭염 공연 수 (최고 38.3° · Zepp 나고야 2025)</div></div>`;
+
+  const W=1000,H=300,mL=44,mR=18,mT=18,mB=42;
+  const tmin=0,tmax=40;
+  const x=t=>mL+(t-tmin)/(tmax-tmin)*(W-mL-mR);
+  const y=H-mB, top=mT;
+  let g='';
+  for(let t=0;t<=40;t+=10){
+    g+=`<line x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${y}" stroke="var(--hair)"/>`;
+    g+=`<text x="${x(t)}" y="${y+20}" text-anchor="middle" font-size="11" fill="var(--muted)" class="mono">${t}°</text>`;
+  }
+  g+=`<text x="${W-mR}" y="${y+34}" text-anchor="end" font-size="11" fill="var(--muted)">← 당일 최고기온 →</text>`;
+  // jitter by index for overlap
+  wx.forEach((l,i)=>{
+    const cx=x(l.tmax_c);
+    const cy=top+30+((i*53)%(y-top-55));
+    const r=4+Math.min(14,Math.sqrt(l.precip_mm)*3.2);
+    const isRain=l.precip_mm>=1.0;
+    const col=isRain?'var(--c1)':'#2c3550';
+    g+=`<circle class="wdot" cx="${cx}" cy="${cy}" r="${r}" fill="${col}" fill-opacity="${isRain?.85:.7}" stroke="var(--accent)" stroke-width="${isRain?1.2:0.5}" stroke-opacity="${isRain?.6:.3}"
+        data-tip="<b>${l.title}</b><br>${l.date}<br>최고 ${l.tmax_c}° · 강수 ${l.precip_mm}mm · ${l.desc}" style="cursor:pointer"/>`;
+  });
+  document.getElementById('wxChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="wx-svg">${g}</svg>`;
+  document.querySelectorAll('#wxChart .wdot').forEach(el=>{
+    el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));
+    el.addEventListener('mouseleave',hideTip);
+  });
+})();
+
+/* ============ 06 UNPLAYED ============ */
+(function(){
+  const played = new Set(Object.keys(freq));   // 세트리스트에 등장한 정규화 곡
+  const un = SONGS_CSV.filter(s=>!played.has(s.jp)).sort((a,b)=>new Date(a.d)-new Date(b.d));
+  const orig = un.filter(s=>s.t!=='cover');
+  const cover = un.filter(s=>s.t==='cover');
+  const today=new Date("2026-07-14");
+  document.getElementById('unplayedOrig').innerHTML = orig.map(s=>{
+    const days=Math.floor((today-new Date(s.d))/86400000);
+    const tag = s.t==='tie'?'<span class="tag tie">타이업</span>':'<span class="tag">오리지널</span>';
+    return `<div class="up-card"><div class="jp">${s.jp}${tag}</div><div class="kr">${s.kr}</div>
+      <div class="meta">발매 ${s.d} · 발매 후 ${days}일째 미공개</div></div>`;
+  }).join('') || '<p class="ink2">오리지널 곡은 모두 라이브에서 연주됐습니다 🎉</p>';
+  document.getElementById('coverCnt').textContent = `— ${cover.length}곡`;
+  document.getElementById('unplayedCover').innerHTML = cover.map(s=>
+    `<span class="cover-chip" title="${s.jp}">${s.kr} <b>${s.jp}</b></span>`).join('');
+})();
+
+/* ============ 07 CLOSER REGRESSION ============ */
+(function(){
+  const relDate={}; SONGS_CSV.forEach(s=>relDate[s.jp]=s.d);
+  const yr = d => { const dt=parseD(d); return dt.getFullYear() + ((dt-parseD(dt.getFullYear()+"-01-01"))/86400000)/365; };
+  // 앙코르 있는 단독·투어 정규공연만
+  const shows = LIVES.filter(l=>(l.type==='solo'||l.type==='tour') && normList(l.encore).length)
+    .map(l=>{const e=normList(l.encore); return {l, closer:e[e.length-1], x:yr(l.date)};})
+    .sort((a,b)=>a.x-b.x);
+  // 세대(발매순) 코드
+  const csongs=[...new Set(shows.map(s=>s.closer))];
+  const ud=[...new Set(csongs.map(s=>relDate[s]))].sort((a,b)=>new Date(a)-new Date(b));
+  const era={}; csongs.forEach(s=>era[s]=ud.indexOf(relDate[s])+1);
+  const maxEra=ud.length;
+  const eraColor={1:'var(--c6)',2:'var(--c1)',3:'var(--encore)',4:'var(--c5)'};
+  const eraLabel={}; csongs.forEach(s=>{ (eraLabel[era[s]]=eraLabel[era[s]]||[]).push(s); });
+
+  // 회귀 (y=era on x=year)
+  const n=shows.length, X=shows.map(s=>s.x), Y=shows.map(s=>era[s.closer]);
+  const mx=X.reduce((a,b)=>a+b)/n, my=Y.reduce((a,b)=>a+b)/n;
+  let sxy=0,sxx=0,syy=0; for(let i=0;i<n;i++){sxy+=(X[i]-mx)*(Y[i]-my);sxx+=(X[i]-mx)**2;syy+=(Y[i]-my)**2;}
+  const slope=sxy/sxx, intc=my-slope*mx, r=sxy/Math.sqrt(sxx*syy), r2=r*r;
+
+  // chart
+  const W=1000,H=320,mL=150,mR=20,mT=20,mB=44;
+  const x0=2022.3,x1=2026.2;
+  const px=x=>mL+(x-x0)/(x1-x0)*(W-mL-mR);
+  const py=e=>mT+(maxEra-e)/(maxEra-1)*(H-mT-mB);
+  let g='';
+  for(let e=1;e<=maxEra;e++){
+    g+=`<line x1="${mL}" x2="${W-mR}" y1="${py(e)}" y2="${py(e)}" stroke="var(--hair)"/>`;
+    const names=(eraLabel[e]||[]).map(disp).join(' / ');
+    g+=`<text x="${mL-10}" y="${py(e)+4}" text-anchor="end" font-size="11" fill="var(--ink2)"><tspan fill="${eraColor[e]}">●</tspan> ${names}</text>`;
+  }
+  for(let y=2022;y<=2026;y++){ g+=`<line x1="${px(y)}" x2="${px(y)}" y1="${mT}" y2="${H-mB}" stroke="var(--hair)" stroke-dasharray="2 4"/>`;
+    g+=`<text x="${px(y)}" y="${H-mB+18}" text-anchor="middle" font-size="11" fill="var(--muted)" class="mono">${y}</text>`; }
+  // 회귀선
+  g+=`<line x1="${px(x0)}" y1="${py(intc+slope*x0)}" x2="${px(x1)}" y2="${py(intc+slope*x1)}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" opacity=".8"/>`;
+  // 점
+  shows.forEach(s=>{
+    const cx=px(s.x),cy=py(era[s.closer]);
+    g+=`<circle class="cdot" cx="${cx}" cy="${cy}" r="6.5" fill="${eraColor[era[s.closer]]}" stroke="var(--bg)" stroke-width="1.5"
+        data-tip="<b>${s.l.title}</b><br>${s.l.date} · 캐퍼 ${fmtN(s.l.capacity)}<br>클로저 ▸ <b>${disp(s.closer)}</b>" style="cursor:pointer"/>`;
+  });
+  document.getElementById('closerReg').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="growth-svg">${g}</svg>`;
+  document.querySelectorAll('#closerReg .cdot').forEach(el=>{el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));el.addEventListener('mouseleave',hideTip);});
+  document.getElementById('regStat').innerHTML=`
+    <div><div class="mono" style="font-size:24px;font-weight:800;color:var(--accent)">R² = ${r2.toFixed(2)}</div><div class="cap" style="margin:0">시간이 클로저 세대를 설명하는 정도</div></div>
+    <div><div class="mono" style="font-size:24px;font-weight:800">r = ${r.toFixed(2)}</div><div class="cap" style="margin:0">상관계수(+면 시간↑ 세대↑)</div></div>
+    <div><div class="mono" style="font-size:24px;font-weight:800">+${slope.toFixed(2)}<small style="font-size:13px">/년</small></div><div class="cap" style="margin:0">해마다 클로저 세대가 오르는 속도</div></div>`;
+
+  // 프로필 테이블
+  const order=csongs.sort((a,b)=>era[a]-era[b]);
+  let t=`<div class="cr h"><span>클로저 곡</span><span class="mono">횟수</span><span class="mono">평균시기</span><span class="mono">평균캐퍼</span><span class="mono">야외</span></div>`;
+  order.forEach(s=>{
+    const sh=shows.filter(x=>x.closer===s);
+    const avgT=(sh.reduce((a,x)=>a+x.x,0)/sh.length);
+    const avgC=Math.round(sh.reduce((a,x)=>a+x.l.capacity,0)/sh.length);
+    const outdoor=sh.filter(x=>/野外|河濱|海浜|スポーツ公園/.test(x.l.venue)).length;
+    t+=`<div class="cr"><span><span class="sw2" style="background:${eraColor[era[s]]}"></span>${disp(s)}</span>
+      <span class="mono">${sh.length}</span><span class="mono">${avgT.toFixed(1)}</span><span class="mono">${(avgC/1000).toFixed(1)}k</span>
+      <span class="mono">${outdoor||'–'}</span></div>`;
+  });
+  document.getElementById('closerTbl').innerHTML=t;
+
+  // 요인 소견 (동적 근거 + 해석)
+  const c音=shows.filter(x=>x.closer==='音一会'), c焚=shows.filter(x=>x.closer==='焚音打'), c往=shows.filter(x=>x.closer==='往欄印');
+  // 양일공연 Day2 여부
+  const day2closers=shows.filter(x=>/Day2/.test(x.l.title)).map(x=>x.closer);
+  const day1closers=shows.filter(x=>/Day1/.test(x.l.title)).map(x=>x.closer);
+  document.getElementById('closerFactors').innerHTML=`
+    <div class="fac"><span class="h">① 시기(가장 강한 요인)</span>클로저는 시간에 따라 <b>迷星叫→音一会→焚音打→往欄印</b> 순으로 <b>세대교체</b>됩니다. R²=${r2.toFixed(2)}로, 편차의 상당 부분을 '언제 공연인가' 하나로 설명합니다. 결국 <b>가장 최근에 자리잡은 곡</b>이 마이크를 넘겨받는 구조.</div>
+    <div class="fac"><span class="h">② 신곡 효과</span>往欄印(오우라이)은 2025-08 발매 후 그해 <b>8th에서 즉시 클로저</b>로 등판 — 새 앨범 리드곡이 나오면 기존 클로저를 밀어냅니다.</div>
+    <div class="fac"><span class="h">③ 양일 공연의 마지막 날</span>6th는 <b>Day1 ▸ ${disp(day1closers[0]||'音一会')} / Day2 ▸ ${disp(day2closers[0]||'焚音打')}</b>. 이틀 중 <b>최종일</b>과 투어 피날레는 더 격정적인 <b>焚音打(타네비, 불씨)</b>로 닫는 경향.</div>
+    <div class="fac"><span class="h">④ 회장·실내외</span>음원 세대를 통제하면 캐퍼시티·야외 여부의 독립적 효과는 약함 — 焚音打가 야외 7th·투어에 몰린 건 대부분 <b>그 시기 자체</b>가 焚音打 전성기였기 때문(시기와 교락).</div>
+    <div class="fac"><span class="h">⑤ 결론</span>"오토이치에냐 타네비냐 오우라이냐"의 답은 <b>"그게 언제 공연이냐에 달렸다"</b>. 세 곡은 경쟁이 아니라 <b>시대의 릴레이</b>. 다음 9th의 클로저로는 최신 세대인 <b>往欄印</b> 혹은 새 신곡이 유력합니다.</div>`;
+})();
+
+/* ============ 08 SONG POSITION (정위치) ============ */
+(function(){
+  // 각 공연: main+encore 를 이어붙인 순서에서 곡의 정규화 위치(0=오프닝,1=클로징)
+  const pos={};                                 // song -> [{p, l, idx, tot, enc}]
+  SET.forEach(l=>{
+    const main=normList(l.setlist), enc=normList(l.encore);
+    const seq=main.concat(enc), tot=seq.length;
+    if(tot<2) return;
+    seq.forEach((s,i)=>{
+      const p=i/(tot-1);
+      (pos[s]=pos[s]||[]).push({p,l,idx:i+1,tot,enc:i>=main.length});
+    });
+  });
+  // 4회 이상 연주곡만, 평균 위치 오름차순(오프너 성향 → 클로저 성향)
+  const rows=Object.entries(pos).filter(([,a])=>a.length>=4)
+    .map(([s,a])=>{
+      const ps=a.map(o=>o.p), mean=ps.reduce((x,y)=>x+y,0)/ps.length;
+      const lo=Math.min(...ps), hi=Math.max(...ps);
+      const sd=Math.sqrt(ps.reduce((x,y)=>x+(y-mean)**2,0)/ps.length);
+      return {s,a,mean,lo,hi,sd,n:a.length};
+    }).sort((a,b)=>a.mean-b.mean);
+
+  const W=1000, rowH=26, mT=34, mB=26, mL=178, mR=24;
+  const H=mT+rows.length*rowH+mB;
+  const x=p=>mL+p*(W-mL-mR);
+  const colOf=m=> m<0.34?'var(--c3)' : m>0.66?'var(--encore)' : 'var(--c1)';  // 오프너/미드/클로저
+  let g='';
+  // 세로 존 구분 + 라벨
+  ['오프닝쪽','중반','클로징쪽'].forEach((t,i)=>{
+    const xa=x(i/3), xb=x((i+1)/3);
+    if(i%2) g+=`<rect x="${xa}" y="${mT-6}" width="${xb-xa}" height="${rows.length*rowH+6}" fill="var(--hair)" opacity=".25"/>`;
+    g+=`<text x="${(xa+xb)/2}" y="${mT-14}" text-anchor="middle" font-size="11" fill="var(--muted)">${t}</text>`;
+  });
+  [0,.5,1].forEach(p=>{ g+=`<line x1="${x(p)}" x2="${x(p)}" y1="${mT-6}" y2="${mT+rows.length*rowH}" stroke="var(--hair)" stroke-dasharray="2 4"/>`; });
+  rows.forEach((r,ri)=>{
+    const cy=mT+ri*rowH+rowH/2, col=colOf(r.mean);
+    g+=`<text x="${mL-12}" y="${cy+4}" text-anchor="end" font-size="12" fill="var(--ink2)"><tspan title="${r.s}">${disp(r.s)}</tspan></text>`;
+    g+=`<text x="${W-mR}" y="${cy+4}" text-anchor="end" font-size="10.5" fill="var(--muted)" class="mono">${r.n}회</text>`;
+    // 범위 막대
+    g+=`<line x1="${x(r.lo)}" x2="${x(r.hi)}" y1="${cy}" y2="${cy}" stroke="${col}" stroke-width="2" opacity=".28"/>`;
+    // 개별 점 (약한 세로 지터)
+    r.a.forEach((o,k)=>{
+      const jy=cy+((k%3)-1)*3.2;
+      g+=`<circle class="sdot" cx="${x(o.p)}" cy="${jy}" r="3.4" fill="${o.enc?'var(--encore)':col}" fill-opacity=".7" stroke="var(--bg)" stroke-width=".6"
+         data-tip="<b>${krName(r.s)}</b> <span style='color:var(--muted)'>${r.s}</span><br>${o.l.title} · ${o.l.date}<br>${o.tot}곡 중 <b>${o.idx}번째</b>${o.enc?' <span class=&quot;en&quot;>앙코르</span>':''}" style="cursor:pointer"/>`;
+    });
+    // 평균 다이아
+    g+=`<path d="M${x(r.mean)} ${cy-6} L${x(r.mean)+6} ${cy} L${x(r.mean)} ${cy+6} L${x(r.mean)-6} ${cy} Z" fill="${col}" stroke="var(--bg)" stroke-width="1"/>`;
+  });
+  document.getElementById('slotChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="growth-svg">${g}</svg>`;
+  document.querySelectorAll('#slotChart .sdot').forEach(el=>{el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));el.addEventListener('mouseleave',hideTip);});
+
+  // 소견: 고정된 자리 vs 자유로운 자리 / 앞뒤 비대칭
+  const closer=rows[rows.length-1];
+  const fixed=[...rows].sort((a,b)=>a.sd-b.sd)[0];
+  const free=[...rows].sort((a,b)=>b.sd-a.sd)[0];
+  // 앞·뒤 비대칭: 평균위치 하위 1/3(앞쪽) vs 상위 1/3(뒤쪽)의 위치 편차 비교
+  const k=Math.max(1,Math.round(rows.length/3));
+  const avgSd=a=>a.reduce((x,r)=>x+r.sd,0)/a.length;
+  const frontSd=avgSd(rows.slice(0,k)), backSd=avgSd(rows.slice(-k));
+  document.getElementById('slotNote').innerHTML=`
+    <div><div class="mono" style="font-size:15px;font-weight:800;color:var(--encore)">🎆 ${disp(closer.s)}</div><div class="cap" style="margin:0">가장 뒤에 앉는 곡 — 평균 위치 <b>${(closer.mean*100).toFixed(0)}%</b>. 사실상 '마지막 곡' 전용석.</div></div>
+    <div><div class="mono" style="font-size:15px;font-weight:800">📌 ${disp(fixed.s)}</div><div class="cap" style="margin:0">자리가 가장 고정된 곡 — 편차 겨우 <b>±${(fixed.sd*100).toFixed(0)}%p</b>. 늘 같은 자리에 앉습니다.</div></div>
+    <div><div class="mono" style="font-size:15px;font-weight:800">🎲 ${disp(free.s)}</div><div class="cap" style="margin:0">자리가 가장 자유로운 곡 — 편차 <b>±${(free.sd*100).toFixed(0)}%p</b>. 앞·중·뒤 어디든 등장.</div></div>
+    <div style="flex:1 1 100%;border-top:1px solid var(--hair);padding-top:10px">
+      <div class="mono" style="font-size:15px;font-weight:800;color:var(--accent)">↔ 앞은 유동적, 뒤는 고정</div>
+      <div class="cap" style="margin:0">뒤쪽에 앉는 곡들의 위치 편차는 평균 <b>±${(backSd*100).toFixed(0)}%p</b>인 반면, 앞쪽 곡들은 <b>±${(frontSd*100).toFixed(0)}%p</b>로 ${frontSd>backSd?'더 흔들립니다':'오히려 안정적입니다'}.
+      즉 MyGO의 세트리스트는 <b>'끝을 먼저 못 박고 앞을 매번 새로 짜는'</b> 구조에 가깝습니다 — 어떤 곡도 오프너를 독점하지 않지만, 마지막 자리는 확실한 주인이 있습니다.
+      (평균 위치는 중앙으로 수렴하므로 <b>순위</b>와 <b>편차</b>를 함께 보세요.)</div>
+    </div>`;
+})();
+
+/* ============ 09 TRIVIA ============ */
+(function(){
+  // most loyal song: highest freq / appears since when
+  const top=freqSorted[0];
+  const topSince=debut[top[0]].date;
+  // song in every solo full setlist? count solo done shows
+  const soloDone=SET.filter(l=>l.type==='solo');
+  const inAllSolo=freqSorted.filter(([s])=>soloDone.every(l=>normList(l.setlist).concat(normList(l.encore)).includes(s)));
+  // cities
+  const cities={}; LIVES.forEach(l=>cities[l.city]=(cities[l.city]||0)+1);
+  const cityTop=Object.entries(cities).sort((a,b)=>b[1]-a[1]);
+  // longest setlist
+  const longest=SET.map(l=>({t:l.title,n:normList(l.setlist).length+normList(l.encore).length})).sort((a,b)=>b.n-a.n)[0];
+  // overseas count
+  const ovs=LIVES.filter(l=>isOverseas(l.type));
+  const ovCities=[...new Set(ovs.map(l=>l.city))];
+  // total songs performed (with multiplicity)
+  const totalPerf=SET.reduce((a,l)=>a+normList(l.setlist).length+normList(l.encore).length,0);
+  // encore staple
+  const encFreq={}; SET.forEach(l=>normList(l.encore).forEach(s=>encFreq[s]=(encFreq[s]||0)+1));
+  const encTop=Object.entries(encFreq).sort((a,b)=>b[1]-a[1])[0];
+
+  const cards=[
+    {c:'',big:`${krName(top[0])}`,t:`가장 많이 연주된 곡 <span class="muted">(${top[0]})</span> — <b>${top[1]}회</b>. ${topSince} 데뷔 이래 사실상 개근하는 MyGO의 시그니처.`},
+    {c:'enc',big:`${krName(encTop[0])}`,t:`앙코르 단골 1위 <span class="muted">(${encTop[0]})</span> — 앙코르에서만 <b>${encTop[1]}회</b>. 라이브를 마무리하는 곡.`},
+    {c:'rn',big:`${longest.n}곡`,t:`최다 세트리스트 — <b>${longest.t}</b>. 신곡 3개를 초연한 대형 공연.`},
+    {c:'',big:`${cityTop.length}개 도시`,t:`공연이 열린 도시 — 요코하마·도쿄가 최다(각 ${cityTop[0][1]}·${cityTop[1][1]}회). ${cityTop[0][0]}가 사실상 홈.`},
+    {c:'rn',big:`${ovs.length}회`,t:`해외 공연 — <b>${ovCities.join(' · ')}</b>. 첫 해외는 2024 상하이 단독.`},
+    {c:'enc',big:`${totalPerf}`,t:`분석에 쓰인 세트리스트의 <b>연주 곡 총합</b>(중복 포함). ${SET.length}개 공연에서 집계.`}
+  ];
+  document.getElementById('triviaGrid').innerHTML=cards.map(c=>
+    `<div class="triv ${c.c}"><div class="big">${c.big}</div><div class="t">${c.t}</div></div>`).join('');
+})();
+</script>
+</body>
+</html>
