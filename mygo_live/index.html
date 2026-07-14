@@ -171,6 +171,27 @@
   .modal-src a{word-break:break-all}
   .modal-empty{color:var(--ink2);font-size:13.5px;padding:8px 0 4px}
 
+  /* live name ↔ lyric */
+  .sec-h .n.star{opacity:1;font-size:16px}
+  .lyr{display:flex;flex-direction:column;gap:0}
+  .lyr-row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 4px;border-bottom:1px solid var(--hair)}
+  .lyr-row:last-child{border-bottom:none}
+  .lyr-l .no{font-family:mono;font-weight:800;font-size:15px;color:var(--accent);letter-spacing:.02em}
+  .lyr-l .no.zep{color:var(--c5)} .lyr-l .no.proj{color:var(--encore)}
+  .lyr-l .nm{font-size:16px;font-weight:700;margin-top:3px;line-height:1.35}
+  .lyr-l .dt{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:4px}
+  .lyr-r .song{font-size:13px;color:var(--ink2);margin-bottom:8px}
+  .lyr-r .song b{color:var(--ink);font-weight:700}
+  .lyr-r .song .kr{color:var(--muted);font-size:11.5px;margin-left:4px}
+  .lyr-r blockquote{margin:0 0 8px;padding:9px 13px;background:#141826;border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;font-size:13.5px;color:var(--ink);line-height:1.5}
+  .lyr-r blockquote .kr{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
+  .lyr-r .cm{font-size:12.5px;color:var(--ink2);line-height:1.5}
+  .lyr-r .cm b{color:var(--accent);font-weight:700}
+  .lyr-row.zep blockquote{border-left-color:var(--c5)}
+  .lyr-row.proj blockquote{border-left-color:var(--encore)}
+  .lyr-note{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.6;border-top:1px dashed var(--hair);padding-top:14px}
+  @media(max-width:620px){.lyr-row{grid-template-columns:1fr;gap:8px}}
   footer{padding:44px 0 60px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--hair);margin-top:40px}
   footer b{color:var(--ink2)}
 
@@ -241,6 +262,126 @@
     <div class="sec-h"><span class="n">04</span><h2>곡의 데뷔 — 레퍼토리는 어떻게 쌓였나</h2></div>
     <p class="sec-desc">각 곡이 <b>세트리스트에 처음 등장</b>한 공연. 초기 라이브하우스 시절의 곡들이 지금까지 살아남는지, 최신곡이 얼마나 빠르게 자리를 잡는지 볼 수 있습니다.</p>
     <div class="card deb-scroll"><div id="debutTl"></div></div>
+  </section>
+
+  <!-- ✦ LIVE NAME ↔ LYRIC -->
+  <section id="naming">
+    <div class="sec-h"><span class="n star">✦</span><h2>라이브 이름에 숨은 신곡 — 가사 대조 가설</h2></div>
+    <p class="sec-desc">MyGO의 각 라이브 타이틀은 그냥 지어진 말이 아니라, <b>그 시점에 나온 신곡의 가사 한 구절</b>에서 따온 것 같다는 가설. 실제로 정규 넘버링 라이브·Zepp 투어 이름을 곡 가사와 하나씩 대조해 보면, 상당수가 <b>가사에 그대로 등장하는 문장</b>이었습니다. (해석은 팬 번역 기준.)</p>
+    <div class="card">
+      <div class="lyr">
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">1st</div><div class="nm">僕たちはここで叫ぶ</div><div class="dt">2022.07.03</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>迷星叫</b><span class="kr">마요이우타 · 데뷔곡</span></div>
+            <blockquote>こんな僕でも　ここにいる　<b>叫ぶ</b>よ<span class="kr">이런 나라도 여기에 있다고 외칠게</span></blockquote>
+            <div class="cm">제목의 <b>「叫」(외치다)</b>가 곧 라이브명 “우리는 <b>여기서 외친다</b>”로. 밴드의 첫 외침을 데뷔곡 제목/가사에 그대로 얹었습니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">2nd</div><div class="nm">そのままを抱きしめて</div><div class="dt">2022.09.10</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>名無声</b><span class="kr">나모나키</span></div>
+            <blockquote><b>そのままを抱きしめて</b>いたい<span class="kr">있는 그대로를 끌어안고 싶어</span></blockquote>
+            <div class="cm">라이브명이 가사 구절 <b>그대로</b>. 조사 하나 차이(…ていたい)뿐입니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">3rd</div><div class="nm">声を抱えて生きる</div><div class="dt">2022.11.26</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>潜在表明</b><span class="kr">센자이효메이</span></div>
+            <blockquote>何度だって　這い出した　<b>声抱えて　生きる</b><span class="kr">몇 번이고 기어나온 목소리를 안고서 살아가</span></blockquote>
+            <div class="cm">곡의 <b>마지막 구절</b>이 그대로 라이브명. 도입부에도 “僕の声を　抱えて歩いた(내 목소리를 안고 걸었어)”가 나옵니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">4th</div><div class="nm">前へ進む音の中で</div><div class="dt">2023.04.09</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>音一会</b><span class="kr">오토이치에</span></div>
+            <blockquote>だから<b>前に進む音の中で</b>　顔を上げて　歌いたい<span class="kr">그러니까 앞으로 나아가는 소리 속에서 얼굴을 들고 노래하고 싶어</span></blockquote>
+            <div class="cm">가사 구절 그대로(前<b>に</b>→前<b>へ</b>). 제목의 <b>「音」</b>도 곡 제목 音一会와 공유합니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">5th</div><div class="nm">迷うことに迷わない</div><div class="dt">2023.08.12</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>迷路日々</b><span class="kr">멜로디 · 미로일일</span></div>
+            <blockquote><b>迷い</b>ながら　戸惑いながら歩く … <b>迷って</b>も　一生離れない<span class="kr">헤매면서 망설이면서 걸어 … 헤매더라도 평생 떨어지지 않을 거야</span></blockquote>
+            <div class="cm">이 시기의 “<b>迷(헤맴)</b>” 테마곡. 곡 전체가 “길을 잃어도 괜찮다”는 정서라, 라이브명 “<b>헤매는 것에 헤매지 않는다</b>”와 맞닿습니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row proj">
+          <div class="lyr-l"><div class="no proj">12th☆</div><div class="nm">BanG Dream! 12th☆LIVE</div><div class="dt">2023.11.04</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>春日影</b><span class="kr">하루히카게</span></div>
+            <blockquote>あの日泣けなかった僕を　光はやさしく抱きしめた<span class="kr">그날 울지 못했던 나를 빛은 다정하게 끌어안았어</span></blockquote>
+            <div class="cm">라이브명 자체는 넘버링이지만, MyGO에겐 이곳이 <b>春日影 첫 공연 무대</b>(발매 사흘 뒤). 프로젝트 합동 라이브라 곡→이름 규칙은 벗어나지만, ‘그때의 신곡=春日影’이라는 점에서 목록에 함께 둡니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row zep">
+          <div class="lyr-l"><div class="no zep">Zepp '24</div><div class="nm">彷徨する渇望</div><div class="dt">2024.02.12~</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>砂寸奏</b><span class="kr">사스라이 · 방랑</span></div>
+            <blockquote><b>彷徨する　渇望</b>　もう　止めないで　いいよね<span class="kr">방황하는 갈망, 더는 막지 말아줘 괜찮지</span></blockquote>
+            <div class="cm">첫 전국투어명이 가사 구절 <b>그대로</b>. 곡 제목 砂寸奏(사스라이=방랑)도 같은 “떠돎” 이미지.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">6th</div><div class="nm">見つけた景色、たずさえて</div><div class="dt">2024.07.27</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>端程山</b><span class="kr">파노라마</span></div>
+            <blockquote>遠まわりしてきた　そのぶんだけ　<b>見つけた景色を　たずさえ</b>ながら<span class="kr">멀리 돌아온 만큼 찾아낸 경치를 함께하면서</span></blockquote>
+            <div class="cm">라이브명이 가사 구절 <b>그대로</b>. 곡 제목 端程山(パノラマ=景色)과도 이어집니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">7th</div><div class="nm">こたえなんてなくても</div><div class="dt">2024.12.22</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>明弦音</b><span class="kr">어게인</span></div>
+            <blockquote>先を急ぐことがすべてじゃない … 今日もしダメでも「また明日」<span class="kr">앞길을 서두르는 게 전부가 아니야 … 오늘 안 되면 “내일 봐”</span></blockquote>
+            <div class="cm">“답을 못 내도 괜찮다”는 곡의 정서가 라이브명 “<b>답 같은 건 없어도</b>”와 직결. 2nd기 名無声의 “確かなこたえがないなら(확실한 답이 없다면)”와도 공명합니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row zep">
+          <div class="lyr-l"><div class="no zep">Zepp '25</div><div class="nm">心のはしを辿って</div><div class="dt">2025.07.01~</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>往欄印</b><span class="kr">오우라이</span></div>
+            <blockquote><b>心のはし</b>は君を目指してのびる … 震えても　挫けそうでも　<b>辿</b>り着きたい<span class="kr">마음의 끝은 너를 향해 뻗어가 … 떨려도 꺾일 것 같아도 끝까지 가고 싶어</span></blockquote>
+            <div class="cm">“<b>心のはし(마음의 끝)</b>” + “<b>辿</b>る(더듬어 가다)” 두 키워드가 곡 후렴에 모두 있습니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">8th</div><div class="nm">想いのかたちが積もるとき</div><div class="dt">2025.12.06</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>静降想</b><span class="kr">사일런트</span></div>
+            <blockquote>数えきれないくらい　<b>想いのかたちが積も</b>ってた<span class="kr">셀 수 없을 만큼 생각의 형태가 쌓여있었어</span></blockquote>
+            <div class="cm">라이브명이 가사 구절 <b>그대로</b>(…積も<b>ってた</b>→積も<b>るとき</b>). 눈이 “쌓이는(積もる)” 이미지의 곡입니다.</div>
+          </div>
+        </div>
+
+        <div class="lyr-row">
+          <div class="lyr-l"><div class="no">9th</div><div class="nm">つなぎ目の向こうに</div><div class="dt">2026.07.18</div></div>
+          <div class="lyr-r">
+            <div class="song">↔ <b>?</b><span class="kr">대응 신곡 미발매 (예상)</span></div>
+            <blockquote class="muted">往欄印:「ひと<b>つなぎ</b>の橋をかけて / その向こうで」<span class="kr">사람을 잇는 다리를 놓아서 / 그 너머에</span></blockquote>
+            <div class="cm">아직 대응 신곡이 나오지 않은 예정 공연. 다만 “<b>つなぎ目(이음매)</b>·向こう” 어휘는 往欄印에 이미 등장 — 이 노선의 곡이 신곡으로 붙을지 지켜볼 대목.</div>
+          </div>
+        </div>
+
+      </div>
+      <p class="lyr-note">※ 팬 사이 가설이며 공식 설명은 아닙니다. 다만 1st·2nd·3rd·4th·6th·8th·Zepp’24·Zepp’25는 라이브명이 <b>가사에 문자 그대로 등장</b>해, 우연으로 보기 어렵습니다. 5th·7th는 문장 일치보다 테마 일치, 9th는 신곡 미발매로 잠정.</p>
+    </div>
   </section>
 
   <!-- 5. WEATHER -->
