@@ -121,6 +121,56 @@
   .closer-tbl .mono{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
   .fac{border-left:3px solid var(--hair);padding:8px 0 8px 12px;margin-bottom:12px;font-size:13px;color:var(--ink2)}
   .fac b{color:var(--ink)} .fac .h{font-weight:700;color:var(--accent);font-size:12px;display:block;margin-bottom:2px}
+  /* 10. setlist browser (탭) */
+  .sl-list{display:flex;flex-direction:column;gap:0}
+  .sl-row{display:grid;grid-template-columns:92px 1fr auto;align-items:center;gap:14px;
+    padding:12px 8px;border-bottom:1px solid var(--hair);cursor:pointer;transition:background .12s}
+  .sl-row:hover{background:var(--panel2)}
+  .sl-row .d{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12.5px;white-space:nowrap}
+  .sl-row .ti{font-weight:700;font-size:14.5px}
+  .sl-row .ti .sub{color:var(--ink2);font-weight:400;font-size:12.5px}
+  .sl-row .ve{color:var(--muted);font-size:11.5px;margin-top:2px}
+  .sl-row .rt{text-align:right;white-space:nowrap}
+  .sl-badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;
+    background:rgba(94,200,224,.14);color:var(--accent)}
+  .sl-badge.up{background:rgba(124,128,152,.18);color:var(--muted)}
+  .sl-cnt{color:var(--ink2);font-size:12px;font-variant-numeric:tabular-nums;margin-top:3px}
+  .sl-chev{color:var(--muted);font-size:15px;margin-left:6px}
+  .sl-year{display:flex;align-items:center;gap:10px;margin:18px 0 4px;color:var(--accent);
+    font-weight:800;font-size:13px;letter-spacing:.05em}
+  .sl-year::after{content:"";flex:1;height:1px;background:var(--hair)}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;z-index:100;background:rgba(4,6,11,.72);backdrop-filter:blur(3px);
+    display:none;align-items:center;justify-content:center;padding:22px;opacity:0;transition:opacity .16s}
+  .modal-bg.on{display:flex;opacity:1}
+  .modal{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--hair);
+    border-radius:18px;max-width:520px;width:100%;max-height:86vh;overflow-y:auto;
+    box-shadow:0 24px 80px rgba(0,0,0,.6);transform:translateY(8px);transition:transform .16s}
+  .modal-bg.on .modal{transform:translateY(0)}
+  .modal-h{position:sticky;top:0;background:linear-gradient(180deg,var(--panel2),rgba(23,27,40,.96));
+    padding:20px 22px 14px;border-bottom:1px solid var(--hair);z-index:2}
+  .modal-h .x{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;border:1px solid var(--hair);
+    background:transparent;color:var(--ink2);font-size:17px;cursor:pointer;line-height:1}
+  .modal-h .x:hover{background:var(--panel);color:var(--ink)}
+  .modal-h h3{font-size:19px;font-weight:800;padding-right:34px}
+  .modal-h .msub{color:var(--accent);font-size:13px;margin-top:3px}
+  .modal-h .mmeta{color:var(--muted);font-size:12px;margin-top:8px;font-variant-numeric:tabular-nums}
+  .modal-h .mnote{color:var(--ink2);font-size:12px;margin-top:8px;border-left:2px solid var(--hair);padding-left:9px}
+  .modal-b{padding:16px 22px 4px}
+  .setl{list-style:none;margin:0;padding:0;counter-reset:s}
+  .setl li{counter-increment:s;display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--hair);font-size:14px}
+  .setl li::before{content:counter(s,decimal-leading-zero);color:var(--muted);font-variant-numeric:tabular-nums;
+    font-size:11.5px;min-width:22px}
+  .setl li .kr{color:var(--muted);font-size:11.5px;margin-left:auto;padding-left:10px}
+  .setl .enc-h{color:var(--encore);font-weight:800;font-size:11.5px;letter-spacing:.08em;margin:14px 0 2px;
+    border:none;padding:0;display:block}
+  .setl li.enc::before{color:var(--encore)}
+  .modal-src{padding:14px 22px 20px;margin-top:6px;border-top:1px solid var(--hair);color:var(--muted);font-size:11.5px}
+  .modal-src b{color:var(--ink2);font-weight:700}
+  .modal-src a{word-break:break-all}
+  .modal-empty{color:var(--ink2);font-size:13.5px;padding:8px 0 4px}
+
   footer{padding:44px 0 60px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--hair);margin-top:40px}
   footer b{color:var(--ink2)}
 
@@ -203,7 +253,8 @@
       <div class="legend">
         <span><span class="sw" style="background:#2c3550;border-radius:50%"></span>맑음·흐림</span>
         <span><span class="sw" style="background:var(--c1);border-radius:50%"></span>비·눈</span>
-        <span class="muted">· 원 크기 = 강수량(mm)</span>
+        <span><span class="sw" style="background:#2c3550;border-radius:50%;box-shadow:0 0 0 2px var(--c3)"></span>Zepp 투어(테두리)</span>
+        <span class="muted">· 원 크기 = 강수량(mm) · 같은 기온은 세로로 쌓음</span>
       </div>
     </div>
   </section>
@@ -229,7 +280,7 @@
 
     <div class="card" style="margin-bottom:18px">
       <h3 style="font-size:15px;margin-bottom:2px">📈 시간 → 클로저 회귀</h3>
-      <p class="cap" style="margin:0 0 10px">가로축 공연일, 세로축은 그 곡의 <b>발매순 세대(1→4)</b>. 점은 각 공연의 실제 클로저, 직선은 최소제곱 회귀선입니다.</p>
+      <p class="cap" style="margin:0 0 10px">가로축 공연일, 세로축은 그 곡의 <b>발매순 세대(1→4)</b>. <b>원 = 넘버링 단독, 마름모 = Zepp 투어</b>이고, 두 그룹의 회귀선을 따로 그렸습니다(파랑=단독, 주황=투어). 두 체제가 <b>정반대 방향</b>이라 하나로 묶으면 안 됩니다.</p>
       <figure><div id="closerReg"></div></figure>
       <div id="regStat" style="display:flex;gap:22px;flex-wrap:wrap;margin-top:8px"></div>
       <p class="cap" style="margin-top:10px">표본 n은 작습니다(정규 앙코르 공연만). 통계적 검정이 아닌 <b>탐색적 분석</b>으로 봐주세요 — 그래도 경향은 뚜렷합니다.</p>
@@ -263,6 +314,16 @@
     <div class="grid3" id="triviaGrid"></div>
   </section>
 
+  <!-- 10. SETLIST BROWSER -->
+  <section id="setlists">
+    <div class="sec-h"><span class="n">10</span><h2>전 공연 세트리스트 — 기간순 전체 목록</h2></div>
+    <p class="sec-desc">데뷔부터 예정 공연까지 <b>시간순</b>으로 나열했습니다. 각 줄을 <b>클릭</b>하면 그 공연의 전체 세트리스트(본편·앙코르)가 팝업으로 뜹니다. 팝업 맨 아래에는 <b>대조 출처</b>가 있습니다.</p>
+    <div class="card">
+      <div class="sl-list" id="slList"></div>
+      <p class="cap" style="margin-top:14px">곡명은 한자 원제 · 우측은 한글 발음 · 세트리스트 미확정 공연은 <span class="sl-badge up">예정</span>으로 표시.</p>
+    </div>
+  </section>
+
 </div>
 
 <footer>
@@ -274,48 +335,64 @@
 
 <div class="tip" id="tip"></div>
 
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-h">
+      <button class="x" id="modalX" aria-label="닫기">✕</button>
+      <h3 id="mTitle"></h3>
+      <div class="msub" id="mSub"></div>
+      <div class="mmeta" id="mMeta"></div>
+      <div class="mnote" id="mNote" style="display:none"></div>
+    </div>
+    <div class="modal-b" id="mBody"></div>
+    <div class="modal-src" id="mSrc"></div>
+  </div>
+</div>
+
 <script>
 /* ===== DATA (embedded) ===== */
+// <LIVES:AUTO-GENERATED>
 const LIVES = [
-{no:1,type:"solo",title:"1st LIVE",subtitle:"僕たちはここで叫ぶ",date:"2022-07-03",venue:"渋谷 duo MUSIC EXCHANGE",city:"도쿄",capacity:700,setlist:["ティアドロップス","二息歩行(Reloaded)","swim","イニシャル","Time Lapse","猛独が襲う","Happy Happy Party!","カサブタ","Yes! BanG_Dream!","迷星叫"],encore:["二息歩行(Reloaded)","迷星叫"],weather:{tmax_c:32.8,precip_mm:0.1,desc:"약한 이슬비"}},
-{no:2,type:"solo",title:"2nd LIVE",subtitle:"そのままを抱きしめて",date:"2022-09-10",venue:"飛行船シアター",city:"도쿄",capacity:300,setlist:["迷星叫","イニシャル","猛独が襲う","二息歩行(Reloaded)","君の神様になりたい。","Time Lapse","ティアドロップス","swim","カサブタ","名無声"],encore:["迷星叫","名無声"],weather:{tmax_c:28.3,precip_mm:0.0,desc:"흐림"}},
-{no:3,type:"solo",title:"3rd LIVE",subtitle:"声を抱えて生きる",date:"2022-11-26",venue:"COOL JAPAN PARK OSAKA WWホール",city:"오사카",capacity:1148,setlist:["名無声","猛独が襲う","Happy Happy Party!","swim","カサブタ","影色舞","二息歩行(Reloaded)","迷星叫","ティアドロップス","君の神様になりたい。","潜在表明"],encore:["影色舞","迷星叫"],weather:{tmax_c:17.9,precip_mm:0.3,desc:"약한 이슬비"}},
-{no:4,type:"solo",title:"4th LIVE",subtitle:"前へ進む音の中で",date:"2023-04-09",venue:"TACHIKAWA STAGE GARDEN",city:"도쿄",capacity:2500,setlist:["名無声","ティアドロップス","影色舞","潜在表明","無路矢","二息歩行(Reloaded)","Henceforth","猛独が襲う","swim","迷星叫","音一会"],encore:["無路矢","壱雫空","音一会"],weather:{tmax_c:17.2,precip_mm:0.0,desc:"맑음"}},
-{no:5,type:"solo",title:"5th LIVE",subtitle:"迷うことに迷わない",date:"2023-08-12",venue:"KT Zepp Yokohama",city:"요코하마",capacity:2146,setlist:["壱雫空","迷星叫","無路矢","Time Lapse","栞","音一会 ～Acoustic Ver.～","迷星叫 ～Acoustic Ver.～","君の神様になりたい。","潜在表明","影色舞","swim","碧天伴走","焚音打"],encore:["名無声","音一会"],weather:{tmax_c:32.4,precip_mm:1.2,desc:"이슬비"}},
-{no:null,type:"solo",title:"BanG Dream! 12th☆LIVE Day2",date:"2023-11-04",venue:"東京ガーデンシアター",city:"도쿄",capacity:8000,milestone:"Day2 전체가 MyGO 단독 스테이지",setlist:[],encore:[],weather:{tmax_c:25.0,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"joint",title:"MyGO!!!!!×トゲナシトゲアリ「Avoid Note」",date:"2025-01-12",venue:"TOKYO DOME CITY HALL",city:"도쿄",capacity:3000,setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","処救生","影色舞","無路矢","潜在表明","孤壊牢","音一会"],encore:[],weather:{tmax_c:6.4,precip_mm:0.1,desc:"약한 이슬비"}},
-{no:null,type:"guest",title:"LisAni! LIVE 2024",date:"2024-01-28",venue:"日本武道館",city:"도쿄",capacity:14500,milestone:"첫 무도관·첫 리스아니",setlist:["迷星叫","壱雫空","影色舞","碧天伴走","音一会"],encore:[],weather:{tmax_c:10.3,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"guest",title:"LisAni! LIVE 2025",date:"2025-01-24",venue:"日本武道館",city:"도쿄",capacity:14500,setlist:["Kokyuu","Sasurai","Utaimashou Narashimashou","Kokoro","Silhouette Dance","Panorama"],encore:[],weather:{tmax_c:13.1,precip_mm:5.5,desc:"비"}},
-{no:null,type:"festival",title:"JAPAN JAM 2024",date:"2024-05-03",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["Mayoi Uta","Hitoshizuku","Silhouette Dance","Hekitenbansou","Sasurai","Utaimashou Narashimashou","Otoichie"],encore:[],weather:{tmax_c:22.2,precip_mm:0.0,desc:"구름 조금"}},
-{no:null,type:"guest",title:"ROCK IN JAPAN 2024",date:"2024-08-10",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["Panorama","Sasurai","Melody","Mayoi Uta","Tanebi"],encore:[],weather:{tmax_c:32.9,precip_mm:0.2,desc:"약한 이슬비"}},
-{no:null,type:"guest",title:"Animelo Summer Live 2024",date:"2024-08-31",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["Noroshi","Sasurai/Utaimashou Narashimashou","Mayoi Uta"],encore:[],weather:{tmax_c:31.0,precip_mm:6.6,desc:"비"}},
-{no:null,type:"guest",title:"Animelo Summer Live 2025",date:"2025-08-29",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["Ichijitsu Senshuu","Otoichie","Tanebi"],encore:[],weather:{tmax_c:35.5,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 東京",date:"2024-02-12",venue:"Zepp Haneda",city:"도쿄",capacity:2925,setlist:["碧天伴走","影色舞","迷星叫","名無声","壱雫空","二息歩行(Reloaded)","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","砂寸奏"],encore:["無路矢","焚音打"],weather:{tmax_c:11.5,precip_mm:2.0,desc:"눈"}},
-{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 福岡",date:"2024-03-19",venue:"Zepp Fukuoka",city:"후쿠오카",capacity:1526,setlist:[],encore:[],weather:{tmax_c:13.3,precip_mm:1.6,desc:"이슬비"}},
-{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 大阪",date:"2024-03-22",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["砂寸奏","影色舞","迷星叫","碧天伴走","壱雫空","名無声","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","回層浮"],encore:["無路矢","焚音打"],weather:{tmax_c:11.5,precip_mm:0.1,desc:"약한 이슬비"}},
-{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 愛知",date:"2024-04-11",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:[],encore:[],weather:{tmax_c:18.5,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"joint",title:"Poppin'Party×MyGO!!!!!「Divide/Unite」",date:"2024-04-29",venue:"横浜アリーナ",city:"요코하마",capacity:17000,setlist:["壱雫空","迷星叫","無路矢","回層浮","砂寸奏","影色舞","碧天伴走","迷路日々","音一会"],encore:["歌いましょう鳴らしましょう(합동)","ティアドロップス(합동)"],weather:{tmax_c:23.5,precip_mm:0.0,desc:"흐림"}},
-{no:6,type:"solo",title:"6th LIVE Day1",subtitle:"見つけた景色、たずさえて",date:"2024-07-27",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,milestone:"첫 아레나급 단독",setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","処救生","影色舞","潜在表明","輪符雨","無路矢","回層浮","名無声","詩超絆","端程山"],encore:["壱雫空","音一会"],weather:{tmax_c:34.9,precip_mm:2.9,desc:"약한 비"}},
-{no:6,type:"solo",title:"6th LIVE Day2",subtitle:"見つけた景色、たずさえて",date:"2024-07-28",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,setlist:["処救生","無路矢","影色舞","輪符雨","潜在表明","回層浮","迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","名無声","詩超絆","端程山"],encore:["壱雫空","焚音打"],weather:{tmax_c:37.1,precip_mm:0.3,desc:"약한 이슬비"}},
-{no:6,type:"solo_overseas",title:"6th LIVE 上海追加",subtitle:"見つけた景色、たずさえて",date:"2024-09-21",venue:"国家会展中心(上海) 虹館EH",city:"상하이",capacity:null,milestone:"첫 해외 단독공연",setlist:["Mayoi Uta","Utaimashou Narashimashou","Sasurai","Melody","Hekitenbansou","Kokyuu","Silhouette Dance","Senzai Hyoumei","Refrain","Noroshi","Kaisou","Namonaki"],encore:[],weather:{tmax_c:27.8,precip_mm:7.0,desc:"비"}},
-{no:7,type:"solo",title:"7th LIVE",subtitle:"こたえなんてなくても",date:"2024-12-22",venue:"日比谷野外大音楽堂",city:"도쿄",capacity:3053,milestone:"첫 야외 단독공연",setlist:["砂寸奏","処救生","歌いましょう鳴らしましょう","迷星叫","壱雫空","無路矢","輪符雨","潜在表明","孤壊牢","影色舞","碧天伴走","歩拾道","端程山"],encore:["音一会","焚音打"],weather:{tmax_c:9.6,precip_mm:0.0,desc:"맑음"}},
-{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D1",date:"2025-04-26",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Ichijitsu Senshuu","Melody","Mayoi Uta","Hitoshizuku","Hekitenbansou","Haruhikage","Utakotoba"],encore:[],weather:{tmax_c:17.7,precip_mm:0.2,desc:"약한 이슬비"}},
-{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D2",date:"2025-04-27",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Hitoshizuku","Melody","Mayoi Uta","Hekitenbansou","Utakotoba","Ichijitsu Senshuu","Tanebi"],encore:[],weather:{tmax_c:22.2,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 東京",date:"2025-07-01",venue:"Zepp DiverCity",city:"도쿄",capacity:2473,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Senzai Hyoumei","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:31.8,precip_mm:0.7,desc:"약한 이슬비"}},
-{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 大阪",date:"2025-07-12",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Noroshi","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:35.4,precip_mm:2.8,desc:"이슬비"}},
-{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 愛知",date:"2025-07-30",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Kaisou","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:38.3,precip_mm:0.6,desc:"이슬비"}},
-{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 北海道",date:"2025-08-07",venue:"Zepp Sapporo",city:"삿포로",capacity:2009,setlist:["Panorama","Utaimashou Narashimashou","Silhouette Dance","Refrain","Sasurai","Moudoku ga Osou","swim","Hitoshizuku","Senzai Hyoumei","Kokyuu","Namonaki","Shoushin Shoumei"],encore:[],weather:{tmax_c:26.1,precip_mm:16.1,desc:"비"}},
-{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/11)",date:"2025-10-11",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["Ichijitsu Senshuu","Melody","Mayoi Uta","Hitoshizuku","Hekitenbansou","Haruhikage","Utakotoba"],encore:[],weather:{tmax_c:34.2,precip_mm:0.0,desc:"맑음"}},
-{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/12)",date:"2025-10-12",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["Hitoshizuku","Melody","Mayoi Uta","Hekitenbansou","Utakotoba","Ichijitsu Senshuu","Tanebi"],encore:[],weather:{tmax_c:33.1,precip_mm:0.0,desc:"흐림"}},
-{no:8,type:"solo",title:"8th LIVE",subtitle:"想いのかたちが積もるとき",date:"2025-12-06",venue:"京王アリーナTOKYO",city:"도쿄 조후",capacity:10000,milestone:"과거 최다 17곡·신곡 3개 초연",setlist:["名無声","孤壊牢","掌心正銘","処救生","影色舞","エガクミライ","端程山","迷星叫","砂寸奏","回層浮","無路矢","碧天伴走","明弦音","聿日箋秋","静降想"],encore:["歩拾道","往欄印"],weather:{tmax_c:11.3,precip_mm:0.0,desc:"구름 조금"}},
-{no:null,type:"project",title:"BanG Dream! 10th Anniversary LIVE",date:"2026-02-28",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["Mayoi Uta","Hitoshizuku","Silhouette Dance","Ourai"],encore:[],weather:{tmax_c:18.3,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"joint",title:"MyGO×Ave Mujica「moment / memory」",date:"2026-03-01",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["回層浮","無路矢","端程山","掌心正銘","迷星叫","夜隠染","孤壊牢","影色舞","壱雫空","歌いましょう鳴らしましょう","砂寸奏","往欄印"],encore:[],weather:{tmax_c:15.1,precip_mm:0.0,desc:"흐림"}},
-{no:null,type:"joint_overseas",title:"Special LIVE in TAIPEI D1",date:"2026-04-11",venue:"大佳河濱公園",city:"타이베이",capacity:null,setlist:[],encore:[],weather:{tmax_c:30.8,precip_mm:0.8,desc:"약한 이슬비"}},
-{no:null,type:"project",title:"MUSIC AWARDS JAPAN WEEK SP LIVE",date:"2026-06-09",venue:"Toyota Arena Tokyo",city:"도쿄",capacity:10000,setlist:[],encore:[],weather:{tmax_c:22.3,precip_mm:18.9,desc:"비"}},
+{no:1,type:"solo",title:"1st LIVE",subtitle:"僕たちはここで叫ぶ",date:"2022-07-03",venue:"渋谷 duo MUSIC EXCHANGE",city:"도쿄",capacity:700,setlist:["ティアドロップス","二息歩行(Reloaded)","swim","イニシャル","Time Lapse","猛独が襲う","Happy Happy Party!","カサブタ","Yes! BanG_Dream!","迷星叫"],encore:["二息歩行(Reloaded)","迷星叫"],source:"https://bushiroad.co.jp/media/dcb7a3783e67c587",weather:{tmax_c:32.8,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:2,type:"solo",title:"2nd LIVE",subtitle:"そのままを抱きしめて",date:"2022-09-10",venue:"飛行船シアター",city:"도쿄",capacity:300,setlist:["迷星叫","イニシャル","猛独が襲う","二息歩行(Reloaded)","君の神様になりたい。","Time Lapse","ティアドロップス","swim","カサブタ","名無声"],encore:["迷星叫","名無声"],source:"https://prtimes.jp/main/html/rd/p/000006042.000014827.html",weather:{tmax_c:28.3,precip_mm:0.0,desc:"흐림"}},
+{no:3,type:"solo",title:"3rd LIVE",subtitle:"声を抱えて生きる",date:"2022-11-26",venue:"COOL JAPAN PARK OSAKA WWホール",city:"오사카",capacity:1148,setlist:["名無声","猛独が襲う","Happy Happy Party!","swim","カサブタ","影色舞","二息歩行(Reloaded)","迷星叫","ティアドロップス","君の神様になりたい。","潜在表明"],encore:["影色舞","迷星叫"],source:"https://prtimes.jp/main/html/rd/p/000006283.000014827.html",weather:{tmax_c:17.9,precip_mm:0.3,desc:"약한 이슬비"}},
+{no:4,type:"solo",title:"4th LIVE",subtitle:"前へ進む音の中で",date:"2023-04-09",venue:"TACHIKAWA STAGE GARDEN",city:"도쿄",capacity:2500,setlist:["名無声","ティアドロップス","影色舞","潜在表明","無路矢","二息歩行(Reloaded)","Henceforth","猛独が襲う","swim","迷星叫","音一会"],encore:["無路矢","壱雫空","音一会"],source:"https://www.livefans.jp/groups/203337",weather:{tmax_c:17.2,precip_mm:0.0,desc:"맑음"}},
+{no:5,type:"solo",title:"5th LIVE",subtitle:"迷うことに迷わない",date:"2023-08-12",venue:"KT Zepp Yokohama",city:"요코하마",capacity:2146,setlist:["壱雫空","迷星叫","無路矢","Time Lapse","栞","音一会 ～Acoustic Ver.～","迷星叫 ～Acoustic Ver.～","君の神様になりたい。","潜在表明","影色舞","swim","碧天伴走","焚音打"],encore:["名無声","音一会"],source:"https://bang-dream.com/news/1659",weather:{tmax_c:32.4,precip_mm:1.2,desc:"이슬비"}},
+{no:null,type:"solo",title:"BanG Dream! 12th☆LIVE Day2",date:"2023-11-04",venue:"東京ガーデンシアター",city:"도쿄",capacity:8000,milestone:"Day2 전체가 MyGO 단독 스테이지",setlist:["無路矢","名無声","Henceforth","猛独が襲う","影色舞","swim","音一会","人間になりたいうた Piano ver.","詩超絆","迷路日々","迷星叫","碧天伴走"],encore:["栞","壱雫空","焚音打"],setlist_note:"MyGO 단독 파트 전 15곡",source:"https://prtimes.jp/main/html/rd/p/000007264.000014827.html",weather:{tmax_c:25.0,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"MyGO!!!!!×トゲナシトゲアリ「Avoid Note」",date:"2025-01-12",venue:"TOKYO DOME CITY HALL",city:"도쿄",capacity:3000,setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","処救生","影色舞","無路矢","潜在表明","孤壊牢","音一会"],encore:["雑踏、僕らの街(합동)","壱雫空(합동)"],setlist_note:"MyGO 파트(M1~M9). 앙코르는 서로의 애니 OP곡 교환(EN1 트게아리 곡×토모리, EN2 壱雫空×니나)",source:"https://prtimes.jp/main/html/rd/p/000008322.000014827.html",weather:{tmax_c:6.4,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:null,type:"guest",title:"LisAni! LIVE 2024",date:"2024-01-28",venue:"日本武道館",city:"도쿄",capacity:14500,milestone:"첫 무도관·첫 리스아니",setlist:["迷星叫","壱雫空","影色舞","碧天伴走","音一会"],encore:[],source:"https://www.setlist.fm/setlist/mygo/2024/nippon-budokan-tokyo-japan-13acd90d.html",weather:{tmax_c:10.3,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"guest",title:"LisAni! LIVE 2025",date:"2025-01-24",venue:"日本武道館",city:"도쿄",capacity:14500,setlist:["処救生","砂寸奏","歌いましょう鳴らしましょう","孤壊牢","影色舞","端程山"],encore:[],setlist_note:"2026-07-14 수정: 기존 로마자 6곡이 오류였음(呼吸/心/パノラマ 등 미포함 곡). 실제 셋리로 교체",source:"https://www.setlist.fm/setlist/mygo/2025/nippon-budokan-tokyo-japan-1b5261ec.html",weather:{tmax_c:13.1,precip_mm:5.5,desc:"비"}},
+{no:null,type:"festival",title:"JAPAN JAM 2024",date:"2024-05-03",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["迷星叫","壱雫空","影色舞","碧天伴走","砂寸奏","歌いましょう鳴らしましょう","音一会"],encore:[],source:"https://www.instagram.com/jfes_official/p/C6gMZaGs9AI/",weather:{tmax_c:22.2,precip_mm:0.0,desc:"구름 조금"}},
+{no:null,type:"guest",title:"ROCK IN JAPAN 2024",date:"2024-08-10",venue:"蘇我スポーツ公園",city:"치바",capacity:null,setlist:["Panorama","Sasurai","Melody","Mayoi Uta","Tanebi"],encore:[],setlist_note:"음향 트러블로 단축 공연(setlist.fm). 곡명 로마자 출처 그대로",source:"https://www.setlist.fm/setlist/mygo/2024/soga-sports-kouen-chiba-japan-43a907bb.html",weather:{tmax_c:32.9,precip_mm:0.2,desc:"약한 이슬비"}},
+{no:null,type:"guest",title:"Animelo Summer Live 2024 -Stargazer- (DAY1)",date:"2024-08-30",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["無路矢","砂寸奏","歌いましょう鳴らしましょう","迷星叫"],encore:[],setlist_note:"2026-07-14 수정: 기존 날짜(8/31)·곡 오류. 실제는 8/30 DAY1, 4곡",source:"https://anisama.tv/2024/setlist/",weather:{tmax_c:33.6,precip_mm:0.0,desc:"구름 조금"}},
+{no:null,type:"guest",title:"Animelo Summer Live 2025 \"ThanXX!\" (DAY1)",date:"2025-08-29",venue:"さいたまスーパーアリーナ",city:"사이타마",capacity:37000,setlist:["聿日箋秋","音一会","焚音打"],encore:[],source:"https://anisama.tv/2025/setlist/",weather:{tmax_c:35.5,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 東京",date:"2024-02-12",venue:"Zepp Haneda",city:"도쿄",capacity:2925,setlist:["碧天伴走","影色舞","迷星叫","名無声","壱雫空","二息歩行(Reloaded)","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","砂寸奏"],encore:["無路矢","焚音打"],source:"https://www.setlist.fm/setlist/mygo/2024/zepp-haneda-tokyo-tokyo-japan-6badbe82.html",weather:{tmax_c:11.5,precip_mm:2.0,desc:"눈"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 福岡",date:"2024-03-19",venue:"Zepp Fukuoka",city:"후쿠오카",capacity:1526,setlist:["砂寸奏","影色舞","迷星叫","碧天伴走","壱雫空","名無声","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","回層浮"],encore:["無路矢","焚音打"],setlist_note:"전 14곡",source:"https://www.setlist.fm/setlist/mygo/2024/zepp-fukuoka-fukuoka-japan-1baa2df8.html",weather:{tmax_c:13.3,precip_mm:1.6,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 大阪",date:"2024-03-22",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["砂寸奏","影色舞","迷星叫","碧天伴走","壱雫空","名無声","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","回層浮"],encore:["無路矢","焚音打"],source:"https://www.setlist.fm/setlist/mygo/2024/zepp-osaka-bayside-osaka-japan-43aa13f7.html",weather:{tmax_c:11.5,precip_mm:0.1,desc:"약한 이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2024",title:"ZEPP TOUR 2024 愛知",date:"2024-04-11",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:["碧天伴走","影色舞","迷星叫","壱雫空","名無声","潜在表明","君の神様になりたい。","歌いましょう鳴らしましょう","音一会","迷路日々","回層浮","砂寸奏"],encore:["無路矢","焚音打"],setlist_note:"투어 파이널, 전 14곡",source:"https://prtimes.jp/main/html/rd/p/000007672.000014827.html",weather:{tmax_c:18.5,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"Poppin'Party×MyGO!!!!!「Divide/Unite」",date:"2024-04-29",venue:"横浜アリーナ",city:"요코하마",capacity:17000,setlist:["壱雫空","迷星叫","無路矢","回層浮","砂寸奏","影色舞","碧天伴走","迷路日々","音一会"],encore:["歌いましょう鳴らしましょう(합동)","ティアドロップス(합동)"],setlist_note:"MyGO 파트만",source:"https://prtimes.jp/main/html/rd/p/000007721.000014827.html",weather:{tmax_c:23.5,precip_mm:0.0,desc:"흐림"}},
+{no:6,type:"solo",title:"6th LIVE Day1",subtitle:"見つけた景色、たずさえて",date:"2024-07-27",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,milestone:"첫 아레나급 단독",setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","処救生","影色舞","潜在表明","輪符雨","無路矢","回層浮","名無声","詩超絆","端程山"],encore:["壱雫空","音一会"],source:"https://prtimes.jp/main/html/rd/p/000007937.000014827.html",weather:{tmax_c:34.9,precip_mm:2.9,desc:"약한 비"}},
+{no:6,type:"solo",title:"6th LIVE Day2",subtitle:"見つけた景色、たずさえて",date:"2024-07-28",venue:"武蔵野の森総合スポーツプラザ",city:"도쿄 조후",capacity:10000,setlist:["処救生","無路矢","影色舞","輪符雨","潜在表明","回層浮","迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","名無声","詩超絆","端程山"],encore:["壱雫空","焚音打"],source:"https://prtimes.jp/main/html/rd/p/000007937.000014827.html",weather:{tmax_c:37.1,precip_mm:0.3,desc:"약한 이슬비"}},
+{no:6,type:"solo_overseas",title:"6th LIVE 上海追加",subtitle:"見つけた景色、たずさえて",date:"2024-09-21",venue:"国家会展中心(上海) 虹館EH",city:"상하이",capacity:null,milestone:"첫 해외 단독공연",setlist:["迷星叫","歌いましょう鳴らしましょう","砂寸奏","迷路日々","碧天伴走","処救生","影色舞","潜在表明","輪符雨","無路矢","回層浮","名無声","詩超絆","端程山"],encore:[],setlist_note:"2026-07-14 수정: 기존 로마자 12곡(呼吸/Refrain 등 오류·2곡 누락). 공식 개최보고 기준 전 14곡으로 교체(Day1 셋리 준거)",source:"https://bang-dream.com/news/1920",weather:{tmax_c:27.8,precip_mm:7.0,desc:"비"}},
+{no:7,type:"solo",title:"7th LIVE",subtitle:"こたえなんてなくても",date:"2024-12-22",venue:"日比谷野外大音楽堂",city:"도쿄",capacity:3053,milestone:"첫 야외 단독공연",setlist:["砂寸奏","処救生","歌いましょう鳴らしましょう","迷星叫","壱雫空","無路矢","輪符雨","潜在表明","孤壊牢","影色舞","碧天伴走","歩拾道"],encore:["端程山","音一会","焚音打"],setlist_note:"2026-07-14 수정: 端程山은 앙코르 첫 곡(EN1). 전 15곡",source:"https://prtimes.jp/main/html/rd/p/000008277.000014827.html",weather:{tmax_c:9.6,precip_mm:0.0,desc:"맑음"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D1",date:"2025-04-26",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["聿日箋秋","迷路日々","迷星叫","壱雫空","碧天伴走","春日影(MyGO!!!!! ver.)","詩超絆"],encore:[],setlist_note:"MyGO 파트만(공연 통합 M3~M14 중). 한자 확정",source:"https://prtimes.jp/main/html/rd/p/000008613.000014827.html",weather:{tmax_c:17.7,precip_mm:0.2,desc:"약한 이슬비"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「わかれ道の、その先へ」D2",date:"2025-04-27",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["壱雫空","迷路日々","迷星叫","碧天伴走","詩超絆","聿日箋秋","焚音打"],encore:[],setlist_note:"MyGO 파트만. 한자 확정",source:"https://prtimes.jp/main/html/rd/p/000008613.000014827.html",weather:{tmax_c:22.2,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 東京",date:"2025-07-01",venue:"Zepp DiverCity",city:"도쿄",capacity:2473,setlist:["端程山","歌いましょう鳴らしましょう","影色舞","輪符雨","砂寸奏","猛独が襲う","swim","壱雫空","潜在表明","処救生","名無声","掌心正銘","孤壊牢","往欄印"],encore:["聿日箋秋","迷星叫"],setlist_note:"전 16곡. 「掌心正銘」 첫 공개, 「往欄印」 세계 초연",source:"https://bang-dream.com/events/mygo_tour2025/",weather:{tmax_c:31.8,precip_mm:0.7,desc:"약한 이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 大阪",date:"2025-07-12",venue:"Zepp Osaka Bayside",city:"오사카",capacity:2801,setlist:["端程山","歌いましょう鳴らしましょう","影色舞","輪符雨","砂寸奏","猛独が襲う","swim","壱雫空","無路矢","処救生","名無声","掌心正銘","孤壊牢","往欄印"],encore:["聿日箋秋","迷星叫"],setlist_note:"전 16곡. M9만 도쿄와 다름(無路矢)",source:"https://bang-dream.com/events/mygo_tour2025/",weather:{tmax_c:35.4,precip_mm:2.8,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 愛知",date:"2025-07-30",venue:"Zepp Nagoya",city:"나고야",capacity:1792,setlist:["端程山","歌いましょう鳴らしましょう","影色舞","輪符雨","砂寸奏","猛独が襲う","swim","壱雫空","回層浮","処救生","名無声","掌心正銘","孤壊牢","往欄印"],encore:["聿日箋秋","迷星叫"],setlist_note:"전 16곡. M9만 回層浮",source:"https://bang-dream.com/events/mygo_tour2025/",weather:{tmax_c:38.3,precip_mm:0.6,desc:"이슬비"}},
+{no:null,type:"tour",tour:"ZEPP 2025",title:"ZEPP TOUR 2025 北海道",date:"2025-08-07",venue:"Zepp Sapporo",city:"삿포로",capacity:2009,setlist:["端程山","歌いましょう鳴らしましょう","影色舞","輪符雨","砂寸奏","猛独が襲う","swim","壱雫空","潜在表明","処救生","名無声","掌心正銘","孤壊牢","往欄印"],encore:["聿日箋秋","迷星叫"],setlist_note:"투어 파이널, 전 16곡",source:"https://bang-dream.com/events/mygo_tour2025/",weather:{tmax_c:26.1,precip_mm:16.1,desc:"비"}},
+{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/11)",date:"2025-10-11",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["聿日箋秋","迷路日々","迷星叫","壱雫空","碧天伴走","春日影(MyGO!!!!! ver.)","詩超絆"],encore:[],setlist_note:"MyGO 파트만. 요코하마 Day1과 동일 구성",source:"https://bang-dream.com/news/2221",weather:{tmax_c:34.2,precip_mm:0.0,desc:"맑음"}},
+{no:null,type:"joint_overseas",title:"わかれ道 上海追加 (10/12)",date:"2025-10-12",venue:"Mercedes-Benz Arena",city:"상하이",capacity:18000,setlist:["壱雫空","迷路日々","迷星叫","碧天伴走","詩超絆","聿日箋秋","焚音打"],encore:[],setlist_note:"MyGO 파트만. 요코하마 Day2와 동일 구성",source:"https://bang-dream.com/news/2221",weather:{tmax_c:33.1,precip_mm:0.0,desc:"흐림"}},
+{no:8,type:"solo",title:"8th LIVE",subtitle:"想いのかたちが積もるとき",date:"2025-12-06",venue:"京王アリーナTOKYO",city:"도쿄 조후",capacity:10000,milestone:"과거 최다 17곡·신곡 3개 초연",setlist:["名無声","孤壊牢","掌心正銘","処救生","影色舞","エガクミライ","端程山","迷星叫","砂寸奏","回層浮","無路矢","碧天伴走","明弦音","聿日箋秋","静降想"],encore:["歩拾道","往欄印"],source:"https://prtimes.jp/main/html/rd/p/000009132.000014827.html",weather:{tmax_c:11.3,precip_mm:0.0,desc:"구름 조금"}},
+{no:null,type:"project",title:"BanG Dream! 10th Anniversary LIVE",date:"2026-02-28",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["迷星叫","壱雫空","影色舞","往欄印"],encore:[],setlist_note:"MyGO 파트(M32~M35). 한자 확정",source:"https://prtimes.jp/main/html/rd/p/000009328.000014827.html",weather:{tmax_c:18.3,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint",title:"MyGO×Ave Mujica「moment / memory」",date:"2026-03-01",venue:"K Arena Yokohama",city:"요코하마",capacity:20000,setlist:["回層浮","無路矢","端程山","掌心正銘","迷星叫","夜隠染","孤壊牢","影色舞","壱雫空","歌いましょう鳴らしましょう","砂寸奏","往欄印"],encore:[],setlist_note:"MyGO 파트만(전 12곡)",source:"https://prtimes.jp/main/html/rd/p/000009331.000014827.html",weather:{tmax_c:15.1,precip_mm:0.0,desc:"흐림"}},
+{no:null,type:"joint_overseas",title:"Special LIVE in TAIPEI D1",date:"2026-04-11",venue:"大佳河濱公園",city:"타이베이",capacity:null,setlist:["回層浮","無路矢","端程山","掌心正銘","迷星叫","夜隠染","孤壊牢","影色舞","壱雫空","歌いましょう鳴らしましょう","砂寸奏","往欄印"],encore:[],setlist_note:"MyGO 파트만(공연 통합 M13~M24)",source:"https://prtimes.jp/main/html/rd/p/000009434.000014827.html",weather:{tmax_c:30.8,precip_mm:0.8,desc:"약한 이슬비"}},
+{no:null,type:"project",title:"MUSIC AWARDS JAPAN WEEK SP LIVE",date:"2026-06-09",venue:"Toyota Arena Tokyo",city:"도쿄",capacity:10000,setlist:["迷星叫","壱雫空","影色舞","聿日箋秋","往欄印"],encore:[],setlist_note:"리스아니! LIVE on TOKYO ANIME MUSIC HIGHLIGHTS, 5곡",source:"https://prtimes.jp/main/html/rd/p/000000055.000151661.html",weather:{tmax_c:22.3,precip_mm:18.9,desc:"비"}},
 {no:9,type:"solo",title:"9th LIVE Day1",subtitle:"つなぎ目の向こうに",date:"2026-07-18",venue:"ぴあアリーナMM",city:"요코하마",capacity:12000,setlist:[],encore:[],weather:null},
 {no:9,type:"solo",title:"9th LIVE Day2",subtitle:"つなぎ目の向こうに",date:"2026-07-19",venue:"ぴあアリーナMM",city:"요코하마",capacity:12000,setlist:[],encore:[],weather:null},
 {no:null,type:"festival",title:"LuckyFes'26",date:"2026-08-09",venue:"国営ひたち海浜公園",city:"이바라키",capacity:null,setlist:[],encore:[],weather:null}
 ];
+// </LIVES:AUTO-GENERATED>
 
 /* ===== SONG NORMALIZATION (romaji → 한자 canonical, 발매곡목록/mygo.csv 기준) ===== */
 const R2J = {
@@ -577,15 +654,23 @@ drawBars('closeBars',closeS,closeS[0][1],true);
     g+=`<text x="${x(t)}" y="${y+20}" text-anchor="middle" font-size="11" fill="var(--muted)" class="mono">${t}°</text>`;
   }
   g+=`<text x="${W-mR}" y="${y+34}" text-anchor="end" font-size="11" fill="var(--muted)">← 당일 최고기온 →</text>`;
-  // jitter by index for overlap
-  wx.forEach((l,i)=>{
-    const cx=x(l.tmax_c);
-    const cy=top+30+((i*53)%(y-top-55));
+  // 비스웜(beeswarm): 같은 기온 구간은 세로로 쌓아 겹침을 없앤다 → Zepp 등 모든 공연이 보이도록
+  const cY=(top+y)/2, step=27;
+  const bins={};
+  wx.forEach(l=>{ const k=Math.round(l.tmax_c); (bins[k]=bins[k]||[]).push(l); });
+  const placed=[];
+  Object.values(bins).forEach(arr=>{
+    arr.sort((a,b)=>b.precip_mm-a.precip_mm);        // 큰 원(강수 많음)을 안쪽 슬롯에
+    arr.forEach((l,j)=>{ l._cx=x(l.tmax_c); l._cy=cY+(j-(arr.length-1)/2)*step; });
+    placed.push(...arr);
+  });
+  placed.sort((a,b)=>b.precip_mm-a.precip_mm);         // 큰 원부터 그려 작은 원이 위로(가려지지 않게)
+  placed.forEach(l=>{
     const r=4+Math.min(14,Math.sqrt(l.precip_mm)*3.2);
-    const isRain=l.precip_mm>=1.0;
+    const isRain=l.precip_mm>=1.0, isTour=l.type==='tour';
     const col=isRain?'var(--c1)':'#2c3550';
-    g+=`<circle class="wdot" cx="${cx}" cy="${cy}" r="${r}" fill="${col}" fill-opacity="${isRain?.85:.7}" stroke="var(--accent)" stroke-width="${isRain?1.2:0.5}" stroke-opacity="${isRain?.6:.3}"
-        data-tip="<b>${l.title}</b><br>${l.date}<br>최고 ${l.tmax_c}° · 강수 ${l.precip_mm}mm · ${l.desc}" style="cursor:pointer"/>`;
+    g+=`<circle class="wdot" cx="${l._cx}" cy="${l._cy}" r="${r}" fill="${col}" fill-opacity="${isRain?.85:.7}" stroke="${isTour?'var(--c3)':'var(--accent)'}" stroke-width="${isTour?2:(isRain?1.2:0.5)}" stroke-opacity="${isTour?.95:(isRain?.6:.3)}"
+        data-tip="<b>${l.title}</b><br>${l.date}<br>최고 ${l.tmax_c}° · 강수 ${l.precip_mm}mm · ${l.desc}${isTour?'<br><span style=&quot;color:var(--c3)&quot;>Zepp 투어</span>':''}" style="cursor:pointer"/>`;
   });
   document.getElementById('wxChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="wx-svg">${g}</svg>`;
   document.querySelectorAll('#wxChart .wdot').forEach(el=>{
@@ -628,11 +713,18 @@ drawBars('closeBars',closeS,closeS[0][1],true);
   const eraColor={1:'var(--c6)',2:'var(--c1)',3:'var(--encore)',4:'var(--c5)'};
   const eraLabel={}; csongs.forEach(s=>{ (eraLabel[era[s]]=eraLabel[era[s]]||[]).push(s); });
 
-  // 회귀 (y=era on x=year)
-  const n=shows.length, X=shows.map(s=>s.x), Y=shows.map(s=>era[s.closer]);
-  const mx=X.reduce((a,b)=>a+b)/n, my=Y.reduce((a,b)=>a+b)/n;
-  let sxy=0,sxx=0,syy=0; for(let i=0;i<n;i++){sxy+=(X[i]-mx)*(Y[i]-my);sxx+=(X[i]-mx)**2;syy+=(Y[i]-my)**2;}
-  const slope=sxy/sxx, intc=my-slope*mx, r=sxy/Math.sqrt(sxx*syy), r2=r*r;
+  // 회귀 (y=era on x=year) — 넘버링 단독 / Zepp 투어를 분리 (두 체제가 반대 방향)
+  function reg(pool){
+    const n=pool.length; if(n<2) return null;
+    const X=pool.map(s=>s.x), Y=pool.map(s=>era[s.closer]);
+    const mx=X.reduce((a,b)=>a+b)/n, my=Y.reduce((a,b)=>a+b)/n;
+    let sxy=0,sxx=0,syy=0; for(let i=0;i<n;i++){sxy+=(X[i]-mx)*(Y[i]-my);sxx+=(X[i]-mx)**2;syy+=(Y[i]-my)**2;}
+    const slope=sxy/sxx, intc=my-slope*mx, r=syy?sxy/Math.sqrt(sxx*syy):0;
+    return {n,slope,intc,r,r2:r*r};
+  }
+  const soloShows=shows.filter(s=>s.l.type==='solo');   // 넘버링 단독(+12th)
+  const tourShows=shows.filter(s=>s.l.type==='tour');   // Zepp 투어
+  const regSolo=reg(soloShows), regTour=reg(tourShows);
 
   // chart
   const W=1000,H=320,mL=150,mR=20,mT=20,mB=44;
@@ -647,20 +739,30 @@ drawBars('closeBars',closeS,closeS[0][1],true);
   }
   for(let y=2022;y<=2026;y++){ g+=`<line x1="${px(y)}" x2="${px(y)}" y1="${mT}" y2="${H-mB}" stroke="var(--hair)" stroke-dasharray="2 4"/>`;
     g+=`<text x="${px(y)}" y="${H-mB+18}" text-anchor="middle" font-size="11" fill="var(--muted)" class="mono">${y}</text>`; }
-  // 회귀선
-  g+=`<line x1="${px(x0)}" y1="${py(intc+slope*x0)}" x2="${px(x1)}" y2="${py(intc+slope*x1)}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" opacity=".8"/>`;
-  // 점
+  // 회귀선 2개: 단독(파랑, 우상향) / 투어(주황, 우하향)
+  const regLine=(rg,pool,col)=>{
+    if(!rg) return '';
+    const xs=pool.map(p=>p.x), xa=Math.min(...xs), xb=Math.max(...xs);
+    return `<line x1="${px(xa)}" y1="${py(rg.intc+rg.slope*xa)}" x2="${px(xb)}" y2="${py(rg.intc+rg.slope*xb)}" stroke="${col}" stroke-width="2.4" stroke-dasharray="6 4" opacity=".9"/>`;
+  };
+  g+=regLine(regSolo,soloShows,'var(--c1)');
+  g+=regLine(regTour,tourShows,'var(--encore)');
+  // 점: 단독=원, 투어=마름모(다이아)
   shows.forEach(s=>{
-    const cx=px(s.x),cy=py(era[s.closer]);
-    g+=`<circle class="cdot" cx="${cx}" cy="${cy}" r="6.5" fill="${eraColor[era[s.closer]]}" stroke="var(--bg)" stroke-width="1.5"
-        data-tip="<b>${s.l.title}</b><br>${s.l.date} · 캐퍼 ${fmtN(s.l.capacity)}<br>클로저 ▸ <b>${disp(s.closer)}</b>" style="cursor:pointer"/>`;
+    const cx=px(s.x),cy=py(era[s.closer]),isTour=s.l.type==='tour',col=eraColor[era[s.closer]];
+    const tip=`<b>${s.l.title}</b><br>${s.l.date} · 캐퍼 ${fmtN(s.l.capacity)}<br>클로저 ▸ <b>${disp(s.closer)}</b><br><span style="color:var(--muted)">${isTour?'Zepp 투어':'넘버링 단독'}</span>`;
+    g+=isTour
+      ? `<rect class="cdot" x="${cx-6}" y="${cy-6}" width="12" height="12" transform="rotate(45 ${cx} ${cy})" fill="${col}" stroke="var(--bg)" stroke-width="1.5" data-tip="${tip.replace(/"/g,'&quot;')}" style="cursor:pointer"/>`
+      : `<circle class="cdot" cx="${cx}" cy="${cy}" r="6.5" fill="${col}" stroke="var(--bg)" stroke-width="1.5" data-tip="${tip.replace(/"/g,'&quot;')}" style="cursor:pointer"/>`;
   });
+  // 범례
+  g+=`<g font-size="11" fill="var(--muted)"><circle cx="${mL+8}" cy="${mT+6}" r="5" fill="var(--ink2)"/><text x="${mL+18}" y="${mT+10}">넘버링 단독</text><rect x="${mL+108}" y="${mT+1}" width="10" height="10" transform="rotate(45 ${mL+113} ${mT+6})" fill="var(--ink2)"/><text x="${mL+124}" y="${mT+10}">Zepp 투어</text></g>`;
   document.getElementById('closerReg').innerHTML=`<svg viewBox="0 0 ${W} ${H}" class="growth-svg">${g}</svg>`;
   document.querySelectorAll('#closerReg .cdot').forEach(el=>{el.addEventListener('mousemove',e=>showTip(el.dataset.tip,e));el.addEventListener('mouseleave',hideTip);});
   document.getElementById('regStat').innerHTML=`
-    <div><div class="mono" style="font-size:24px;font-weight:800;color:var(--accent)">R² = ${r2.toFixed(2)}</div><div class="cap" style="margin:0">시간이 클로저 세대를 설명하는 정도</div></div>
-    <div><div class="mono" style="font-size:24px;font-weight:800">r = ${r.toFixed(2)}</div><div class="cap" style="margin:0">상관계수(+면 시간↑ 세대↑)</div></div>
-    <div><div class="mono" style="font-size:24px;font-weight:800">+${slope.toFixed(2)}<small style="font-size:13px">/년</small></div><div class="cap" style="margin:0">해마다 클로저 세대가 오르는 속도</div></div>`;
+    <div><div class="mono" style="font-size:24px;font-weight:800;color:var(--c1)">R² = ${regSolo.r2.toFixed(2)}</div><div class="cap" style="margin:0"><b>넘버링 단독</b> — 시간↑ 세대↑ (기울기 +${regSolo.slope.toFixed(2)}/년)</div></div>
+    <div><div class="mono" style="font-size:24px;font-weight:800;color:var(--encore)">R² = ${regTour.r2.toFixed(2)}</div><div class="cap" style="margin:0"><b>Zepp 투어</b> — 시간↑ 세대↓ (기울기 ${regTour.slope.toFixed(2)}/년, <b>반대 방향</b>)</div></div>
+    <div><div class="mono" style="font-size:24px;font-weight:800">2체제</div><div class="cap" style="margin:0">단독은 '세대교체', 투어는 '콘셉트 선택' — 하나의 추세선으로 못 묶임</div></div>`;
 
   // 프로필 테이블
   const order=csongs.sort((a,b)=>era[a]-era[b]);
@@ -676,17 +778,16 @@ drawBars('closeBars',closeS,closeS[0][1],true);
   });
   document.getElementById('closerTbl').innerHTML=t;
 
-  // 요인 소견 (동적 근거 + 해석)
-  const c音=shows.filter(x=>x.closer==='音一会'), c焚=shows.filter(x=>x.closer==='焚音打'), c往=shows.filter(x=>x.closer==='往欄印');
-  // 양일공연 Day2 여부
+  // 요인 소견 (동적 근거 + 해석) — 단독/투어 두 체제
   const day2closers=shows.filter(x=>/Day2/.test(x.l.title)).map(x=>x.closer);
   const day1closers=shows.filter(x=>/Day1/.test(x.l.title)).map(x=>x.closer);
+  const t24=tourShows.map(s=>s.closer), t25=tourShows.filter(s=>s.x>=2025).map(s=>s.closer);
   document.getElementById('closerFactors').innerHTML=`
-    <div class="fac"><span class="h">① 시기(가장 강한 요인)</span>클로저는 시간에 따라 <b>迷星叫→音一会→焚音打→往欄印</b> 순으로 <b>세대교체</b>됩니다. R²=${r2.toFixed(2)}로, 편차의 상당 부분을 '언제 공연인가' 하나로 설명합니다. 결국 <b>가장 최근에 자리잡은 곡</b>이 마이크를 넘겨받는 구조.</div>
-    <div class="fac"><span class="h">② 신곡 효과</span>往欄印(오우라이)은 2025-08 발매 후 그해 <b>8th에서 즉시 클로저</b>로 등판 — 새 앨범 리드곡이 나오면 기존 클로저를 밀어냅니다.</div>
-    <div class="fac"><span class="h">③ 양일 공연의 마지막 날</span>6th는 <b>Day1 ▸ ${disp(day1closers[0]||'音一会')} / Day2 ▸ ${disp(day2closers[0]||'焚音打')}</b>. 이틀 중 <b>최종일</b>과 투어 피날레는 더 격정적인 <b>焚音打(타네비, 불씨)</b>로 닫는 경향.</div>
-    <div class="fac"><span class="h">④ 회장·실내외</span>음원 세대를 통제하면 캐퍼시티·야외 여부의 독립적 효과는 약함 — 焚音打가 야외 7th·투어에 몰린 건 대부분 <b>그 시기 자체</b>가 焚音打 전성기였기 때문(시기와 교락).</div>
-    <div class="fac"><span class="h">⑤ 결론</span>"오토이치에냐 타네비냐 오우라이냐"의 답은 <b>"그게 언제 공연이냐에 달렸다"</b>. 세 곡은 경쟁이 아니라 <b>시대의 릴레이</b>. 다음 9th의 클로저로는 최신 세대인 <b>往欄印</b> 혹은 새 신곡이 유력합니다.</div>`;
+    <div class="fac"><span class="h">① 넘버링 단독 = 세대교체 (R²=${regSolo.r2.toFixed(2)})</span>정규 넘버링 라이브의 마지막 곡은 시간순으로 <b>迷星叫→音一会→焚音打→往欄印</b> 순으로 <b>깔끔하게 바통을 넘깁니다</b>. 가장 최근에 자리잡은 대표곡이 클로저를 물려받는 구조.</div>
+    <div class="fac"><span class="h">② 그런데 Zepp 투어는 정반대 (R²=${regTour.r2.toFixed(2)}, 기울기 ${regTour.slope.toFixed(2)})</span><b>2024 투어</b>는 전 공연을 당시 최신 <b>焚音打(타네비)</b>로 뜨겁게 닫았지만, <b>2025 투어</b>는 전 공연을 데뷔 대표곡 <b>迷星叫(마요이우타)</b>로 <b>원점 회귀</b>시켰습니다. 시간이 갈수록 오히려 '옛 곡'으로 마무리 — 세대교체가 아니라 <b>그 투어의 콘셉트에 맞춘 의도적 선택</b>.</div>
+    <div class="fac"><span class="h">③ 迷星叫의 이중성</span>마요이우타는 <b>최초기 라이브하우스(1st·3rd)의 클로저</b>이자 <b>2025 투어 4공연 전부의 피날레</b> — 데뷔곡이 앵커(닻)로 돌아온 셈. 그래서 하나의 추세선으로 17개 공연을 묶으면 두 체제가 상쇄돼 <b>설명력이 무너집니다</b>. 단독과 투어를 나눠 봐야 하는 이유.</div>
+    <div class="fac"><span class="h">④ 양일 공연·신곡 효과</span>6th는 <b>Day1 ▸ ${disp(day1closers[0]||'音一会')} / Day2 ▸ ${disp(day2closers[0]||'焚音打')}</b>로 최종일을 더 격정적으로 닫고, 往欄印(오우라이)은 2025-08 발매 직후 <b>8th에서 즉시 클로저</b>로 등판 — 넘버링 쪽에선 신곡이 곧장 마지막 자리를 차지합니다.</div>
+    <div class="fac"><span class="h">⑤ 결론 & 9th 예측</span>"어느 곡으로 닫느냐"의 답은 <b>공연의 성격</b>에 달렸습니다. <b>넘버링 9th</b>라면 세대교체 논리상 최신 <b>往欄印</b>(또는 새 신곡)이, 만약 투어성 피날레라면 앵커 <b>迷星叫</b> 회귀도 충분히 가능합니다.</div>`;
 })();
 
 /* ============ 08 SONG POSITION (정위치) ============ */
@@ -793,6 +894,74 @@ drawBars('closeBars',closeS,closeS[0][1],true);
   ];
   document.getElementById('triviaGrid').innerHTML=cards.map(c=>
     `<div class="triv ${c.c}"><div class="big">${c.big}</div><div class="t">${c.t}</div></div>`).join('');
+})();
+
+/* ============ 10 SETLIST BROWSER + MODAL ============ */
+(function(){
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const rows=LIVES.slice().sort((a,b)=>parseD(a.date)-parseD(b.date));
+  const wrap=document.getElementById('slList');
+  let html='', curYear='';
+  rows.forEach((l,i)=>{
+    const yr=l.date.slice(0,4);
+    if(yr!==curYear){curYear=yr; html+=`<div class="sl-year">${yr}</div>`;}
+    const has=l.setlist.length>0;
+    const cnt=l.setlist.length+(l.encore?l.encore.length:0);
+    const badge=has?`<span class="sl-badge">${TYPE_LABEL[l.type]}</span>`:`<span class="sl-badge up">예정</span>`;
+    const rt=has?`${badge}<div class="sl-cnt">${cnt}곡<span class="sl-chev">›</span></div>`:badge;
+    html+=`<div class="sl-row" data-i="${i}">
+      <div class="d">${l.date}</div>
+      <div><div class="ti">${esc(l.title)}${l.subtitle?` <span class="sub">「${esc(l.subtitle)}」</span>`:''}</div>
+        <div class="ve">${esc(l.venue)} · ${esc(l.city)}${l.capacity?' · '+fmtN(l.capacity)+'석':''}</div></div>
+      <div class="rt">${rt}</div></div>`;
+  });
+  wrap.innerHTML=html;
+
+  const bg=document.getElementById('modalBg');
+  const mTitle=document.getElementById('mTitle'),mSub=document.getElementById('mSub'),
+        mMeta=document.getElementById('mMeta'),mNote=document.getElementById('mNote'),
+        mBody=document.getElementById('mBody'),mSrc=document.getElementById('mSrc');
+
+  function songLi(s,enc){
+    const kr=krName(normSong(String(s).replace(/\s*[（(].*?[)）]\s*/g,'').replace(/\s*～.*?～\s*/g,'').trim()));
+    const krTxt=(kr && kr!==s)?`<span class="kr">${esc(kr)}</span>`:'';
+    return `<li class="${enc?'enc':''}">${esc(s)}${krTxt}</li>`;
+  }
+  function open(l){
+    mTitle.innerHTML=esc(l.title);
+    mSub.textContent=l.subtitle?`「${l.subtitle}」`:'';
+    mSub.style.display=l.subtitle?'':'none';
+    mMeta.textContent=`${l.date} · ${l.venue} · ${l.city}${l.capacity?' · '+fmtN(l.capacity)+'석':''} · ${TYPE_LABEL[l.type]}`;
+    if(l.milestone){mNote.textContent='★ '+l.milestone;mNote.style.display='';}
+    else if(l.setlist_note){mNote.textContent=l.setlist_note;mNote.style.display='';}
+    else mNote.style.display='none';
+    if(l.setlist.length){
+      let b='<ol class="setl">';
+      l.setlist.forEach(s=>b+=songLi(s,false));
+      if(l.encore&&l.encore.length){
+        b+='<div class="enc-h">ENCORE</div>';
+        l.encore.forEach(s=>b+=songLi(s,true));
+      }
+      b+='</ol>';
+      mBody.innerHTML=b;
+    }else{
+      mBody.innerHTML='<div class="modal-empty">아직 세트리스트가 공개되지 않은 공연입니다.</div>';
+    }
+    if(l.source){
+      mSrc.innerHTML=`<b>출처</b> · <a href="${esc(l.source)}" target="_blank" rel="noopener">${esc(l.source)}</a>`;
+      mSrc.style.display='';
+    }else{
+      mSrc.innerHTML='<b>출처</b> · 세트리스트 미확정(추후 공식 발표 대조 예정)';
+      mSrc.style.display='';
+    }
+    bg.classList.add('on');
+  }
+  function close(){bg.classList.remove('on');}
+  wrap.querySelectorAll('.sl-row').forEach(el=>
+    el.addEventListener('click',()=>open(rows[+el.dataset.i])));
+  document.getElementById('modalX').addEventListener('click',close);
+  bg.addEventListener('click',e=>{if(e.target===bg)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
 })();
 </script>
 </body>

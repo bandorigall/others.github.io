@@ -1,8 +1,21 @@
 {
   "artist": "MyGO!!!!!",
   "compiled": "2026-07-13",
-  "notes": ["setlist_status: done=일본어 공식/보도 소스로 확정, partial=일부만 확보, romaji=setlist.fm 로마자만(한자 미확정), none=미조사/미공개", "합동·프로젝트·페스 공연은 MyGO!!!!! 담당 파트만 setlist에 기록", "capacity는 회장 공칭 최대치(스탠딩/지정 배치에 따라 실제 상이)", "6th와 8th는 동일 회장(武蔵野の森総合スポーツプラザ→2025.5 京王アリーナTOKYO 개명)"],
-  "sources": ["https://bang-dream.com/events/?artist=mygo", "https://www.livefans.jp/artists/156253", "https://www.setlist.fm/setlists/mygo-1bfd2508.html", "부시로드/부시로드뮤직 프레스릴리스, mygo-matome.jp, lisani.jp 등"],
+  "verified": "2026-07-14",
+  "notes": [
+    "setlist_status: done=일본어 공식/보도 소스로 확정, partial=일부만 확보, romaji=setlist.fm 로마자만(한자 미확정), none=미조사/미공개",
+    "합동·프로젝트·페스 공연은 MyGO!!!!! 담당 파트만 setlist에 기록",
+    "capacity는 회장 공칭 최대치(스탠딩/지정 배치에 따라 실제 상이)",
+    "6th와 8th는 동일 회장(武蔵野の森総合スポーツプラザ→2025.5 京王アリーナTOKYO 개명)",
+    "2026-07-14 전수 대조: 각 공연 setlist를 공식 개최보고(prtimes)·공식 플레이리스트·anisama 공식·setlist.fm으로 재검증하고 각 항목에 source 추가. 오류 수정: 아니사마2024(날짜·곡), LisAni2025(곡 전부), 6th상하이(2곡 누락), Avoid Note(앙코르 2곡 누락)"
+  ],
+  "sources": [
+    "https://bang-dream.com/events/?artist=mygo",
+    "https://www.livefans.jp/artists/156253",
+    "https://www.setlist.fm/setlists/mygo-1bfd2508.html",
+    "부시로드/부시로드뮤직 프레스릴리스, mygo-matome.jp, lisani.jp 등",
+    "각 공연 개별 source 필드 참조"
+  ],
   "lives": [
     {
       "no": 1,
@@ -14,8 +27,23 @@
       "city": "도쿄",
       "capacity": 700,
       "setlist_status": "done",
-      "setlist": ["ティアドロップス", "二息歩行(Reloaded)", "swim", "イニシャル", "Time Lapse", "猛独が襲う", "Happy Happy Party!", "カサブタ", "Yes! BanG_Dream!", "迷星叫"],
-      "encore": ["二息歩行(Reloaded)", "迷星叫"],
+      "source": "https://bushiroad.co.jp/media/dcb7a3783e67c587",
+      "setlist": [
+        "ティアドロップス",
+        "二息歩行(Reloaded)",
+        "swim",
+        "イニシャル",
+        "Time Lapse",
+        "猛独が襲う",
+        "Happy Happy Party!",
+        "カサブタ",
+        "Yes! BanG_Dream!",
+        "迷星叫"
+      ],
+      "encore": [
+        "二息歩行(Reloaded)",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 32.8,
         "tmin_c": 24.9,
@@ -34,14 +62,32 @@
       "city": "도쿄 이케부쿠로",
       "capacity": 300,
       "setlist_status": "done",
-      "setlist": ["迷星叫", "イニシャル", "猛独が襲う", "二息歩行(Reloaded)", "君の神様になりたい。", "Time Lapse", "ティアドロップス", "swim", "カサブタ", "名無声"],
-      "encore": ["迷星叫", "名無声"],
+      "source": "https://prtimes.jp/main/html/rd/p/000006042.000014827.html",
+      "setlist": [
+        "迷星叫",
+        "イニシャル",
+        "猛独が襲う",
+        "二息歩行(Reloaded)",
+        "君の神様になりたい。",
+        "Time Lapse",
+        "ティアドロップス",
+        "swim",
+        "カサブタ",
+        "名無声"
+      ],
+      "encore": [
+        "迷星叫",
+        "名無声"
+      ],
       "weather": {
         "tmax_c": 28.3,
         "tmin_c": 20.6,
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "city": "도쿄"
       }
     },
     {
@@ -54,8 +100,24 @@
       "city": "오사카",
       "capacity": 1148,
       "setlist_status": "done",
-      "setlist": ["名無声", "猛独が襲う", "Happy Happy Party!", "swim", "カサブタ", "影色舞", "二息歩行(Reloaded)", "迷星叫", "ティアドロップス", "君の神様になりたい。", "潜在表明"],
-      "encore": ["影色舞", "迷星叫"],
+      "source": "https://prtimes.jp/main/html/rd/p/000006283.000014827.html",
+      "setlist": [
+        "名無声",
+        "猛独が襲う",
+        "Happy Happy Party!",
+        "swim",
+        "カサブタ",
+        "影色舞",
+        "二息歩行(Reloaded)",
+        "迷星叫",
+        "ティアドロップス",
+        "君の神様になりたい。",
+        "潜在表明"
+      ],
+      "encore": [
+        "影色舞",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 17.9,
         "tmin_c": 9.8,
@@ -74,14 +136,34 @@
       "city": "도쿄 다치카와",
       "capacity": 2500,
       "setlist_status": "done",
-      "setlist": ["名無声", "ティアドロップス", "影色舞", "潜在表明", "無路矢", "二息歩行(Reloaded)", "Henceforth", "猛独が襲う", "swim", "迷星叫", "音一会"],
-      "encore": ["無路矢", "壱雫空", "音一会"],
+      "source": "https://www.livefans.jp/groups/203337",
+      "setlist": [
+        "名無声",
+        "ティアドロップス",
+        "影色舞",
+        "潜在表明",
+        "無路矢",
+        "二息歩行(Reloaded)",
+        "Henceforth",
+        "猛独が襲う",
+        "swim",
+        "迷星叫",
+        "音一会"
+      ],
+      "encore": [
+        "無路矢",
+        "壱雫空",
+        "音一会"
+      ],
       "weather": {
         "tmax_c": 17.2,
         "tmin_c": 2.0,
         "precip_mm": 0.0,
         "code": 0,
         "desc": "맑음"
+      },
+      "display": {
+        "city": "도쿄"
       }
     },
     {
@@ -94,8 +176,26 @@
       "city": "요코하마",
       "capacity": 2146,
       "setlist_status": "done",
-      "setlist": ["壱雫空", "迷星叫", "無路矢", "Time Lapse", "栞", "音一会 ～Acoustic Ver.～", "迷星叫 ～Acoustic Ver.～", "君の神様になりたい。", "潜在表明", "影色舞", "swim", "碧天伴走", "焚音打"],
-      "encore": ["名無声", "音一会"],
+      "source": "https://bang-dream.com/news/1659",
+      "setlist": [
+        "壱雫空",
+        "迷星叫",
+        "無路矢",
+        "Time Lapse",
+        "栞",
+        "音一会 ～Acoustic Ver.～",
+        "迷星叫 ～Acoustic Ver.～",
+        "君の神様になりたい。",
+        "潜在表明",
+        "影色舞",
+        "swim",
+        "碧天伴走",
+        "焚音打"
+      ],
+      "encore": [
+        "名無声",
+        "音一会"
+      ],
       "weather": {
         "tmax_c": 32.4,
         "tmin_c": 24.9,
@@ -113,15 +213,40 @@
       "venue": "東京ガーデンシアター",
       "city": "도쿄 아리아케",
       "capacity": 8000,
-      "setlist_status": "none",
-      "setlist": [],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000007264.000014827.html",
+      "setlist": [
+        "無路矢",
+        "名無声",
+        "Henceforth",
+        "猛独が襲う",
+        "影色舞",
+        "swim",
+        "音一会",
+        "人間になりたいうた Piano ver.",
+        "詩超絆",
+        "迷路日々",
+        "迷星叫",
+        "碧天伴走"
+      ],
+      "encore": [
+        "栞",
+        "壱雫空",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 25.0,
         "tmin_c": 13.4,
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "setlist_note": "MyGO 단독 파트 전 15곡",
+      "display": {
+        "title": "BanG Dream! 12th☆LIVE Day2",
+        "city": "도쿄",
+        "milestone": "Day2 전체가 MyGO 단독 스테이지",
+        "type": "solo"
       }
     },
     {
@@ -134,15 +259,32 @@
       "city": "도쿄",
       "capacity": 3000,
       "setlist_status": "done",
-      "setlist_note": "MyGO 파트(M1~M9). 앙코르는 토게아리와 서로의 OP곡 교환",
-      "setlist": ["迷星叫", "歌いましょう鳴らしましょう", "砂寸奏", "処救生", "影色舞", "無路矢", "潜在表明", "孤壊牢", "音一会"],
-      "encore": [],
+      "source": "https://prtimes.jp/main/html/rd/p/000008322.000014827.html",
+      "setlist_note": "MyGO 파트(M1~M9). 앙코르는 서로의 애니 OP곡 교환(EN1 트게아리 곡×토모리, EN2 壱雫空×니나)",
+      "setlist": [
+        "迷星叫",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "処救生",
+        "影色舞",
+        "無路矢",
+        "潜在表明",
+        "孤壊牢",
+        "音一会"
+      ],
+      "encore": [
+        "雑踏、僕らの街(합동)",
+        "壱雫空(합동)"
+      ],
       "weather": {
         "tmax_c": 6.4,
         "tmin_c": 0.3,
         "precip_mm": 0.1,
         "code": 51,
         "desc": "약한 이슬비"
+      },
+      "display": {
+        "subtitle": null
       }
     },
     {
@@ -156,7 +298,14 @@
       "capacity": 14500,
       "milestone": "첫 무도관·첫 리스아니 출연",
       "setlist_status": "done",
-      "setlist": ["迷星叫", "壱雫空", "影色舞", "碧天伴走", "音一会"],
+      "source": "https://www.setlist.fm/setlist/mygo/2024/nippon-budokan-tokyo-japan-13acd90d.html",
+      "setlist": [
+        "迷星叫",
+        "壱雫空",
+        "影色舞",
+        "碧天伴走",
+        "音一会"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 10.3,
@@ -164,19 +313,32 @@
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "LisAni! LIVE 2024",
+        "milestone": "첫 무도관·첫 리스아니"
       }
     },
     {
       "no": null,
       "type": "guest",
-      "title": "LisAni! LIVE 2025",
+      "title": "LisAni! LIVE 2025 (FRIDAY STAGE)",
       "subtitle": null,
       "date": "2025-01-24",
       "venue": "日本武道館",
       "city": "도쿄",
       "capacity": 14500,
-      "setlist_status": "romaji",
-      "setlist": ["Kokyuu", "Sasurai", "Utaimashou Narashimashou", "Kokoro", "Silhouette Dance", "Panorama"],
+      "setlist_status": "done",
+      "source": "https://www.setlist.fm/setlist/mygo/2025/nippon-budokan-tokyo-japan-1b5261ec.html",
+      "setlist_note": "2026-07-14 수정: 기존 로마자 6곡이 오류였음(呼吸/心/パノラマ 등 미포함 곡). 실제 셋리로 교체",
+      "setlist": [
+        "処救生",
+        "砂寸奏",
+        "歌いましょう鳴らしましょう",
+        "孤壊牢",
+        "影色舞",
+        "端程山"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 13.1,
@@ -184,6 +346,9 @@
         "precip_mm": 5.5,
         "code": 63,
         "desc": "비"
+      },
+      "display": {
+        "title": "LisAni! LIVE 2025"
       }
     },
     {
@@ -195,8 +360,17 @@
       "venue": "蘇我スポーツ公園",
       "city": "치바",
       "capacity": null,
-      "setlist_status": "romaji",
-      "setlist": ["Mayoi Uta", "Hitoshizuku", "Silhouette Dance", "Hekitenbansou", "Sasurai", "Utaimashou Narashimashou", "Otoichie"],
+      "setlist_status": "done",
+      "source": "https://www.instagram.com/jfes_official/p/C6gMZaGs9AI/",
+      "setlist": [
+        "迷星叫",
+        "壱雫空",
+        "影色舞",
+        "碧天伴走",
+        "砂寸奏",
+        "歌いましょう鳴らしましょう",
+        "音一会"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 22.2,
@@ -204,6 +378,9 @@
         "precip_mm": 0.0,
         "code": 2,
         "desc": "구름 조금"
+      },
+      "display": {
+        "title": "JAPAN JAM 2024"
       }
     },
     {
@@ -216,7 +393,15 @@
       "city": "치바",
       "capacity": null,
       "setlist_status": "romaji",
-      "setlist": ["Panorama", "Sasurai", "Melody", "Mayoi Uta", "Tanebi"],
+      "source": "https://www.setlist.fm/setlist/mygo/2024/soga-sports-kouen-chiba-japan-43a907bb.html",
+      "setlist_note": "음향 트러블로 단축 공연(setlist.fm). 곡명 로마자 출처 그대로",
+      "setlist": [
+        "Panorama",
+        "Sasurai",
+        "Melody",
+        "Mayoi Uta",
+        "Tanebi"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 32.9,
@@ -224,39 +409,54 @@
         "precip_mm": 0.2,
         "code": 51,
         "desc": "약한 이슬비"
+      },
+      "display": {
+        "title": "ROCK IN JAPAN 2024"
       }
     },
     {
       "no": null,
       "type": "guest",
-      "title": "Animelo Summer Live 2024",
+      "title": "Animelo Summer Live 2024 -Stargazer- (DAY1)",
       "subtitle": null,
-      "date": "2024-08-31",
+      "date": "2024-08-30",
       "venue": "さいたまスーパーアリーナ",
       "city": "사이타마",
       "capacity": 37000,
-      "setlist_status": "romaji",
-      "setlist": ["Noroshi", "Sasurai/Utaimashou Narashimashou", "Mayoi Uta"],
+      "setlist_status": "done",
+      "source": "https://anisama.tv/2024/setlist/",
+      "setlist_note": "2026-07-14 수정: 기존 날짜(8/31)·곡 오류. 실제는 8/30 DAY1, 4곡",
+      "setlist": [
+        "無路矢",
+        "砂寸奏",
+        "歌いましょう鳴らしましょう",
+        "迷星叫"
+      ],
       "encore": [],
       "weather": {
-        "tmax_c": 31.0,
-        "tmin_c": 25.4,
-        "precip_mm": 6.6,
-        "code": 63,
-        "desc": "비"
+        "tmax_c": 33.6,
+        "tmin_c": 25.9,
+        "precip_mm": 0.0,
+        "code": 2,
+        "desc": "구름 조금"
       }
     },
     {
       "no": null,
       "type": "guest",
-      "title": "Animelo Summer Live 2025",
+      "title": "Animelo Summer Live 2025 \"ThanXX!\" (DAY1)",
       "subtitle": null,
       "date": "2025-08-29",
       "venue": "さいたまスーパーアリーナ",
       "city": "사이타마",
       "capacity": 37000,
-      "setlist_status": "romaji",
-      "setlist": ["Ichijitsu Senshuu", "Otoichie", "Tanebi"],
+      "setlist_status": "done",
+      "source": "https://anisama.tv/2025/setlist/",
+      "setlist": [
+        "聿日箋秋",
+        "音一会",
+        "焚音打"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 35.5,
@@ -277,14 +477,37 @@
       "city": "도쿄",
       "capacity": 2925,
       "setlist_status": "done",
-      "setlist": ["碧天伴走", "影色舞", "迷星叫", "名無声", "壱雫空", "二息歩行(Reloaded)", "潜在表明", "君の神様になりたい。", "歌いましょう鳴らしましょう", "音一会", "迷路日々", "砂寸奏"],
-      "encore": ["無路矢", "焚音打"],
+      "source": "https://www.setlist.fm/setlist/mygo/2024/zepp-haneda-tokyo-tokyo-japan-6badbe82.html",
+      "setlist": [
+        "碧天伴走",
+        "影色舞",
+        "迷星叫",
+        "名無声",
+        "壱雫空",
+        "二息歩行(Reloaded)",
+        "潜在表明",
+        "君の神様になりたい。",
+        "歌いましょう鳴らしましょう",
+        "音一会",
+        "迷路日々",
+        "砂寸奏"
+      ],
+      "encore": [
+        "無路矢",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 11.5,
         "tmin_c": 1.2,
         "precip_mm": 2.0,
         "code": 73,
         "desc": "눈"
+      },
+      "display": {
+        "title": "ZEPP TOUR 2024 東京",
+        "venue": "Zepp Haneda",
+        "tour": "ZEPP 2024",
+        "subtitle": null
       }
     },
     {
@@ -297,15 +520,38 @@
       "venue": "Zepp Fukuoka",
       "city": "후쿠오카",
       "capacity": 1526,
-      "setlist_status": "none",
-      "setlist": [],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://www.setlist.fm/setlist/mygo/2024/zepp-fukuoka-fukuoka-japan-1baa2df8.html",
+      "setlist": [
+        "砂寸奏",
+        "影色舞",
+        "迷星叫",
+        "碧天伴走",
+        "壱雫空",
+        "名無声",
+        "潜在表明",
+        "君の神様になりたい。",
+        "歌いましょう鳴らしましょう",
+        "音一会",
+        "迷路日々",
+        "回層浮"
+      ],
+      "encore": [
+        "無路矢",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 13.3,
         "tmin_c": 8.2,
         "precip_mm": 1.6,
         "code": 53,
         "desc": "이슬비"
+      },
+      "setlist_note": "전 14곡",
+      "display": {
+        "title": "ZEPP TOUR 2024 福岡",
+        "tour": "ZEPP 2024",
+        "subtitle": null
       }
     },
     {
@@ -319,14 +565,36 @@
       "city": "오사카",
       "capacity": 2801,
       "setlist_status": "done",
-      "setlist": ["砂寸奏", "影色舞", "迷星叫", "碧天伴走", "壱雫空", "名無声", "潜在表明", "君の神様になりたい。", "歌いましょう鳴らしましょう", "音一会", "迷路日々", "回層浮"],
-      "encore": ["無路矢", "焚音打"],
+      "source": "https://www.setlist.fm/setlist/mygo/2024/zepp-osaka-bayside-osaka-japan-43aa13f7.html",
+      "setlist": [
+        "砂寸奏",
+        "影色舞",
+        "迷星叫",
+        "碧天伴走",
+        "壱雫空",
+        "名無声",
+        "潜在表明",
+        "君の神様になりたい。",
+        "歌いましょう鳴らしましょう",
+        "音一会",
+        "迷路日々",
+        "回層浮"
+      ],
+      "encore": [
+        "無路矢",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 11.5,
         "tmin_c": -1.5,
         "precip_mm": 0.1,
         "code": 51,
         "desc": "약한 이슬비"
+      },
+      "display": {
+        "title": "ZEPP TOUR 2024 大阪",
+        "tour": "ZEPP 2024",
+        "subtitle": null
       }
     },
     {
@@ -339,15 +607,38 @@
       "venue": "Zepp Nagoya",
       "city": "나고야",
       "capacity": 1792,
-      "setlist_status": "none",
-      "setlist": [],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000007672.000014827.html",
+      "setlist": [
+        "碧天伴走",
+        "影色舞",
+        "迷星叫",
+        "壱雫空",
+        "名無声",
+        "潜在表明",
+        "君の神様になりたい。",
+        "歌いましょう鳴らしましょう",
+        "音一会",
+        "迷路日々",
+        "回層浮",
+        "砂寸奏"
+      ],
+      "encore": [
+        "無路矢",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 18.5,
         "tmin_c": 6.6,
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "setlist_note": "투어 파이널, 전 14곡",
+      "display": {
+        "title": "ZEPP TOUR 2024 愛知",
+        "tour": "ZEPP 2024",
+        "subtitle": null
       }
     },
     {
@@ -360,15 +651,33 @@
       "city": "요코하마",
       "capacity": 17000,
       "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000007721.000014827.html",
       "setlist_note": "MyGO 파트만",
-      "setlist": ["壱雫空", "迷星叫", "無路矢", "回層浮", "砂寸奏", "影色舞", "碧天伴走", "迷路日々", "音一会"],
-      "encore": ["歌いましょう鳴らしましょう(합동)", "ティアドロップス(합동)"],
+      "setlist": [
+        "壱雫空",
+        "迷星叫",
+        "無路矢",
+        "回層浮",
+        "砂寸奏",
+        "影色舞",
+        "碧天伴走",
+        "迷路日々",
+        "音一会"
+      ],
+      "encore": [
+        "歌いましょう鳴らしましょう(합동)",
+        "ティアドロップス(합동)"
+      ],
       "weather": {
         "tmax_c": 23.5,
         "tmin_c": 14.9,
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "Poppin'Party×MyGO!!!!!「Divide/Unite」",
+        "subtitle": null
       }
     },
     {
@@ -381,14 +690,36 @@
       "city": "도쿄 조후",
       "capacity": 10000,
       "setlist_status": "done",
-      "setlist": ["迷星叫", "歌いましょう鳴らしましょう", "砂寸奏", "迷路日々", "碧天伴走", "処救生", "影色舞", "潜在表明", "輪符雨", "無路矢", "回層浮", "名無声", "詩超絆", "端程山"],
-      "encore": ["壱雫空", "音一会"],
+      "source": "https://prtimes.jp/main/html/rd/p/000007937.000014827.html",
+      "setlist": [
+        "迷星叫",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "迷路日々",
+        "碧天伴走",
+        "処救生",
+        "影色舞",
+        "潜在表明",
+        "輪符雨",
+        "無路矢",
+        "回層浮",
+        "名無声",
+        "詩超絆",
+        "端程山"
+      ],
+      "encore": [
+        "壱雫空",
+        "音一会"
+      ],
       "weather": {
         "tmax_c": 34.9,
         "tmin_c": 25.8,
         "precip_mm": 2.9,
         "code": 61,
         "desc": "약한 비"
+      },
+      "display": {
+        "milestone": "첫 아레나급 단독"
       }
     },
     {
@@ -401,8 +732,27 @@
       "city": "도쿄 조후",
       "capacity": 10000,
       "setlist_status": "done",
-      "setlist": ["処救生", "無路矢", "影色舞", "輪符雨", "潜在表明", "回層浮", "迷星叫", "歌いましょう鳴らしましょう", "砂寸奏", "迷路日々", "碧天伴走", "名無声", "詩超絆", "端程山"],
-      "encore": ["壱雫空", "焚音打"],
+      "source": "https://prtimes.jp/main/html/rd/p/000007937.000014827.html",
+      "setlist": [
+        "処救生",
+        "無路矢",
+        "影色舞",
+        "輪符雨",
+        "潜在表明",
+        "回層浮",
+        "迷星叫",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "迷路日々",
+        "碧天伴走",
+        "名無声",
+        "詩超絆",
+        "端程山"
+      ],
+      "encore": [
+        "壱雫空",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 37.1,
         "tmin_c": 25.6,
@@ -421,8 +771,25 @@
       "city": "상하이",
       "capacity": null,
       "milestone": "첫 해외 단독공연",
-      "setlist_status": "romaji_partial",
-      "setlist": ["Mayoi Uta", "Utaimashou Narashimashou", "Sasurai", "Melody", "Hekitenbansou", "Kokyuu", "Silhouette Dance", "Senzai Hyoumei", "Refrain", "Noroshi", "Kaisou", "Namonaki"],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/news/1920",
+      "setlist_note": "2026-07-14 수정: 기존 로마자 12곡(呼吸/Refrain 등 오류·2곡 누락). 공식 개최보고 기준 전 14곡으로 교체(Day1 셋리 준거)",
+      "setlist": [
+        "迷星叫",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "迷路日々",
+        "碧天伴走",
+        "処救生",
+        "影色舞",
+        "潜在表明",
+        "輪符雨",
+        "無路矢",
+        "回層浮",
+        "名無声",
+        "詩超絆",
+        "端程山"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 27.8,
@@ -430,6 +797,9 @@
         "precip_mm": 7.0,
         "code": 63,
         "desc": "비"
+      },
+      "display": {
+        "title": "6th LIVE 上海追加"
       }
     },
     {
@@ -443,15 +813,34 @@
       "capacity": 3053,
       "milestone": "첫 야외 단독공연",
       "setlist_status": "done",
-      "setlist": ["砂寸奏", "処救生", "歌いましょう鳴らしましょう", "迷星叫", "壱雫空", "無路矢", "輪符雨", "潜在表明", "孤壊牢", "影色舞", "碧天伴走", "歩拾道", "端程山"],
-      "encore": ["音一会", "焚音打"],
+      "source": "https://prtimes.jp/main/html/rd/p/000008277.000014827.html",
+      "setlist": [
+        "砂寸奏",
+        "処救生",
+        "歌いましょう鳴らしましょう",
+        "迷星叫",
+        "壱雫空",
+        "無路矢",
+        "輪符雨",
+        "潜在表明",
+        "孤壊牢",
+        "影色舞",
+        "碧天伴走",
+        "歩拾道"
+      ],
+      "encore": [
+        "端程山",
+        "音一会",
+        "焚音打"
+      ],
       "weather": {
         "tmax_c": 9.6,
         "tmin_c": 3.3,
         "precip_mm": 0.0,
         "code": 0,
         "desc": "맑음"
-      }
+      },
+      "setlist_note": "2026-07-14 수정: 端程山은 앙코르 첫 곡(EN1). 전 15곡"
     },
     {
       "no": null,
@@ -462,9 +851,18 @@
       "venue": "K Arena Yokohama",
       "city": "요코하마",
       "capacity": 20000,
-      "setlist_status": "romaji",
-      "setlist_note": "MyGO 파트만(setlist.fm 로마자)",
-      "setlist": ["Ichijitsu Senshuu", "Melody", "Mayoi Uta", "Hitoshizuku", "Hekitenbansou", "Haruhikage", "Utakotoba"],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000008613.000014827.html",
+      "setlist_note": "MyGO 파트만(공연 통합 M3~M14 중). 한자 확정",
+      "setlist": [
+        "聿日箋秋",
+        "迷路日々",
+        "迷星叫",
+        "壱雫空",
+        "碧天伴走",
+        "春日影(MyGO!!!!! ver.)",
+        "詩超絆"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 17.7,
@@ -472,6 +870,10 @@
         "precip_mm": 0.2,
         "code": 51,
         "desc": "약한 이슬비"
+      },
+      "display": {
+        "title": "MyGO×Ave Mujica「わかれ道の、その先へ」D1",
+        "subtitle": null
       }
     },
     {
@@ -483,9 +885,18 @@
       "venue": "K Arena Yokohama",
       "city": "요코하마",
       "capacity": 20000,
-      "setlist_status": "romaji",
-      "setlist_note": "MyGO 파트만(setlist.fm 로마자)",
-      "setlist": ["Hitoshizuku", "Melody", "Mayoi Uta", "Hekitenbansou", "Utakotoba", "Ichijitsu Senshuu", "Tanebi"],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000008613.000014827.html",
+      "setlist_note": "MyGO 파트만. 한자 확정",
+      "setlist": [
+        "壱雫空",
+        "迷路日々",
+        "迷星叫",
+        "碧天伴走",
+        "詩超絆",
+        "聿日箋秋",
+        "焚音打"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 22.2,
@@ -493,6 +904,10 @@
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "MyGO×Ave Mujica「わかれ道の、その先へ」D2",
+        "subtitle": null
       }
     },
     {
@@ -505,16 +920,42 @@
       "venue": "Zepp DiverCity (TOKYO)",
       "city": "도쿄",
       "capacity": 2473,
-      "setlist_status": "romaji_partial",
-      "setlist": ["Panorama", "Utaimashou Narashimashou", "Silhouette Dance", "Refrain", "Sasurai", "Moudoku ga Osou", "swim", "Hitoshizuku", "Senzai Hyoumei", "Kokyuu", "Namonaki", "Shoushin Shoumei"],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/events/mygo_tour2025/",
+      "setlist": [
+        "端程山",
+        "歌いましょう鳴らしましょう",
+        "影色舞",
+        "輪符雨",
+        "砂寸奏",
+        "猛独が襲う",
+        "swim",
+        "壱雫空",
+        "潜在表明",
+        "処救生",
+        "名無声",
+        "掌心正銘",
+        "孤壊牢",
+        "往欄印"
+      ],
+      "encore": [
+        "聿日箋秋",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 31.8,
         "tmin_c": 25.9,
         "precip_mm": 0.7,
         "code": 51,
         "desc": "약한 이슬비"
-      }
+      },
+      "display": {
+        "title": "ZEPP TOUR 2025 東京",
+        "venue": "Zepp DiverCity",
+        "tour": "ZEPP 2025",
+        "subtitle": null
+      },
+      "setlist_note": "전 16곡. 「掌心正銘」 첫 공개, 「往欄印」 세계 초연"
     },
     {
       "no": null,
@@ -526,16 +967,41 @@
       "venue": "Zepp Osaka Bayside",
       "city": "오사카",
       "capacity": 2801,
-      "setlist_status": "romaji_partial",
-      "setlist": ["Panorama", "Utaimashou Narashimashou", "Silhouette Dance", "Refrain", "Sasurai", "Moudoku ga Osou", "swim", "Hitoshizuku", "Noroshi", "Kokyuu", "Namonaki", "Shoushin Shoumei"],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/events/mygo_tour2025/",
+      "setlist": [
+        "端程山",
+        "歌いましょう鳴らしましょう",
+        "影色舞",
+        "輪符雨",
+        "砂寸奏",
+        "猛独が襲う",
+        "swim",
+        "壱雫空",
+        "無路矢",
+        "処救生",
+        "名無声",
+        "掌心正銘",
+        "孤壊牢",
+        "往欄印"
+      ],
+      "encore": [
+        "聿日箋秋",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 35.4,
         "tmin_c": 26.3,
         "precip_mm": 2.8,
         "code": 53,
         "desc": "이슬비"
-      }
+      },
+      "display": {
+        "title": "ZEPP TOUR 2025 大阪",
+        "tour": "ZEPP 2025",
+        "subtitle": null
+      },
+      "setlist_note": "전 16곡. M9만 도쿄와 다름(無路矢)"
     },
     {
       "no": null,
@@ -547,16 +1013,41 @@
       "venue": "Zepp Nagoya",
       "city": "나고야",
       "capacity": 1792,
-      "setlist_status": "romaji_partial",
-      "setlist": ["Panorama", "Utaimashou Narashimashou", "Silhouette Dance", "Refrain", "Sasurai", "Moudoku ga Osou", "swim", "Hitoshizuku", "Kaisou", "Kokyuu", "Namonaki", "Shoushin Shoumei"],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/events/mygo_tour2025/",
+      "setlist": [
+        "端程山",
+        "歌いましょう鳴らしましょう",
+        "影色舞",
+        "輪符雨",
+        "砂寸奏",
+        "猛独が襲う",
+        "swim",
+        "壱雫空",
+        "回層浮",
+        "処救生",
+        "名無声",
+        "掌心正銘",
+        "孤壊牢",
+        "往欄印"
+      ],
+      "encore": [
+        "聿日箋秋",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 38.3,
         "tmin_c": 27.7,
         "precip_mm": 0.6,
         "code": 53,
         "desc": "이슬비"
-      }
+      },
+      "display": {
+        "title": "ZEPP TOUR 2025 愛知",
+        "tour": "ZEPP 2025",
+        "subtitle": null
+      },
+      "setlist_note": "전 16곡. M9만 回層浮"
     },
     {
       "no": null,
@@ -568,16 +1059,41 @@
       "venue": "Zepp Sapporo",
       "city": "삿포로",
       "capacity": 2009,
-      "setlist_status": "romaji_partial",
-      "setlist": ["Panorama", "Utaimashou Narashimashou", "Silhouette Dance", "Refrain", "Sasurai", "Moudoku ga Osou", "swim", "Hitoshizuku", "Senzai Hyoumei", "Kokyuu", "Namonaki", "Shoushin Shoumei"],
-      "encore": [],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/events/mygo_tour2025/",
+      "setlist": [
+        "端程山",
+        "歌いましょう鳴らしましょう",
+        "影色舞",
+        "輪符雨",
+        "砂寸奏",
+        "猛独が襲う",
+        "swim",
+        "壱雫空",
+        "潜在表明",
+        "処救生",
+        "名無声",
+        "掌心正銘",
+        "孤壊牢",
+        "往欄印"
+      ],
+      "encore": [
+        "聿日箋秋",
+        "迷星叫"
+      ],
       "weather": {
         "tmax_c": 26.1,
         "tmin_c": 21.1,
         "precip_mm": 16.1,
         "code": 63,
         "desc": "비"
-      }
+      },
+      "display": {
+        "title": "ZEPP TOUR 2025 北海道",
+        "tour": "ZEPP 2025",
+        "subtitle": null
+      },
+      "setlist_note": "투어 파이널, 전 16곡"
     },
     {
       "no": null,
@@ -588,9 +1104,18 @@
       "venue": "Mercedes-Benz Arena",
       "city": "상하이",
       "capacity": 18000,
-      "setlist_status": "romaji",
-      "setlist_note": "MyGO 파트만(setlist.fm 로마자)",
-      "setlist": ["Ichijitsu Senshuu", "Melody", "Mayoi Uta", "Hitoshizuku", "Hekitenbansou", "Haruhikage", "Utakotoba"],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/news/2221",
+      "setlist_note": "MyGO 파트만. 요코하마 Day1과 동일 구성",
+      "setlist": [
+        "聿日箋秋",
+        "迷路日々",
+        "迷星叫",
+        "壱雫空",
+        "碧天伴走",
+        "春日影(MyGO!!!!! ver.)",
+        "詩超絆"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 34.2,
@@ -598,6 +1123,10 @@
         "precip_mm": 0.0,
         "code": 0,
         "desc": "맑음"
+      },
+      "display": {
+        "title": "わかれ道 上海追加 (10/11)",
+        "subtitle": null
       }
     },
     {
@@ -609,9 +1138,18 @@
       "venue": "Mercedes-Benz Arena",
       "city": "상하이",
       "capacity": 18000,
-      "setlist_status": "romaji",
-      "setlist_note": "MyGO 파트만(setlist.fm 로마자)",
-      "setlist": ["Hitoshizuku", "Melody", "Mayoi Uta", "Hekitenbansou", "Utakotoba", "Ichijitsu Senshuu", "Tanebi"],
+      "setlist_status": "done",
+      "source": "https://bang-dream.com/news/2221",
+      "setlist_note": "MyGO 파트만. 요코하마 Day2와 동일 구성",
+      "setlist": [
+        "壱雫空",
+        "迷路日々",
+        "迷星叫",
+        "碧天伴走",
+        "詩超絆",
+        "聿日箋秋",
+        "焚音打"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 33.1,
@@ -619,6 +1157,10 @@
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "わかれ道 上海追加 (10/12)",
+        "subtitle": null
       }
     },
     {
@@ -632,14 +1174,38 @@
       "capacity": 10000,
       "milestone": "과거 최다 17곡, 「エガクミライ」「明弦音」「静降想」 첫 공개",
       "setlist_status": "done",
-      "setlist": ["名無声", "孤壊牢", "掌心正銘", "処救生", "影色舞", "エガクミライ", "端程山", "迷星叫", "砂寸奏", "回層浮", "無路矢", "碧天伴走", "明弦音", "聿日箋秋", "静降想"],
-      "encore": ["歩拾道", "往欄印"],
+      "source": "https://prtimes.jp/main/html/rd/p/000009132.000014827.html",
+      "setlist": [
+        "名無声",
+        "孤壊牢",
+        "掌心正銘",
+        "処救生",
+        "影色舞",
+        "エガクミライ",
+        "端程山",
+        "迷星叫",
+        "砂寸奏",
+        "回層浮",
+        "無路矢",
+        "碧天伴走",
+        "明弦音",
+        "聿日箋秋",
+        "静降想"
+      ],
+      "encore": [
+        "歩拾道",
+        "往欄印"
+      ],
       "weather": {
         "tmax_c": 11.3,
         "tmin_c": 1.9,
         "precip_mm": 0.0,
         "code": 2,
         "desc": "구름 조금"
+      },
+      "display": {
+        "venue": "京王アリーナTOKYO",
+        "milestone": "과거 최다 17곡·신곡 3개 초연"
       }
     },
     {
@@ -651,9 +1217,15 @@
       "venue": "K Arena Yokohama",
       "city": "요코하마",
       "capacity": 20000,
-      "setlist_status": "romaji_partial",
-      "setlist_note": "MyGO 파트만(setlist.fm 로마자, 일부)",
-      "setlist": ["Mayoi Uta", "Hitoshizuku", "Silhouette Dance", "Ourai"],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000009328.000014827.html",
+      "setlist_note": "MyGO 파트(M32~M35). 한자 확정",
+      "setlist": [
+        "迷星叫",
+        "壱雫空",
+        "影色舞",
+        "往欄印"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 18.3,
@@ -661,6 +1233,10 @@
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "BanG Dream! 10th Anniversary LIVE",
+        "subtitle": null
       }
     },
     {
@@ -673,8 +1249,22 @@
       "city": "요코하마",
       "capacity": 20000,
       "setlist_status": "done",
-      "setlist_note": "MyGO 파트만(공연 통합 M15~)",
-      "setlist": ["回層浮", "無路矢", "端程山", "掌心正銘", "迷星叫", "夜隠染", "孤壊牢", "影色舞", "壱雫空", "歌いましょう鳴らしましょう", "砂寸奏", "往欄印"],
+      "source": "https://prtimes.jp/main/html/rd/p/000009331.000014827.html",
+      "setlist_note": "MyGO 파트만(전 12곡)",
+      "setlist": [
+        "回層浮",
+        "無路矢",
+        "端程山",
+        "掌心正銘",
+        "迷星叫",
+        "夜隠染",
+        "孤壊牢",
+        "影色舞",
+        "壱雫空",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "往欄印"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 15.1,
@@ -682,6 +1272,10 @@
         "precip_mm": 0.0,
         "code": 3,
         "desc": "흐림"
+      },
+      "display": {
+        "title": "MyGO×Ave Mujica「moment / memory」",
+        "subtitle": null
       }
     },
     {
@@ -693,8 +1287,22 @@
       "venue": "大佳河濱公園 (Dajia Riverside Park)",
       "city": "타이베이",
       "capacity": null,
-      "setlist_status": "none",
-      "setlist": [],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000009434.000014827.html",
+      "setlist": [
+        "回層浮",
+        "無路矢",
+        "端程山",
+        "掌心正銘",
+        "迷星叫",
+        "夜隠染",
+        "孤壊牢",
+        "影色舞",
+        "壱雫空",
+        "歌いましょう鳴らしましょう",
+        "砂寸奏",
+        "往欄印"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 30.8,
@@ -702,6 +1310,12 @@
         "precip_mm": 0.8,
         "code": 51,
         "desc": "약한 이슬비"
+      },
+      "setlist_note": "MyGO 파트만(공연 통합 M13~M24)",
+      "display": {
+        "title": "Special LIVE in TAIPEI D1",
+        "venue": "大佳河濱公園",
+        "subtitle": null
       }
     },
     {
@@ -713,8 +1327,15 @@
       "venue": "Toyota Arena Tokyo",
       "city": "도쿄",
       "capacity": 10000,
-      "setlist_status": "none",
-      "setlist": [],
+      "setlist_status": "done",
+      "source": "https://prtimes.jp/main/html/rd/p/000000055.000151661.html",
+      "setlist": [
+        "迷星叫",
+        "壱雫空",
+        "影色舞",
+        "聿日箋秋",
+        "往欄印"
+      ],
       "encore": [],
       "weather": {
         "tmax_c": 22.3,
@@ -722,6 +1343,10 @@
         "precip_mm": 18.9,
         "code": 63,
         "desc": "비"
+      },
+      "setlist_note": "리스아니! LIVE on TOKYO ANIME MUSIC HIGHLIGHTS, 5곡",
+      "display": {
+        "title": "MUSIC AWARDS JAPAN WEEK SP LIVE"
       }
     },
     {
@@ -733,7 +1358,7 @@
       "venue": "ぴあアリーナMM",
       "city": "요코하마",
       "capacity": 12000,
-      "setlist_status": "none",
+      "setlist_status": "upcoming",
       "setlist": [],
       "encore": [],
       "weather": null
@@ -747,7 +1372,7 @@
       "venue": "ぴあアリーナMM",
       "city": "요코하마",
       "capacity": 12000,
-      "setlist_status": "none",
+      "setlist_status": "upcoming",
       "setlist": [],
       "encore": [],
       "weather": null
@@ -761,10 +1386,17 @@
       "venue": "国営ひたち海浜公園",
       "city": "이바라키 히타치나카",
       "capacity": null,
-      "setlist_status": "none",
+      "setlist_status": "upcoming",
       "setlist": [],
       "encore": [],
-      "weather": null
+      "weather": null,
+      "display": {
+        "city": "이바라키"
+      }
     }
-  ]
+  ],
+  "schema": {
+    "display": "index.html 렌더용 축약 오버라이드. 값이 있으면 본 필드 대신 사용(generate_html.py).",
+    "source": "각 공연 setlist의 대조 출처 URL(2026-07-14 전수검증)."
+  }
 }
