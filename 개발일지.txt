@@ -18,6 +18,12 @@ others — 개발일지
   - our_notes_profile: 캐릭터 프로필 대시보드(밴드별 테마색). CSV→HTML.
   - kimchikura: 오프라인 공연(김치쿠라) 안내 사이트. fetch 없이 JS 전역주입이라
     file:// 로도 열림.
+  - mygo_live: MyGO 라이브 전체 이력/세트리스트 요약 페이지.
+    mygo_lives.json(단일 소스) → generate_html.py → index.html 의 LIVES 배열 갱신.
+    ※ 데이터는 반드시 JSON만 고치고 생성기를 돌릴 것 (예전엔 HTML에 직접 하드코딩돼
+      JSON과 이중 관리였음 → 2026-07-14 템플릿화로 해소).
+    index.html 의 LIVES 는 // <LIVES:AUTO-GENERATED> 마커 사이만 교체됨.
+    JSON 의 display{} 는 렌더용 축약 오버라이드(타이틀/venue/city/tour 등).
 
 ■ 주요 결정 및 이유
   - "작은 것들은 한 레포"로 정리 → 관리/배포 단순화.
