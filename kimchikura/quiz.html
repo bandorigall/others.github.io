@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3초 곡 퀴즈 · KIMCHIKURA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/include.js"></script>
+  <script src="quiz/quizdata.js"></script>
+  <style>
+    .quiz-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 28px 24px; max-width: 640px; margin: 0 auto;
+    }
+    .quiz-progress { color: var(--text-muted); font-size: .9rem; font-weight: 700; letter-spacing: .03em; }
+    .quiz-score { float: right; color: var(--accent-strong); font-weight: 800; }
+    .quiz-bar { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin: 12px 0 26px; }
+    .quiz-bar > i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+
+    .play-zone { text-align: center; margin-bottom: 28px; }
+    .play-btn {
+      cursor: pointer; border: none; border-radius: 99px;
+      width: 96px; height: 96px; font-size: 2.4rem;
+      background: var(--accent); color: #fff; box-shadow: var(--shadow);
+      transition: transform .12s, background .15s; line-height: 1;
+    }
+    .play-btn:hover { background: var(--accent-strong); }
+    .play-btn:active { transform: scale(.93); }
+    .play-btn.playing { animation: pulse 1s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(79,192,227,.5);} 50%{ box-shadow: 0 0 0 16px rgba(79,192,227,0);} }
+    .play-hint { color: var(--text-muted); font-size: .85rem; margin-top: 12px; }
+
+    .opt-list { display: flex; flex-direction: column; gap: 10px; }
+    .opt {
+      cursor: pointer; text-align: left; width: 100%;
+      background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 14px 16px; font-size: .98rem; font-weight: 600;
+      font-family: inherit; transition: background .12s, border-color .12s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .opt:hover:not(:disabled) { background: var(--border); }
+    .opt:disabled { cursor: default; }
+    .opt .kr { color: var(--text-muted); font-weight: 500; font-size: .85rem; }
+    .opt.correct { background: #16351f; border-color: #2f7d43; color: #b6f0c4; }
+    .opt.wrong { background: #3a1b1b; border-color: #7d2f2f; color: #f0b6b6; }
+    .opt .mark { margin-left: auto; font-weight: 800; }
+
+    .next-row { margin-top: 22px; text-align: right; min-height: 44px; }
+    #next-btn { display: none; }
+
+    .result { text-align: center; }
+    .result .big { font-size: 3rem; font-weight: 800; color: var(--accent-strong); margin: 8px 0; }
+    .result .msg { color: var(--text-muted); margin-bottom: 24px; }
+    .review { text-align: left; margin: 20px 0; }
+    .review .ri { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .9rem; }
+    .review .ri.ok { color: #b6f0c4; } .review .ri.no { color: #f0b6b6; }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <section>
+      <h2 class="section-title">3초 곡 퀴즈</h2>
+      <p class="subtitle">모르포니카 곡을 3초만 듣고 맞혀보세요. 5지선다 · 총 10문제 · 매번 랜덤!</p>
+    </section>
+
+    <section>
+      <div class="quiz-card" id="card"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">모르포니카 발매곡 기반 · 각 3초 클립</footer>
+
+<script src="nav.js"></script>
+<script>
+(function () {
+  "use strict";
+  var SONGS = window.QUIZ_SONGS || [];
+  var N_Q = 10, N_OPT = 5;
+  var card = document.getElementById("card");
+  var quiz = [], idx = 0, score = 0, answered = false, audio = null, history = [];
+
+  function shuffle(a) { a = a.slice(); for (var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+  function buildQuiz() {
+    var pool = shuffle(SONGS);
+    var picks = pool.slice(0, Math.min(N_Q, pool.length));
+    quiz = picks.map(function (song) {
+      var clip = "quiz/" + song.clips[Math.floor(Math.random()*song.clips.length)];
+      var others = shuffle(SONGS.filter(function (s){ return s.id !== song.id; })).slice(0, N_OPT-1);
+      var opts = shuffle(others.concat([song]));
+      return { song: song, clip: clip, opts: opts };
+    });
+    idx = 0; score = 0; history = [];
+  }
+
+  function stopAudio() { if (audio){ audio.pause(); audio = null; } }
+
+  function play(clip, btn) {
+    stopAudio();
+    audio = new Audio(clip);
+    if (btn) { btn.classList.add("playing"); audio.addEventListener("ended", function(){ btn.classList.remove("playing"); }); }
+    audio.play().catch(function(){});
+  }
+
+  function renderQuestion() {
+    answered = false;
+    var q = quiz[idx];
+    var pct = Math.round((idx) / quiz.length * 100);
+    var h = '';
+    h += '<div><span class="quiz-progress">문제 ' + (idx+1) + ' / ' + quiz.length + '</span>';
+    h += '<span class="quiz-score">' + score + '점</span></div>';
+    h += '<div class="quiz-bar"><i style="width:' + pct + '%"></i></div>';
+    h += '<div class="play-zone"><button class="play-btn" id="play">▶</button>';
+    h += '<div class="play-hint">버튼을 눌러 3초 듣기 (다시 들을 수 있어요)</div></div>';
+    h += '<div class="opt-list" id="opts"></div>';
+    h += '<div class="next-row"><button class="btn" id="next-btn">다음 →</button></div>';
+    card.innerHTML = h;
+
+    var playBtn = document.getElementById("play");
+    playBtn.addEventListener("click", function(){ play(q.clip, playBtn); });
+
+    var list = document.getElementById("opts");
+    q.opts.forEach(function (opt) {
+      var b = document.createElement("button");
+      b.className = "opt";
+      b.innerHTML = '<span>' + escapeHtml(opt.title) + (opt.titleKo && opt.titleKo!==opt.title ? ' <span class="kr">' + escapeHtml(opt.titleKo) + '</span>' : '') + '</span>';
+      b.addEventListener("click", function(){ choose(opt, b); });
+      list.appendChild(b);
+    });
+
+    var nb = document.getElementById("next-btn");
+    nb.addEventListener("click", nextQuestion);
+
+    // 자동으로 한 번 재생
+    play(q.clip, playBtn);
+  }
+
+  function choose(opt, btn) {
+    if (answered) return;
+    answered = true;
+    var q = quiz[idx];
+    var correct = opt.id === q.song.id;
+    if (correct) score++;
+    history.push({ song: q.song, picked: opt, correct: correct });
+
+    var buttons = document.querySelectorAll("#opts .opt");
+    buttons.forEach(function (b) { b.disabled = true; });
+    // 정답/오답 표시
+    buttons.forEach(function (b, i) {
+      var o = q.opts[i];
+      if (o.id === q.song.id) { b.classList.add("correct"); b.innerHTML += '<span class="mark">✓ 정답</span>'; }
+      else if (b === btn) { b.classList.add("wrong"); b.innerHTML += '<span class="mark">✗</span>'; }
+    });
+    var nb = document.getElementById("next-btn");
+    nb.textContent = (idx === quiz.length - 1) ? "결과 보기 →" : "다음 →";
+    nb.style.display = "inline-block";
+  }
+
+  function nextQuestion() {
+    stopAudio();
+    if (idx === quiz.length - 1) { renderResult(); return; }
+    idx++; renderQuestion();
+  }
+
+  function renderResult() {
+    var pct = Math.round(score / quiz.length * 100);
+    var msg = pct === 100 ? "완벽해요! 진성 모르포니카 팬 인정 🦋"
+            : pct >= 70 ? "훌륭해요! 귀가 좋으시네요 👂"
+            : pct >= 40 ? "나쁘지 않아요! 한 번 더 도전?"
+            : "3초는 짧죠… 다시 들어보러 가요!";
+    var h = '<div class="result">';
+    h += '<div class="quiz-progress">RESULT</div>';
+    h += '<div class="big">' + score + ' / ' + quiz.length + '</div>';
+    h += '<div class="msg">' + msg + '</div>';
+    h += '<div class="review">';
+    history.forEach(function (r, i) {
+      h += '<div class="ri ' + (r.correct?'ok':'no') + '"><span>' + (r.correct?'✓':'✗') + '</span>';
+      h += '<span>' + (i+1) + '. ' + escapeHtml(r.song.title) + '</span>';
+      if (!r.correct) h += '<span style="color:var(--text-muted)">— 내 답: ' + escapeHtml(r.picked.title) + '</span>';
+      h += '</div>';
+    });
+    h += '</div>';
+    h += '<div class="btn-row" style="justify-content:center">';
+    h += '<button class="btn" id="again">다시 풀기</button>';
+    h += '<a class="btn ghost" href="morfonica.html">곡 목록 보기</a></div>';
+    h += '</div>';
+    card.innerHTML = h;
+    document.getElementById("again").addEventListener("click", start);
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function start() { buildQuiz(); renderQuestion(); }
+
+  if (!SONGS.length) { card.innerHTML = '<p class="subtitle">퀴즈 데이터를 불러오지 못했습니다.</p>'; }
+  else start();
+})();
+</script>
+</body>
+</html>
