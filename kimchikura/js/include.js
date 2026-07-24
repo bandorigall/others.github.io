@@ -22,6 +22,7 @@
           '<li><a href="index.html">홈</a></li>' +
           '<li><a href="cast.html">출연진</a></li>' +
           '<li><a href="morfonica.html">모르포니카 곡</a></li>' +
+          '<li><a href="quiz.html">3초 곡 퀴즈</a></li>' +
           '<li><a href="callguide.html">콜 가이드</a></li>' +
           '<li><a href="goods.html">응원물품</a></li>' +
           '<li><a href="fan.html">제단/나눔존</a></li>' +
