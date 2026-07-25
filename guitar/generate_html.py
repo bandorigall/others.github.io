@@ -24,6 +24,179 @@ def e(s):
     return html.escape(str(s), quote=True)
 
 
+# 픽업 해설 사전.
+#   keys : specs["픽업"] 문자열에 이 조각이 들어있으면 매칭 (대소문자 무시)
+#   tags : 사운드 성격 요약 칩
+# 위에 있는 항목이 먼저 매칭된다(구체적인 모델명 → 일반 용어 순으로 둘 것).
+PICKUP_GLOSSARY = [
+    # --- Seymour Duncan ---
+    (["SH-1n", "'59"], "Seymour Duncan SH-1n '59 (넥)",
+     ["빈티지", "저출력", "따뜻함"],
+     "50~60년대 PAF 험버커를 재현한 표준 넥 픽업. 출력이 낮아 깔끔하고 부드럽게 울리며, "
+     "클린 아르페지오나 리드에서 '노래하는' 소리를 낸다. 넥에 넣는 가장 무난한 선택."),
+    (["SH-4"], "Seymour Duncan SH-4 JB (브리지)",
+     ["고출력", "중고역 강조", "록/메탈 표준"],
+     "세상에서 가장 많이 쓰인 브리지 험버커. 중고역이 앞으로 튀어나와 밴드 합주에서 기타가 묻히지 않고, "
+     "게인을 걸면 단단한 리프와 잘 뻗는 리드가 나온다."),
+    (["SH-11"], "Seymour Duncan SH-11 Custom Custom (브리지)",
+     ["중역 두툼", "알니코2", "부드러운 왜곡"],
+     "고출력 Custom 계열이지만 자석을 알니코2로 바꿔 날카로움을 덜어낸 픽업. "
+     "중역이 도톰하고 왜곡이 매끈해서 리드·백킹 어디에 써도 거칠지 않다."),
+    (["SH-16"], "Seymour Duncan SH-16 59/Custom Hybrid (브리지)",
+     ["하이브리드", "중출력", "다재다능"],
+     "'59의 맑은 코일 + Custom의 두꺼운 코일을 한 픽업에 섞은 구조. 클린은 빈티지처럼 투명하고 "
+     "게인을 걸면 모던하게 조여지는, 장르를 안 가리는 성격."),
+    (["SH-2n"], "Seymour Duncan SH-2n Jazz (넥)",
+     ["저출력", "맑고 투명", "선명한 분리"],
+     "'59보다 더 밝고 정돈된 넥 험버커. 코드를 쳐도 음이 뭉치지 않아 재즈·퓨전은 물론 "
+     "빠른 리드에서도 한 음 한 음이 또렷하다."),
+    (["SH-15"], "Seymour Duncan SH-15 Alternative 8 (브리지)",
+     ["초고출력", "알니코8", "공격적"],
+     "알니코 자석 중 가장 센 알니코8을 쓴 초고출력 픽업. 액티브급 펀치를 내면서도 패시브 특유의 "
+     "다이내믹이 남아 있어, 헤비한 리프에서 가슴을 때리는 저역이 나온다."),
+    (["SH-18"], "Seymour Duncan SH-18 Whole Lotta Humbucker",
+     ["빈티지 고출력", "70년대 록"],
+     "70년대 하드록 톤을 노린 픽업. PAF의 질감을 유지한 채 출력만 끌어올려, "
+     "앰프를 살짝 밀어붙였을 때의 걸쭉한 크런치가 특기."),
+    (["SSL-6"], "Seymour Duncan SSL-6 (스트랫 싱글코일)",
+     ["싱글코일", "고출력", "찰랑임 + 힘"],
+     "스트라토캐스터용 싱글코일의 고출력 버전. 싱글 특유의 찰랑거리는 고역은 그대로면서 "
+     "출력이 높아 험버커 기타와 같이 서도 힘이 밀리지 않는다."),
+    (["SHR-1"], "Seymour Duncan SHR-1 Hot Rails (싱글 사이즈 험버커)",
+     ["싱글 크기", "험버커 출력", "잡음 적음"],
+     "싱글코일 자리에 그대로 들어가는 미니 험버커. 겉은 싱글인데 소리는 굵고 잡음(험)이 없어, "
+     "스트랫에서 브리지만 확 헤비하게 만들고 싶을 때 쓴다."),
+    (["SENTIENT"], "Seymour Duncan Sentient (넥)",
+     ["모던", "타이트", "메탈 넥"],
+     "메탈용으로 설계된 넥 험버커. 고게인에서도 저역이 퍼지지 않고 손가락 움직임이 그대로 들려, "
+     "빠른 리드와 클린 아르페지오 둘 다 소화한다."),
+    (["NAZGÛL", "NAZGUL"], "Seymour Duncan Nazgûl (브리지)",
+     ["초고출력", "저음 강력", "다운튜닝"],
+     "다운튜닝 헤비 리프 전용에 가까운 브리지 픽업. 저역이 단단하게 뭉치고 어택이 칼처럼 잘려서, "
+     "빠른 뮤트 리프가 기관총처럼 들린다."),
+    # --- 액티브 / 기타 브랜드 ---
+    (["EMG 707-X", "EMG 707"], "EMG 707-X (7현용 액티브)",
+     ["액티브", "7현 전용", "저역 정리"],
+     "7현의 굵은 저음줄까지 흐트러지지 않게 잡아주는 액티브 픽업. X 시리즈라 기존 EMG보다 "
+     "헤드룸이 넓어 다이내믹이 살아 있고, 노이즈가 거의 없다. 9V 배터리가 필요하다."),
+    (["EMG 81"], "EMG 81 (액티브)",
+     ["액티브", "고출력", "메탈의 대명사"],
+     "메탈 기타 하면 떠오르는 액티브 험버커. 내장 프리앰프로 출력을 밀어 아주 타이트하고 "
+     "노이즈 없는 소리를 내지만, 그만큼 톤 성격이 강해 앰프 색을 덮는 편. 배터리가 필요하다."),
+    (["GH-1G"], "ESP GH-1G",
+     ["패시브", "보급형", "무난한 고출력"],
+     "ESP 보급형 모델에 들어가는 패시브 험버커. 액티브만큼 조여지지는 않지만 "
+     "배터리 없이 무난한 고출력 록 톤을 내준다."),
+    (["Fishman Fluence"], "Fishman Fluence (액티브)",
+     ["액티브", "보이스 전환", "노이즈 없음"],
+     "코일을 감는 대신 인쇄 회로를 층층이 쌓아 만든 신형 픽업. 스위치 하나로 '빈티지 PAF'와 "
+     "'모던 액티브' 두 가지 성격을 오갈 수 있고, 코일 잡음이 원리적으로 없다."),
+    (["MONSTER TONE", "MONSTERTONE"], "SCHECTER MONSTER TONE J (싱글)",
+     ["싱글코일", "고출력", "일본산"],
+     "SCHECTER 재팬의 고출력 싱글코일. 일반 싱글보다 굵고 중역이 차 있어 "
+     "험버커와 섞어 써도 음량 차이가 크게 나지 않는다."),
+    (["SUPER ROCK"], "SCHECTER SUPER ROCK J (험버커)",
+     ["중고출력", "밸런스형", "일본산"],
+     "SCHECTER 재팬의 간판 험버커. 지나치게 세지 않은 출력에 고·중·저역이 고르게 나와, "
+     "팝부터 하드록까지 무난하게 받아준다."),
+    (["Air Norton"], "DiMarzio Air Norton (넥)",
+     ["중출력", "부드러움", "리드 특화"],
+     "에어버킹 구조로 자석 힘을 줄여 음이 더 길게 늘어지는 넥 픽업. "
+     "왜곡을 걸었을 때 기름진 리드 톤이 특기다."),
+    (["True Velvet"], "DiMarzio True Velvet (미들 싱글)",
+     ["싱글코일", "빈티지", "부드러운 고역"],
+     "60년대 싱글코일 감각의 미들 픽업. 고역이 날카롭지 않고 부드러워 "
+     "브리지·넥과 섞는 하프톤에서 특히 예쁘다."),
+    (["Tone Zone"], "DiMarzio Tone Zone (브리지)",
+     ["고출력", "중저역 두툼", "펀치"],
+     "중저역이 유난히 두꺼운 고출력 브리지 험버커. 코드를 치면 벽처럼 밀려오고 "
+     "리드에서는 굵고 뭉근한 톤이 난다."),
+    (["PRS 85/15"], "PRS 85/15 험버커",
+     ["밝고 선명", "코일탭 우수", "만능형"],
+     "PRS가 창업 초기 픽업을 다시 다듬은 자사 험버커. 고역이 시원하게 열려 있고 "
+     "코일을 탭하면 진짜 싱글에 가까운 소리가 나 한 대로 여러 장르를 커버한다."),
+    (["Filter'Tron", "FilterTron", "Filtertron"], "TV Jones Filter'Tron 계열",
+     ["그레치 사운드", "저출력 험버커", "찰랑+두께"],
+     "그레치 특유의 픽업. 험버커인데도 출력이 낮아 싱글처럼 찰랑거리면서 잡음은 적고, "
+     "로커빌리·개러지 록의 그 '트왱'한 소리를 만든다."),
+    (["ESP CUSTOM LAB"], "ESP CUSTOM LAB",
+     ["주문 제작", "사양별 상이"],
+     "ESP 커스텀 오더 시 사용되는 자사 픽업. 주문 사양에 따라 출력·성격이 달라져 "
+     "개체마다 소리가 같지 않다."),
+    (["P-90"], "P-90 (소프바 싱글코일)",
+     ["싱글코일", "굵은 중역", "거친 크런치"],
+     "싱글코일인데 코일이 넓고 납작해 험버커에 가까운 두께를 가진다. "
+     "클린은 통통하고 게인을 걸면 지저분하게 으르렁대는, 개성이 아주 강한 픽업."),
+]
+
+# 일반 용어. 위 모델 해설이 2개 미만일 때만 보조로 덧붙인다.
+GENERAL_GLOSSARY = [
+    (["싱글코일", "싱글 코일", "싱글"], "싱글코일이란?",
+     ["얇고 맑음", "잡음 있음"],
+     "코일 하나로 소리를 받는 가장 오래된 방식. 고역이 밝고 음의 윤곽이 또렷하지만 "
+     "형광등·모니터 근처에서 '지-' 하는 험 노이즈가 잘 탄다. 펜더 계열의 상징."),
+    (["험버커", "Humbucker"], "험버커란?",
+     ["굵고 힘 있음", "잡음 상쇄"],
+     "코일 두 개를 반대로 감아 잡음(험)을 서로 지워(bucking) 없앤 방식. "
+     "싱글보다 출력이 높고 중저역이 두꺼워 왜곡과 궁합이 좋다. 깁슨 계열의 상징."),
+    (["액티브"], "액티브 픽업이란?",
+     ["배터리 필요", "노이즈 최소"],
+     "픽업 안에 소형 프리앰프가 들어 있어 9V 건전지로 신호를 증폭한다. "
+     "출력이 일정하고 잡음이 거의 없어 고게인에 유리한 대신, 배터리가 닳으면 소리가 죽는다."),
+    (["코일탭", "push/pull", "코일 탭"], "코일탭(코일 스플릿)이란?",
+     ["1대 2가지 소리"],
+     "험버커의 코일 하나만 살려 싱글코일처럼 쓰는 스위치. 볼륨 노브를 당기는(push/pull) 식이 흔하며, "
+     "기타 한 대로 굵은 소리와 맑은 소리를 오갈 수 있다."),
+    (["HSH"], "HSH 배열이란?",
+     ["험-싱글-험"],
+     "넥과 브리지에 험버커, 가운데에 싱글코일을 두는 배치. 헤비한 리프와 맑은 커팅을 "
+     "한 대에서 모두 뽑으려는 만능형 구성이다."),
+    (["SSS"], "SSS 배열이란?",
+     ["싱글 3기", "스트랫 표준"],
+     "싱글코일 3개를 얹은 스트라토캐스터의 표준 배치. 5-way 스위치로 픽업을 섞어 "
+     "찰랑거리는 '하프톤'까지 다섯 가지 소리를 만든다."),
+]
+
+
+def pickup_html(pickup_text):
+    """픽업 스펙 문자열에서 해설이 있는 낱말에 말풍선 트리거를 씌운 HTML을 만든다."""
+    if not pickup_text:
+        return ""
+    low = pickup_text.lower()
+    spans = []  # (start, end, note)
+    for keys, name, tags, desc in PICKUP_GLOSSARY + GENERAL_GLOSSARY:
+        hit = None
+        for k in keys:
+            i = low.find(k.lower())
+            if i >= 0:
+                hit = (i, i + len(k))
+                break
+        if not hit:
+            continue
+        # 이미 다른 해설이 덮은 구간이면 건너뛴다(구체적인 모델명 우선).
+        if any(hit[0] < s_end and s_start < hit[1] for s_start, s_end, _ in spans):
+            continue
+        spans.append((hit[0], hit[1],
+                      {"name": name, "tags": tags, "desc": desc}))
+    spans.sort()
+
+    out, cur = [], 0
+    for s, t, note in spans:
+        out.append(e(pickup_text[cur:s]))
+        tips = "".join(f'<span class="pk-tag">{e(x)}</span>' for x in note["tags"])
+        out.append(
+            '<span class="pk-term" tabindex="0" role="button" aria-label="픽업 설명 보기">'
+            f'{e(pickup_text[s:t])}'
+            '<span class="pk-pop" role="tooltip">'
+            f'<b class="pk-name">{e(note["name"])}</b>'
+            f'<span class="pk-tags">{tips}</span>'
+            f'<span class="pk-desc">{e(note["desc"])}</span>'
+            '</span></span>')
+        cur = t
+    out.append(e(pickup_text[cur:]))
+    return "".join(out)
+
+
 def render_thumb(g, band):
     """그리드에 들어가는 작은 카드."""
     badge = "공식" if g.get("official_model") else "추정"
@@ -83,6 +256,7 @@ def detail_payload(bands):
                 "official": bool(g.get("official_model")),
                 "desc": g["desc"],
                 "specs": g.get("specs") or {},
+                "pickupHtml": pickup_html((g.get("specs") or {}).get("픽업", "")),
                 "variants": g.get("variants") or [],
                 "shops": g.get("shops") or [],
                 "charImg": g["char_img"],
@@ -204,6 +378,29 @@ h4.sec{margin:20px 0 8px;font-size:.76rem;letter-spacing:.06em;color:var(--tx3);
 .variants td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}
 .variants td.price{text-align:right;white-space:nowrap;color:var(--accent);font-weight:700;padding-left:12px}
 .empty{font-size:.85rem;color:var(--tx3);margin:0}
+/* 픽업 말풍선 */
+.pk-term{position:relative;cursor:help;color:var(--tx);font-weight:600;
+    border-bottom:1px dashed var(--accent);padding-bottom:1px;outline:none}
+.pk-term:hover,.pk-term:focus-visible,.pk-term.on{color:var(--accent)}
+.pk-pop{position:absolute;left:0;bottom:calc(100% + 9px);z-index:30;
+    width:min(280px,72vw);display:block;visibility:hidden;opacity:0;
+    transform:translateY(4px);transition:opacity .13s,transform .13s,visibility .13s;
+    background:var(--panel2);border:1px solid var(--line);border-radius:10px;
+    box-shadow:0 10px 28px rgba(0,0,0,.45);padding:10px 12px;
+    font-size:.79rem;font-weight:400;line-height:1.65;color:var(--tx2);
+    text-align:left;white-space:normal;cursor:auto;pointer-events:none}
+.pk-pop::after{content:'';position:absolute;top:100%;left:16px;border:7px solid transparent;
+    border-top-color:var(--panel2);filter:drop-shadow(0 1px 0 var(--line))}
+.pk-term:hover>.pk-pop,.pk-term:focus-visible>.pk-pop,.pk-term.on>.pk-pop{
+    visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
+.pk-term.flip>.pk-pop{left:auto;right:0}
+.pk-term.flip>.pk-pop::after{left:auto;right:16px}
+.pk-name{display:block;color:var(--tx);font-size:.82rem;margin-bottom:6px}
+.pk-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.pk-tag{font-size:.67rem;color:var(--tx2);background:var(--panel);
+    border:1px solid var(--line);border-radius:99px;padding:2px 7px;white-space:nowrap}
+.pk-desc{display:block}
+@media (hover:none){.pk-term{cursor:pointer}}
 .shops{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
 .shops a{font-size:.8rem;text-decoration:none;color:var(--tx2);background:var(--panel2);
   border:1px solid var(--line);border-radius:8px;padding:5px 11px;display:inline-block}
@@ -231,7 +428,11 @@ function open(id){
   const d = DATA[id]; if(!d) return;
   lastFocus = document.activeElement;
   const specs = Object.keys(d.specs).length
-    ? '<dl class="specs">'+Object.entries(d.specs).map(([k,v])=>row(k,v)).join('')+'</dl>' : '';
+    ? '<dl class="specs">'+Object.entries(d.specs).map(([k,v])=>
+        (k === '픽업' && d.pickupHtml)
+          ? '<div class="spec-row"><dt>'+esc(k)+'</dt><dd>'+d.pickupHtml+'</dd></div>'
+          : row(k,v)).join('')+'</dl>'
+    : '';
   const vars = d.variants.length
     ? '<div class="tbl-wrap"><table class="variants"><thead><tr><th>모델 / 사양</th><th>가격</th></tr></thead><tbody>'
       + d.variants.map(v=>'<tr><td>'+esc(v.name)+'</td><td class="price">'+esc(v.price)+'</td></tr>').join('')
@@ -264,10 +465,34 @@ function open(id){
     + (specs ? '<h4 class="sec">스펙</h4>'+specs : '')
     + '<h4 class="sec">가격</h4>'+vars
     + (shops ? '<h4 class="sec">공식 / 판매처</h4>'+shops : '');
+  bindPickups();
   bd.classList.add('on');
   document.body.style.overflow='hidden';
   mo.querySelector('.modal-close').focus();
 }
+function bindPickups(){
+  mo.querySelectorAll('.pk-term').forEach(el=>{
+    el.addEventListener('click',ev=>{
+      ev.stopPropagation();
+      const was = el.classList.contains('on');
+      mo.querySelectorAll('.pk-term.on').forEach(o=>o.classList.remove('on'));
+      if(!was) el.classList.add('on');
+    });
+    // 말풍선이 화면 밖으로 나가면 오른쪽 기준으로 뒤집는다.
+    const fix = ()=>{
+      el.classList.remove('flip');
+      const r = el.querySelector('.pk-pop').getBoundingClientRect();
+      if(r.right > window.innerWidth - 8) el.classList.add('flip');
+    };
+    el.addEventListener('mouseenter',fix);
+    el.addEventListener('click',fix);
+    el.addEventListener('focus',fix);
+  });
+}
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.pk-term.on').forEach(o=>o.classList.remove('on'));
+});
+
 function close(){
   bd.classList.remove('on');
   document.body.style.overflow='';
