@@ -533,6 +533,47 @@
             "text": "키쿠타니 뮤직 RAS 특설 사이트",
             "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j7.html"
           }
+        },
+        {
+          "char": "朝日六花 (LOCK)",
+          "char_ko": "아사히 롯카 (LOCK) — 이전 사용기",
+          "part": "Gt.",
+          "brand": ".strandberg*",
+          "model": "Boden OS 6 (Original Series) — Blue",
+          "official_model": false,
+          "desc": "CHU²에게 시그니처 모델(Boden J6 RAS LOCK)을 받기 전부터 쓰던 기타. 작중에서 어릴 적 악기점 쇼윈도의 스트란드베르그를 보고 반해, 농사일을 도우며 모은 돈으로 직접 산 것이라는 설정이다. 콜라보 사양이 아닌 카탈로그 기종 그대로이지만, 블루 계열 피니시 + 헤드리스 + 팬드 프렛이라는 실루엣은 동일해서 J6 RAS LOCK이 이 라인을 베이스로 만들어진 이유가 된다. 정확한 색상 표기는 작중 작화 기준 추정.",
+          "specs": {
+            "형식": "헤드리스, 팬드 프렛(멀티스케일)",
+            "바디": "챔버드 Swamp Ash + 플레임 메이플 탑 (블루 스테인)",
+            "넥": "Roasted Maple (EndurNeck 비대칭 그립)",
+            "지판": "Roasted Maple",
+            "픽업": "Seymour Duncan 험버커 2기 (패시브)",
+            "브리지": "strandberg EGS 시리즈 (개별 새들)",
+            "기타": "OS = 해외 생산 보급 라인. 약 2.3kg 전후의 초경량 설계"
+          },
+          "variants": [
+            {
+              "name": "strandberg Boden OS 6 (일반 카탈로그 모델, 단종)",
+              "price": "출시가 약 $1,800 / 중고 유통"
+            }
+          ],
+          "shops": [
+            {
+              "name": ".strandberg* 공식",
+              "url": "https://strandbergguitars.com/"
+            },
+            {
+              "name": "Reverb (중고 시세)",
+              "url": "https://reverb.com/p/strandberg-boden-os-6"
+            }
+          ],
+          "id": "lock_orig",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/raise-a-suilen/img_list_lock.webp",
+          "guitar_img": "img/lock_orig.jpg",
+          "img_credit": {
+            "text": "The Music Zoo 제품 이미지 (Boden OS 6 Blue)",
+            "url": "https://www.themusiczoo.com/products/strandberg-boden-os-6-electric-guitar-blue"
+          }
         }
       ]
     },
