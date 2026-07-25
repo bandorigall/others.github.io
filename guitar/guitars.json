@@ -638,7 +638,7 @@
           "brand": "ESP",
           "model": "POTBELLY Rāna",
           "official_model": true,
-          "desc": "ESP 오리지널 기종 POTBELLY 기반. 강한 하드 에이징(레릭) 마감이 최대 특징. 메이플 지판 + Fish Eye 포지션 마크. ESP 사양 정가가 밴드리 콜라보 중 최고가.",
+          "desc": "ESP 오리지널 기종 POTBELLY 기반. 강한 하드 에이징(레릭) 마감이 최대 특징. 메이플 지판 + Fish Eye 포지션 마크. ESP 사양 정가가 뱅드림 콜라보 중 최고가.",
           "specs": {
             "바디": "Flamed Maple top / Mahogany back (FM) 또는 Plain Maple (PM)",
             "넥": "Mahogany (딥 조인트)",
@@ -819,7 +819,7 @@
             "구조": "Sound Reservoir 중공 바디 + CT System Type-3",
             "픽업": "ESP CUSTOM LAB (사양에 따라 Seymour Duncan)",
             "페그": "GOTOH MG-T 락킹 튜너",
-            "비고": "밴드리 콜라보 모델은 미발매 — 작중기는 ESP THROBBER 기반"
+            "비고": "뱅드림 콜라보 모델은 미발매 — 작중기는 ESP THROBBER 기반"
           },
           "variants": [
             {
@@ -908,7 +908,7 @@
           "brand": "Ibanez",
           "model": "j.custom RG8570",
           "official_model": false,
-          "desc": "아이바네즈 최상위 라인 j.custom의 RG. 붉은 플레임 메이플 탑 + 얇은 슈퍼 위저드 넥 + Edge-Zero 트레몰로로, 밴드리 캐릭터 중 가장 하이게인·테크니컬 지향. 자신감 넘치는 작곡 담당이라는 캐릭터와 잘 맞는 선택.",
+          "desc": "아이바네즈 최상위 라인 j.custom의 RG. 붉은 플레임 메이플 탑 + 얇은 슈퍼 위저드 넥 + Edge-Zero 트레몰로로, 뱅드림 캐릭터 중 가장 하이게인·테크니컬 지향. 자신감 넘치는 작곡 담당이라는 캐릭터와 잘 맞는 선택.",
           "specs": {
             "바디": "African Mahogany + AAA Flamed Maple 4mm 탑",
             "넥": "Super Wizard, Maple/Wenge 5피스",
@@ -951,7 +951,7 @@
           "brand": "PRS (Paul Reed Smith)",
           "model": "Custom 24",
           "official_model": false,
-          "desc": "PRS의 간판 기종 Custom 24. 블루 계열 플레임 메이플 탑의 카브드 더블컷 바디에 버드 인레이가 특징. 차분하고 어른스러운 캐릭터에 맞게 밴드리 기타 중 가장 '정통 하이엔드' 선택.",
+          "desc": "PRS의 간판 기종 Custom 24. 블루 계열 플레임 메이플 탑의 카브드 더블컷 바디에 버드 인레이가 특징. 차분하고 어른스러운 캐릭터에 맞게 뱅드림 기타 중 가장 '정통 하이엔드' 선택.",
           "specs": {
             "바디": "Mahogany + Figured Maple 카브드 탑",
             "넥": "Mahogany (Pattern Thin 등 카브 선택)",
@@ -1007,7 +1007,7 @@
           "brand": "Fender",
           "model": "Telecaster — Butterscotch Blonde",
           "official_model": false,
-          "desc": "버터스카치 블론드 바디 + 블랙 픽가드 + 메이플 원피스 넥이라는, 1950년대 초기 텔레캐스터의 상징적인 조합. 一家Dumb Rock!은 드럼·키보드를 뺀 전원이 펜더 악기를 쓰며, 헤드스톡에 펜더 로고가 선명히 그려져 있어 펜더 본사와 정식 라이선스를 맺은 것으로 보인다. 밴드리 시리즈 최초 사례.",
+          "desc": "버터스카치 블론드 바디 + 블랙 픽가드 + 메이플 원피스 넥이라는, 1950년대 초기 텔레캐스터의 상징적인 조합. 一家Dumb Rock!은 드럼·키보드를 뺀 전원이 펜더 악기를 쓰며, 헤드스톡에 펜더 로고가 선명히 그려져 있어 펜더 본사와 정식 라이선스를 맺은 것으로 보인다. 뱅드림 시리즈 최초 사례.",
           "specs": {
             "바디": "Ash / Alder (라인에 따라 상이)",
             "넥": "Maple 원피스 (볼트온)",
