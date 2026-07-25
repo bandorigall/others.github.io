@@ -488,6 +488,51 @@
             "text": "키쿠타니 뮤직 RAS 특설 사이트",
             "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j6.html"
           }
+        },
+        {
+          "char": "朝日六花 (LOCK)",
+          "char_ko": "아사히 롯카 (LOCK) — 7현",
+          "part": "Gt.",
+          "brand": ".strandberg*",
+          "model": "Boden J7 RAS LOCK — Caribbean Light Blue",
+          "official_model": true,
+          "desc": "J6와 같은 컬러·헤드폰 인레이를 쓰는 7현 사양. 6현판과 달리 바디가 앨더(무게감 있는 저역)이고 픽업도 EMG 707-X 액티브로 바뀌어, 다운튜닝·헤비한 RAS 사운드에 맞춘 구성이다.",
+          "specs": {
+            "현 수": "7현",
+            "바디": "Alder + 5A 퀼티드 메이플 베니어 탑 (백: 솔리드 블랙)",
+            "넥": "Roasted Maple",
+            "지판": "Maple, 플레임 메이플 바인딩 / 스테인리스 프렛",
+            "픽업": "EMG 707-X (액티브)",
+            "브리지": "고정식 (블랙 하드웨어)",
+            "기타": "12프렛 헤드폰 축광 인레이, 골드 실크스크린 로고 / 전용 슬림 기그백 동봉"
+          },
+          "variants": [
+            {
+              "name": "strandberg Boden J7 RAS LOCK (7현, 상위 모델)",
+              "price": "¥561,000 (세금포함)"
+            }
+          ],
+          "shops": [
+            {
+              "name": "키쿠타니 뮤직 RAS 특설 사이트",
+              "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j7.html"
+            },
+            {
+              "name": "쿠로사와 악기",
+              "url": "https://shop.kurosawagakki.com/items/2785068"
+            },
+            {
+              "name": "이케베 악기",
+              "url": "https://www.ikebe-gakki.com/Form/Product/ProductDetail.aspx?shop=0&pid=689196&bid=ec"
+            }
+          ],
+          "id": "lock7",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/raise-a-suilen/img_list_lock.webp",
+          "guitar_img": "img/lock7.jpg",
+          "img_credit": {
+            "text": "키쿠타니 뮤직 RAS 특설 사이트",
+            "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j7.html"
+          }
         }
       ]
     },
