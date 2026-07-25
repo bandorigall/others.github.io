@@ -43,3 +43,62 @@ others — 개발일지
     루트에서 git_auto.sh 로 커밋/푸시.
   - mygocenter는 로컬 venv(d:\venv_dev) 전제(run.bat). yt-dlp 필요.
   - mbti site/는 빌드 불필요(데이터 갱신 시에만 build_site_data.py).
+
+■ guitar (2026-07-26 신규)
+  12밴드 기타 담당 캐릭터 19명의 사용 기타 도감.
+  guitars.json(단일 소스) → generate_html.py → index.html + img/.
+
+  [현재 상태]
+    - 19명 전원 데이터 완비(모델/스펙/픽업/가격/판매처).
+    - 기타 사진 18/19 확보(img/ 로컬). 히카와 히나만 없음 — 모델 자체가
+      미특정 커스텀이라 대응 실물이 없음. guitar_img="" 로 두면 자동 안내 표시.
+    - 캐릭터 이미지 19/19 (bang-dream.com 공식 원격 링크).
+    - UI: 썸네일 그리드 → 클릭 시 모달(스펙/가격/판매처/사진출처).
+
+  [다음 할 일]
+    - 신규 3밴드(무겐다이/millsage/일가덤락) 악기 콜라보가 정식 발매되면
+      official_model 을 true 로 바꾸고 가격·판매처 갱신.
+    - 히나 모델이 특정되면 사진 추가.
+
+  [결정사항]
+    - 데이터는 반드시 guitars.json 만 고치고 generate_html.py 재실행.
+      HTML 직접 수정 금지(생성물).
+    - official_model 플래그로 '공식 콜라보 발매품 / 작화 기반 추정'을 구분해
+      뱃지 표시. 추정은 추정이라고 명시하는 것을 원칙으로 함.
+    - 신규 3밴드는 공식 단체 아트의 악기 형태 판독 + 나무위키 캐릭터 문서의
+      '사용 악기' 항목을 교차검증해 확정(퍼스널 컬러·머리색으로 인물 매칭).
+    - 이미지는 로컬 저장 원칙(핫링크는 깨지므로). 단 캐릭터 이미지는
+      공식 사이트 링크 유지.
+    - Commons(CC) 이미지는 저작자·라이선스 표기가 조건 → img_credit 필드에
+      담고 모달에 링크로 노출. 제조사 이미지도 같은 방식으로 출처 표기.
+
+  [수집 결과 요약]
+    ESP 공식 콜라보 : 카스미(RANDOM STAR) 타에(SNAPPER) 사요(M-II SAYO)
+                      토우코(ARROW FR TOKO) 아논(ULTRATONE) 라나(POTBELLY)
+    SCHECTER 공식   : 우이카(AC-AR-07 Doloris) 무츠미(AC-EX-7 Mortis)
+    strandberg      : 롯카(Boden J6 RAS LOCK)
+    실기 특정(비공식): 란(Gibson LP Special) 모카(SCHECTER BH-1-STD-24 Deep Blue)
+                      카오루(Gretsch White Falcon) 히나(미특정)
+    신규 3밴드      : 노노카(ESP THROBBER-STD) 리츠(ESP STREAM-GT)
+                      나츠메(Ibanez j.custom RG8570) 나기(PRS Custom 24)
+                      라이카(Fender Tele 버터스카치) 미쿠(Fender Strat 캔디애플레드)
+                      ※ 일가덤락은 드럼·키보드 제외 전원 펜더(헤드스톡 로고 있음)
+
+  [함정/메모]
+    - 若葉睦(모르티스) 모델은 '미발매'가 아님. 2025년 SCHECTER 정식 발매.
+      AC-EX-7-AveMujica/Mortis/SIG ¥748,000 / BC-AveMujica/Mortis ¥209,000.
+    - namu.wiki 는 WebFetch 403. curl + 브라우저 UA 헤더로 우회해야 읽힘.
+    - bang-dream.com 캐릭터 이미지 패턴:
+      .../assets/webp/common/artist/{밴드슬러그}/img_list_{이름슬러그}.webp
+      무겐다이만 _01/_02 접미사. Ave Mujica 슬러그=avemujica, 덤락=ikka-dumb-rock.
+    - bushimo.jp(Our Notes) 이미지는 curl 직접 접근 차단됨(228바이트 에러페이지).
+    - 윈도 파일시스템은 대소문자 구분 안 함 → curl 로 xxx.png 와 XXX.png 를
+      연속 받으면 뒤 응답(404 본문)이 앞 파일을 덮어씀. 주의.
+    - 표기 통일: 애프터글로우 / 일가덤락 / 키리가야 토우코 / 아사히 롯카 / 돌로리스.
+
+  [관련 파일]
+    others/guitar/guitars.json        데이터 단일 소스
+    others/guitar/generate_html.py    생성기 (python generate_html.py)
+    others/guitar/index.html          생성물 (직접 수정 금지)
+    others/guitar/img/*.jpg           기타 사진 (파일명 = guitarist id)
+    others/guitar/img/SOURCES.txt     사진 출처·라이선스 일람

@@ -83,7 +83,10 @@
   var SONGS = window.QUIZ_SONGS || [];
   var N_Q = 10, N_OPT = 5;
   var card = document.getElementById("card");
-  var quiz = [], idx = 0, score = 0, answered = false, audio = null, history = [];
+  var quiz = [], idx = 0, score = 0, answered = false, history = [];
+  var audio = new Audio();          // 재사용할 오디오 엘리먼트 하나
+  var curBtn = null;
+  audio.addEventListener("ended", function () { if (curBtn) curBtn.classList.remove("playing"); });
 
   function shuffle(a) { a = a.slice(); for (var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
 
@@ -99,13 +102,17 @@
     idx = 0; score = 0; history = [];
   }
 
-  function stopAudio() { if (audio){ audio.pause(); audio = null; } }
+  function stopAudio() { audio.pause(); if (curBtn) curBtn.classList.remove("playing"); }
 
   function play(clip, btn) {
-    stopAudio();
-    audio = new Audio(clip);
-    if (btn) { btn.classList.add("playing"); audio.addEventListener("ended", function(){ btn.classList.remove("playing"); }); }
-    audio.play().catch(function(){});
+    audio.pause();
+    // 같은 곡이면 src 재설정 없이 처음으로 되감기(더 빠르고 안정적)
+    var abs = new URL(clip, location.href).href;
+    if (audio.src !== abs) audio.src = clip;
+    audio.currentTime = 0;
+    curBtn = btn || null;
+    if (curBtn) curBtn.classList.add("playing");
+    audio.play().catch(function(){ if (curBtn) curBtn.classList.remove("playing"); });
   }
 
   function renderQuestion() {
