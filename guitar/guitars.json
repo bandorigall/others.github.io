@@ -1,0 +1,1014 @@
+{
+  "meta": {
+    "title": "뱅드림 기타 도감",
+    "subtitle": "12밴드 기타 담당 캐릭터가 쓰는 기타 총정리",
+    "updated": "2026-07-26",
+    "note": "가격은 조사 시점(2026-07) 일본 내 정가/세금포함 기준이며 환율·시기에 따라 달라집니다. '공식 콜라보 모델'은 실제 발매된 시그니처 기타, '비공식/추정'은 작중 작화로 실기를 특정한 것입니다. 신규 3밴드(무겐다이·millsage·일가덤락)는 공식 아트의 악기 형태와 나무위키 기재 정보를 교차검증해 정리했습니다.",
+    "img_note": "캐릭터 이미지는 BanG Dream! 공식 사이트 링크, 기타 이미지는 img/ 폴더의 로컬 파일입니다."
+  },
+  "bands": [
+    {
+      "id": "poppinparty",
+      "name": "Poppin'Party",
+      "name_ko": "포핀파티",
+      "color": "#ff5b8d",
+      "official": "https://bang-dream.com/artist/poppinparty/",
+      "guitarists": [
+        {
+          "char": "戸山香澄",
+          "char_ko": "토야마 카스미",
+          "part": "Gt. & Vo.",
+          "brand": "ESP",
+          "model": "RANDOM STAR Kasumi",
+          "official_model": true,
+          "desc": "ESP의 별 모양 바디 'RANDOM STAR'를 베이스로 한 시그니처. 바디와 헤드에 LED가 들어가는 -LED- 사양이 상징. 헤드는 로켓형이 아닌 6-in-line 샤프 헤드로 변경.",
+          "specs": {
+            "바디": "Alder",
+            "넥": "Hard Maple 3P (볼트온)",
+            "지판": "Rosewood, 스타 인레이",
+            "픽업": "Seymour Duncan SH-1n / SH-4 (험버커 2기)",
+            "브리지": "GOTOH"
+          },
+          "variants": [
+            {
+              "name": "ESP RANDOM STAR Kasumi III -LED-",
+              "price": "¥957,000"
+            },
+            {
+              "name": "ESP RANDOM STAR Kasumi III",
+              "price": "¥715,000"
+            },
+            {
+              "name": "ESP RANDOM STAR Kasumi -LED-",
+              "price": "¥935,000"
+            },
+            {
+              "name": "ESP RANDOM STAR Kasumi",
+              "price": "¥682,000"
+            },
+            {
+              "name": "BanG Dream! 브랜드 보급형",
+              "price": "¥99,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 (Poppin'Party 시리즈)",
+              "url": "https://espguitars.co.jp/collaborate/10147/"
+            },
+            {
+              "name": "BIGBOSS (ESP 직영)",
+              "url": "https://bigboss.jp/store/products/list?category_id=167"
+            },
+            {
+              "name": "뮤직랜드 KEY",
+              "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-random-star-kasumi"
+            }
+          ],
+          "id": "kasumi",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_toyama-kasumi.webp",
+          "guitar_img": "img/kasumi.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        },
+        {
+          "char": "花園たえ",
+          "char_ko": "하나조노 타에",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "SNAPPER Tae",
+          "official_model": true,
+          "desc": "ESP 오리지널 스트랫 타입 'SNAPPER' 기반. 표준 색이 아닌 라이트 블루 커스텀 컬러 + 미러 픽가드가 특징. 리어는 싱글 사이즈 험버커.",
+          "specs": {
+            "바디": "Roasted Alder",
+            "넥": "Hard Maple",
+            "지판": "Indian Rosewood",
+            "픽업": "Seymour Duncan SSL-6 x2 (프론트/미들) + SHR-1 (리어, 싱글사이즈 험버커)",
+            "브리지": "트레몰로 (II FR은 Floyd Rose)"
+          },
+          "variants": [
+            {
+              "name": "ESP SNAPPER Tae II FR",
+              "price": "¥726,000"
+            },
+            {
+              "name": "ESP SNAPPER Tae",
+              "price": "¥726,000"
+            },
+            {
+              "name": "BanG Dream! 브랜드 보급형",
+              "price": "¥99,000"
+            },
+            {
+              "name": "SNAPPER Tae Mini (미니 사이즈)",
+              "price": "¥48,400 전후"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 (Poppin'Party 시리즈)",
+              "url": "https://espguitars.co.jp/collaborate/10147/"
+            },
+            {
+              "name": "뮤직랜드 KEY",
+              "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-snapper-tae"
+            }
+          ],
+          "id": "tae",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_hanazono-tae.webp",
+          "guitar_img": "img/tae.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "afterglow",
+      "name": "Afterglow",
+      "name_ko": "애프터글로우",
+      "color": "#e2445c",
+      "official": "https://bang-dream.com/artist/afterglow/",
+      "guitarists": [
+        {
+          "char": "美竹蘭",
+          "char_ko": "미타케 란",
+          "part": "Gt. & Vo.",
+          "brand": "Gibson",
+          "model": "Les Paul Special (기반 추정)",
+          "official_model": false,
+          "desc": "ESP 콜라보 기타는 미발매(피크만 발매). 작화상 깁슨 레스폴 스페셜 계열의 플랫탑·더블컷 바디로 보인다. 레스폴 중에서도 저렴한 라인이며, 란의 캐릭터성과 맞물려 팬들 사이에서 정설로 통한다.",
+          "specs": {
+            "바디": "Mahogany (플랫탑, 아치드탑 아님)",
+            "넥": "Mahogany",
+            "지판": "Rosewood",
+            "픽업": "P-90 계열 소프바 싱글 x2 (레스폴 스페셜 표준)",
+            "비고": "공식 스펙 발표 없음 — 팬 추정"
+          },
+          "variants": [
+            {
+              "name": "Gibson Les Paul Special (현행품 참고가)",
+              "price": "약 ¥250,000~ / 국내 200만원대"
+            },
+            {
+              "name": "Epiphone Les Paul Special (입문 대체)",
+              "price": "약 ¥50,000~"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 Afterglow 시리즈 (피크류)",
+              "url": "https://espguitars.co.jp/collaborate/10493/"
+            },
+            {
+              "name": "Gibson 공식",
+              "url": "https://www.gibson.com/"
+            }
+          ],
+          "id": "ran",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_mitake-ran.webp",
+          "guitar_img": "img/ran.jpg",
+          "img_credit": {
+            "text": "Sangandongo / CC BY-SA 3.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File:1960_Les_Paul_Special_Doublecut.jpg"
+          }
+        },
+        {
+          "char": "青葉モカ",
+          "char_ko": "아오바 모카",
+          "part": "Gt.",
+          "brand": "SCHECTER",
+          "model": "BH-1-STD-24 (Deep Blue)",
+          "official_model": false,
+          "desc": "쉑터 재팬의 BH-1 시리즈(스트랫 셰이프, 24프렛) 기반. 딥 블루 바디 + 착색 넥, 픽업 커버를 흰색으로 바꾼 커스텀 사양. 일부 작화에서 헤드가 ESP풍으로 그려져 논란이 있으나 본체는 BH-1로 특정됨.",
+          "specs": {
+            "바디": "Ash",
+            "넥": "Maple (볼트온)",
+            "지판": "Maple",
+            "픽업": "SCHECTER MONSTER TONE J x2 + SUPER ROCK J (SSH), 화이트 커버 커스텀",
+            "비고": "공식 콜라보 모델 아님 — 실기 특정",
+            "브리지": "Wilkinson VG300"
+          },
+          "variants": [
+            {
+              "name": "SCHECTER BH-1-STD-24 (일본제 현행)",
+              "price": "약 ¥190,000~"
+            }
+          ],
+          "shops": [
+            {
+              "name": "SCHECTER 공식 BH-1-STD-24",
+              "url": "https://schecter.co.jp/schecterjapan/496/"
+            },
+            {
+              "name": "ESP 공식 Afterglow 시리즈 (피크류)",
+              "url": "https://espguitars.co.jp/collaborate/10493/"
+            }
+          ],
+          "id": "moca",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_aoba-moca.webp",
+          "guitar_img": "img/moca.jpg",
+          "img_credit": {
+            "text": "SCHECTER 재팬 공식 (BH-1-STD-24 / Deep Blue)",
+            "url": "https://schecter.co.jp/schecterjapan/496/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pastelpalettes",
+      "name": "Pastel*Palettes",
+      "name_ko": "파스파레",
+      "color": "#4fc3f7",
+      "official": "https://bang-dream.com/artist/pastel-palettes/",
+      "guitarists": [
+        {
+          "char": "氷川日菜",
+          "char_ko": "히카와 히나",
+          "part": "Gt.",
+          "brand": "미상 (텔레캐스터 타입)",
+          "model": "Telecaster 계열 커스텀 (추정)",
+          "official_model": false,
+          "desc": "ESP 콜라보는 피크만 존재. 실루엣은 텔레캐스터지만 픽업이 HSH 배열에 픽가드 없는 다이렉트 마운트라 펜더 표준 사양과 다르다. 커스텀 오더 또는 부티크 빌더 제작으로 추정.",
+          "specs": {
+            "바디": "Alder / Ash 계열 (추정)",
+            "넥": "Maple",
+            "지판": "Maple 또는 Rosewood",
+            "픽업": "HSH 배열, 픽가드 없는 다이렉트 마운트",
+            "비고": "실존 모델 미특정 — 팬 추정"
+          },
+          "variants": [
+            {
+              "name": "유사 사양 참고: Fender Player Telecaster HH 등",
+              "price": "약 ¥120,000~"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 Pastel*Palettes 시리즈 (피크류)",
+              "url": "https://espguitars.co.jp/collaborate/10498/"
+            },
+            {
+              "name": "히카와 히나 공식 프로필",
+              "url": "https://bang-dream.com/artist/pastel-palettes/hikawa-hina/"
+            }
+          ],
+          "id": "hina",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/pastel-palettes/img_list_hikawa-hina.webp",
+          "guitar_img": ""
+        }
+      ]
+    },
+    {
+      "id": "roselia",
+      "name": "Roselia",
+      "name_ko": "로젤리아",
+      "color": "#8e6bd8",
+      "official": "https://bang-dream.com/artist/roselia/",
+      "guitarists": [
+        {
+          "char": "氷川紗夜",
+          "char_ko": "히카와 사요",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "M-II SAYO",
+          "official_model": true,
+          "desc": "ESP 대표 기종 M-II 기반. 플레임 메이플 탑 + 앨더 백 라미네이트, 에보니 지판에 12프렛을 중심으로 축광 소재 장미 인레이. 메탈 지향 사운드로 로젤리아 사운드의 축.",
+          "specs": {
+            "바디": "Flame Maple top / Alder back (ROSELIA SAYO는 Basswood back)",
+            "넥": "Hard Maple 3P (셋넥)",
+            "지판": "Ebony, 축광 장미 인레이",
+            "픽업": "Seymour Duncan SENTIENT / NAZGÛL (구 M-II ROSELIA SAYO는 EMG 81 x2)",
+            "브리지": "GOTOH GE103B-T / FR 사양은 Floyd Rose + EVH D-Tuna"
+          },
+          "variants": [
+            {
+              "name": "ESP M-II SAYO II",
+              "price": "¥891,000"
+            },
+            {
+              "name": "ESP M-II SAYO II FR",
+              "price": "¥1,001,000"
+            },
+            {
+              "name": "ESP M-II ROSELIA SAYO (EMG 81)",
+              "price": "¥957,000"
+            },
+            {
+              "name": "BanG Dream! M-II SAYO (보급형, GH-1G x2)",
+              "price": "¥110,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 (Roselia 시리즈)",
+              "url": "https://espguitars.co.jp/collaborate/10179/"
+            },
+            {
+              "name": "BIGBOSS (ESP 직영)",
+              "url": "https://bigboss.jp/store/products/detail/8901"
+            },
+            {
+              "name": "이케베 악기",
+              "url": "https://www.ikebe-gakki.com/"
+            }
+          ],
+          "id": "sayo",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/roselia/img_list_hikawa-sayo.webp",
+          "guitar_img": "img/sayo.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hellohappyworld",
+      "name": "ハロー、ハッピーワールド！",
+      "name_ko": "하로하피",
+      "color": "#ffb300",
+      "official": "https://bang-dream.com/artist/hello-happy-world/",
+      "guitarists": [
+        {
+          "char": "瀬田薫",
+          "char_ko": "세타 카오루",
+          "part": "Gt.",
+          "brand": "Gretsch",
+          "model": "White Falcon (더블컷 DC 사양, 추정)",
+          "official_model": false,
+          "desc": "ESP 콜라보는 피크만 존재. 작화의 화이트 할로우바디 + 골드 하드웨어는 그레치 최상급기 White Falcon의 더블컷 사양과 일치. 일부 아트에서는 Gibson ES-335 계열로 그려지기도 한다.",
+          "specs": {
+            "바디": "Maple 할로우 바디 (화이트 피니시)",
+            "넥": "Maple",
+            "지판": "Ebony, 골드 스파클 바인딩",
+            "픽업": "TV Jones Filter'Tron 계열 험버커 x2",
+            "비고": "공식 스펙 발표 없음 — 팬 추정"
+          },
+          "variants": [
+            {
+              "name": "Gretsch G6136TDC / Players Edition White Falcon",
+              "price": "약 ¥600,000~"
+            },
+            {
+              "name": "Gretsch Electromatic Falcon (보급 라인)",
+              "price": "약 ¥150,000~"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 하로하피 시리즈 (피크류)",
+              "url": "https://espguitars.co.jp/collaborate/10500/"
+            },
+            {
+              "name": "Gretsch 공식",
+              "url": "https://www.gretschguitars.com/"
+            }
+          ],
+          "id": "kaoru",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/hello-happy-world/img_list_seta-kaoru.webp",
+          "guitar_img": "img/kaoru.jpg",
+          "img_credit": {
+            "text": "cortneymartin82 / CC BY 2.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File:Gretsch_White_Falcon.jpg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "morfonica",
+      "name": "Morfonica",
+      "name_ko": "모니카",
+      "color": "#5c6bc0",
+      "official": "https://bang-dream.com/artist/morfonica/",
+      "guitarists": [
+        {
+          "char": "桐ヶ谷透子",
+          "char_ko": "키리가야 토우코",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "ARROW FR TOKO",
+          "official_model": true,
+          "desc": "ESP-ARROW FR 기반의 익스플로러/애로우 셰이프. 지판에 재구성석(reconstructed stone)으로 만든 모포니카 나비 인레이. 스루넥 구조 + EMG 81 액티브 픽업으로 공격적인 사운드.",
+          "specs": {
+            "바디": "Alder (보급형은 Basswood)",
+            "넥": "Hard Maple 3P (스루넥)",
+            "지판": "Ebony / Richlite (보급형은 Rosewood), 나비 인레이",
+            "픽업": "EMG 81 (액티브) — 보급형은 GH-1G",
+            "브리지": "Floyd Rose"
+          },
+          "variants": [
+            {
+              "name": "ESP ARROW FR TOKO",
+              "price": "¥858,000"
+            },
+            {
+              "name": "BanG Dream! ARROW FR TOKO (보급형)",
+              "price": "¥107,800"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 (Morfonica 시리즈)",
+              "url": "https://espguitars.co.jp/collaborate/16587/"
+            },
+            {
+              "name": "ESP CRAFT HOUSE 라쿠텐점",
+              "url": "https://item.rakuten.co.jp/esp/10013464/"
+            },
+            {
+              "name": "시마무라 악기",
+              "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0112864"
+            }
+          ],
+          "id": "toko",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/morfonica/img_list_kirigaya-toko.webp",
+          "guitar_img": "img/toko.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ras",
+      "name": "RAISE A SUILEN",
+      "name_ko": "라스",
+      "color": "#ef5350",
+      "official": "https://bang-dream.com/artist/raise-a-suilen/",
+      "guitarists": [
+        {
+          "char": "朝日六花 (LOCK)",
+          "char_ko": "아사히 롯카 (LOCK)",
+          "part": "Gt.",
+          "brand": ".strandberg*",
+          "model": "Boden J6 RAS LOCK — Caribbean Light Blue",
+          "official_model": true,
+          "desc": "헤드리스 + 팬드 프렛(멀티스케일)로 유명한 스트란드베르그 Boden 기반. 12프렛에 RAS를 상징하는 헤드폰 축광 인레이. 'CHU²가 로카에게 맡긴 특별기'라는 설정으로 제작됐다.",
+          "specs": {
+            "바디": "Basswood + 5A 퀼티드 메이플 베니어 탑 (백: 솔리드 블랙)",
+            "넥": "Roasted Maple",
+            "지판": "Maple, 플레임 메이플 바인딩 / 스테인리스 프렛",
+            "픽업": "Fishman Fluence (액티브 배터리 박스)",
+            "컨트롤": "3-way + push/pull 볼륨(코일탭) + 톤",
+            "브리지": "고정식 (블랙 하드웨어)"
+          },
+          "variants": [
+            {
+              "name": "strandberg Boden J6 RAS LOCK (상위 모델)",
+              "price": "¥547,800 (세금포함)"
+            },
+            {
+              "name": "strandberg Boden RAS 6 LOCK (코스트퍼포먼스 모델)",
+              "price": "약 ¥150,000~170,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "키쿠타니 뮤직 RAS 특설 사이트",
+              "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j6.html"
+            },
+            {
+              "name": "이시바시 악기",
+              "url": "https://www.ishibashi.co.jp/ec/product/4580419321782"
+            },
+            {
+              "name": "쿠로사와 악기",
+              "url": "https://www.shopping-kurosawagakki.com/shopdetail/000000195732/"
+            }
+          ],
+          "id": "lock",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/raise-a-suilen/img_list_lock.webp",
+          "guitar_img": "img/lock.jpg",
+          "img_credit": {
+            "text": "키쿠타니 뮤직 RAS 특설 사이트",
+            "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j6.html"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mygo",
+      "name": "MyGO!!!!!",
+      "name_ko": "마이고",
+      "color": "#3f8ecc",
+      "official": "https://bang-dream.com/artist/mygo/",
+      "guitarists": [
+        {
+          "char": "千早愛音",
+          "char_ko": "치하야 아논",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "ULTRATONE Anon",
+          "official_model": true,
+          "desc": "ESP 오리지널 기종 ULTRATONE 기반. 시스루 서프 그린 피니시가 특징이며, 장르를 가리지 않는 범용적인 사운드. 다이아몬드 포지션 마크.",
+          "specs": {
+            "바디": "Alder",
+            "넥": "Hard Maple 3P (볼트온)",
+            "지판": "Rosewood, 다이아몬드 포지션 마크",
+            "픽업": "Seymour Duncan SH-1n '59 / SH-11 Custom Custom",
+            "스케일": "648mm"
+          },
+          "variants": [
+            {
+              "name": "ESP ULTRATONE Anon",
+              "price": "¥625,000"
+            },
+            {
+              "name": "BanG Dream! ULTRATONE Anon (보급형)",
+              "price": "¥78,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 발표 (MyGO!!!!! 모델)",
+              "url": "https://espguitars.co.jp/productinfo/34806/"
+            },
+            {
+              "name": "BIGBOSS (ESP 직영)",
+              "url": "https://bigboss.jp/store/products/detail/30998"
+            },
+            {
+              "name": "뮤직랜드 KEY",
+              "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-ultratone-anon-cp"
+            }
+          ],
+          "id": "anon",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_chihaya-anon.webp",
+          "guitar_img": "img/anon.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        },
+        {
+          "char": "要楽奈",
+          "char_ko": "카나메 라나",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "POTBELLY Rāna",
+          "official_model": true,
+          "desc": "ESP 오리지널 기종 POTBELLY 기반. 강한 하드 에이징(레릭) 마감이 최대 특징. 메이플 지판 + Fish Eye 포지션 마크. ESP 사양 정가가 밴드리 콜라보 중 최고가.",
+          "specs": {
+            "바디": "Flamed Maple top / Mahogany back (FM) 또는 Plain Maple (PM)",
+            "넥": "Mahogany (딥 조인트)",
+            "지판": "Hard Maple, Fish Eye 마커",
+            "픽업": "Seymour Duncan SH-1n '59 / SH-16 59 Custom Hybrid",
+            "마감": "Hard Aged (레릭)"
+          },
+          "variants": [
+            {
+              "name": "ESP POTBELLY Rāna FM",
+              "price": "¥1,570,000"
+            },
+            {
+              "name": "ESP POTBELLY Rāna PM",
+              "price": "¥1,320,000"
+            },
+            {
+              "name": "BanG Dream! POTBELLY Rāna (보급형)",
+              "price": "¥98,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 발표 (MyGO!!!!! 모델)",
+              "url": "https://espguitars.co.jp/productinfo/34806/"
+            },
+            {
+              "name": "ESP 공식 블로그 — MyGO!!!!! 사용 악기 소개",
+              "url": "https://espguitars.co.jp/espblog/2023/06/29/1914/"
+            },
+            {
+              "name": "BIGBOSS (ESP 직영)",
+              "url": "https://bigboss.jp/store/products/detail/35979"
+            }
+          ],
+          "id": "rana",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_kaname-rana.webp",
+          "guitar_img": "img/rana.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 제품 이미지",
+            "url": "https://espguitars.co.jp/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "avemujica",
+      "name": "Ave Mujica",
+      "name_ko": "무지카",
+      "color": "#7e57c2",
+      "official": "https://bang-dream.com/artist/ave-mujica/",
+      "guitarists": [
+        {
+          "char": "三角初華 (Doloris)",
+          "char_ko": "미스미 우이카 (돌로리스)",
+          "part": "Gt. & Vo.",
+          "brand": "SCHECTER",
+          "model": "AC-AR-07-AveMujica/Doloris/SIG",
+          "official_model": true,
+          "desc": "쉑터 AR-07 기반의 7현 시그니처. 블랙 바디에 12프렛 Ave Mujica 로고(톱니바퀴) 인레이. 완전 수주생산으로 납기 약 2년, 1인 1대 한정. 세미하드 케이스 포함.",
+          "specs": {
+            "바디": "Alder",
+            "넥": "Maple (Ultra Access 4-Bolt 조인트)",
+            "지판": "Maple, 305R 라디우스 / Jescar 24프렛",
+            "픽업": "프론트 MONSTERTONE-J-7st (싱글) / 리어 SUPER ROCK-J-7st",
+            "컨트롤": "프론트·리어 코일탭 + 다이렉트 스위치",
+            "스케일": "25 1/2\"",
+            "브리지": "TOM 브리지 (7현)"
+          },
+          "variants": [
+            {
+              "name": "SCHECTER AC-AR-07-AveMujica/Doloris/SIG (Full Spec, 수주생산 약 2년)",
+              "price": "¥748,000 전후"
+            },
+            {
+              "name": "SCHECTER BC-AveMujica/Doloris (콜라보 시리즈)",
+              "price": "¥203,500"
+            }
+          ],
+          "shops": [
+            {
+              "name": "SCHECTER 공식 Ave Mujica 페이지",
+              "url": "https://schecter.co.jp/collaboration/avemujica/"
+            },
+            {
+              "name": "SCHECTER 재팬 공식",
+              "url": "https://www.schecter.co.jp/"
+            },
+            {
+              "name": "BIGBOSS Ave Mujica 카테고리",
+              "url": "https://bigboss.jp/store/products/list?category_id=2316"
+            },
+            {
+              "name": "이케베 악기",
+              "url": "https://www.ikebe-gakki.com/Form/Product/ProductDetail.aspx?shop=0&pid=837626&bid=ec"
+            },
+            {
+              "name": "시마무라 악기",
+              "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0184223"
+            }
+          ],
+          "id": "uika",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_misumi-uika.webp",
+          "guitar_img": "img/uika.jpg",
+          "img_credit": {
+            "text": "SCHECTER 재팬 공식",
+            "url": "https://schecter.co.jp/collaboration/avemujica/"
+          }
+        },
+        {
+          "char": "若葉睦 (Mortis)",
+          "char_ko": "와카바 무츠미 (모르티스)",
+          "part": "Gt.",
+          "brand": "SCHECTER",
+          "model": "AC-EX-7-AveMujica/Mortis/SIG",
+          "official_model": true,
+          "desc": "핑크 글리터(PGL) 7현 시그니처. 지판에 톱니바퀴(Ave Mujica 로고) 인레이가 들어가며, CRYCHIC 시절부터 같은 기타를 계속 쓰고 있다는 설정. 극중·리얼 라이브에서 성우 와타세 유즈키가 쓰는 실기를 재현한 모델로, 2025년 SCHECTER 콜라보로 정식 발매됐다. 완전 수주생산, 납기 약 2년.",
+          "specs": {
+            "바디": "Alder",
+            "넥": "Maple (Ultra Access 4-Bolt 조인트)",
+            "지판": "Maple / 24프렛 (Jescar 프렛와이어)",
+            "픽업": "SCHECTER SUPER ROCK-J-7st (프론트·리어) — BC 사양은 Humbucker-7st",
+            "브리지": "GOTOH 510FX-7 (BC 사양은 고정식 7현 브리지)",
+            "컨트롤": "Volume / Tone(스플릿 톤) / CRL 3-way / 코일 스플릿 미니 스위치",
+            "컬러": "PGL (Pink Glitter)",
+            "스케일": "25 1/2\""
+          },
+          "variants": [
+            {
+              "name": "SCHECTER AC-EX-7-AveMujica/Mortis/SIG (Full Spec, 수주생산 약 2년)",
+              "price": "¥748,000"
+            },
+            {
+              "name": "SCHECTER BC-AveMujica/Mortis (콜라보 시리즈)",
+              "price": "¥209,000"
+            }
+          ],
+          "shops": [
+            {
+              "name": "SCHECTER 공식 Ave Mujica 페이지",
+              "url": "https://schecter.co.jp/collaboration/avemujica/"
+            },
+            {
+              "name": "시마무라 악기",
+              "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0184224"
+            },
+            {
+              "name": "뮤직랜드 KEY",
+              "url": "https://www.musicland.co.jp/fs/musiclandkey/schctr-ac-ex-7-avmjc-mortis-sig"
+            }
+          ],
+          "id": "mutsumi",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_wakaba-mutsumi.webp",
+          "guitar_img": "img/mutsumi.jpg",
+          "img_credit": {
+            "text": "SCHECTER 재팬 공식",
+            "url": "https://schecter.co.jp/collaboration/avemujica/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "yumemita",
+      "name": "夢限大みゅーたいぷ",
+      "name_ko": "무겐다이 뮤타입",
+      "color": "#26c6da",
+      "official": "https://bang-dream.com/artist/yumemita/",
+      "guitarists": [
+        {
+          "char": "宮永ののか",
+          "char_ko": "미야나가 노노카",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "THROBBER-STD",
+          "official_model": false,
+          "desc": "핑크 스파클 피니시의 ESP 오리지널 시리즈 THROBBER. 넥 픽업 부근부터 브리지 아래까지 이어지는 중공 구조 'Sound Reservoir'가 최대 특징으로, 세미어쿠스틱 같은 공기감과 솔리드 기타의 어택·서스테인을 동시에 낸다. 텔레캐스터풍 실루엣. 데뷔 후 처음 일렉을 배웠다는 설정.",
+          "specs": {
+            "구조": "Sound Reservoir 중공 바디 + CT System Type-3",
+            "픽업": "ESP CUSTOM LAB (사양에 따라 Seymour Duncan)",
+            "페그": "GOTOH MG-T 락킹 튜너",
+            "비고": "밴드리 콜라보 모델은 미발매 — 작중기는 ESP THROBBER 기반"
+          },
+          "variants": [
+            {
+              "name": "ESP THROBBER-STD (현행품 참고가)",
+              "price": "약 ¥480,000"
+            },
+            {
+              "name": "GrassRoots THROBBER (보급 라인)",
+              "price": "약 ¥50,000~"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 THROBBER 페이지",
+              "url": "https://espguitars.co.jp/original/throbber/"
+            },
+            {
+              "name": "공식 프로필",
+              "url": "https://bang-dream.com/artist/yumemita/miyanaga-nonoka/"
+            }
+          ],
+          "id": "nonoka",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_miyanaga-nonoka_01.webp",
+          "guitar_img": "img/nonoka.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 (THROBBER-STD)",
+            "url": "https://espguitars.co.jp/original/throbber/"
+          }
+        },
+        {
+          "char": "峰月律",
+          "char_ko": "미네츠키 리츠",
+          "part": "Gt.",
+          "brand": "ESP",
+          "model": "STREAM-GT",
+          "official_model": false,
+          "desc": "퍼플~블루 계열의 ESP 오리지널 시리즈 STREAM-GT. 유선형 바디 라인과 바디 톱·헤드 톱의 단차(step-off)가 시각적 포인트. 리듬 기타 담당으로 밴드 사운드를 차분히 잡아주는 역할.",
+          "specs": {
+            "바디": "Mahogany",
+            "넥": "Hard Maple 3P (셋넥)",
+            "지판": "Ebony (Classic은 Honduras Rosewood)",
+            "픽업": "Seymour Duncan SH-2n / SH-15 (Classic은 SH-18)",
+            "브리지": "TonePros T3BP + GOTOH 510FA"
+          },
+          "variants": [
+            {
+              "name": "ESP STREAM-GT Standard",
+              "price": "¥572,000"
+            },
+            {
+              "name": "ESP STREAM-GT Classic / Custom / Custom FM",
+              "price": "상위 사양, 문의"
+            }
+          ],
+          "shops": [
+            {
+              "name": "ESP 공식 STREAM-GT Standard",
+              "url": "https://espguitars.co.jp/original/streamgt/standard.html"
+            },
+            {
+              "name": "공식 프로필",
+              "url": "https://bang-dream.com/artist/yumemita/minetsuki-ritsu/"
+            }
+          ],
+          "id": "ritsu",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_minetsuki-ritsu_01.webp",
+          "guitar_img": "img/ritsu.jpg",
+          "img_credit": {
+            "text": "ESP GUITARS 공식 (STREAM-GT Standard)",
+            "url": "https://espguitars.co.jp/original/streamgt/standard.html"
+          }
+        }
+      ]
+    },
+    {
+      "id": "millsage",
+      "name": "millsage",
+      "name_ko": "밀싸주",
+      "color": "#aa22ee",
+      "official": "https://bang-dream.com/artist/millsage/",
+      "guitarists": [
+        {
+          "char": "伊沢なつめ",
+          "char_ko": "이자와 나츠메",
+          "part": "Gt.",
+          "brand": "Ibanez",
+          "model": "j.custom RG8570",
+          "official_model": false,
+          "desc": "아이바네즈 최상위 라인 j.custom의 RG. 붉은 플레임 메이플 탑 + 얇은 슈퍼 위저드 넥 + Edge-Zero 트레몰로로, 밴드리 캐릭터 중 가장 하이게인·테크니컬 지향. 자신감 넘치는 작곡 담당이라는 캐릭터와 잘 맞는 선택.",
+          "specs": {
+            "바디": "African Mahogany + AAA Flamed Maple 4mm 탑",
+            "넥": "Super Wizard, Maple/Wenge 5피스",
+            "지판": "바인딩 처리된 Macassar Ebony, Tree of Life 인레이 / 24프렛",
+            "픽업": "DiMarzio Air Norton (넥) / True Velvet (미들) / Tone Zone (브리지), 5-way",
+            "브리지": "Edge-Zero 트레몰로"
+          },
+          "variants": [
+            {
+              "name": "Ibanez j.custom RG8570 (일본 정가, 하드케이스 포함)",
+              "price": "¥506,000"
+            },
+            {
+              "name": "해외가 참고",
+              "price": "약 $2,999~3,499"
+            }
+          ],
+          "shops": [
+            {
+              "name": "Ibanez 공식 RG8570",
+              "url": "https://www.ibanez.com/jp/products/detail/rg8570_00_06.html"
+            },
+            {
+              "name": "millsage 공식",
+              "url": "https://bang-dream.com/artist/millsage/"
+            }
+          ],
+          "id": "natsume",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_izawa-natsume.webp",
+          "guitar_img": "img/natsume.jpg",
+          "img_credit": {
+            "text": "jonXmack / CC BY 2.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File%3AIbanez_RG_Prestige_RG2620.jpg"
+          }
+        },
+        {
+          "char": "琴平凪",
+          "char_ko": "코토히라 나기",
+          "part": "Gt.",
+          "brand": "PRS (Paul Reed Smith)",
+          "model": "Custom 24",
+          "official_model": false,
+          "desc": "PRS의 간판 기종 Custom 24. 블루 계열 플레임 메이플 탑의 카브드 더블컷 바디에 버드 인레이가 특징. 차분하고 어른스러운 캐릭터에 맞게 밴드리 기타 중 가장 '정통 하이엔드' 선택.",
+          "specs": {
+            "바디": "Mahogany + Figured Maple 카브드 탑",
+            "넥": "Mahogany (Pattern Thin 등 카브 선택)",
+            "지판": "Rosewood, 버드 인레이 / 24프렛",
+            "픽업": "PRS 85/15 (TCI 튠) 험버커 2기",
+            "컨트롤": "볼륨 + 5-way 로터리/블레이드 (코일탭 가능)"
+          },
+          "variants": [
+            {
+              "name": "PRS Core Custom 24 (미국 본사 라인)",
+              "price": "약 $4,000대 / 국내 600만원대"
+            },
+            {
+              "name": "PRS S2 Custom 24",
+              "price": "약 $1,700대"
+            },
+            {
+              "name": "PRS SE Custom 24 (입문 라인)",
+              "price": "약 $650~900"
+            }
+          ],
+          "shops": [
+            {
+              "name": "PRS Guitars 공식",
+              "url": "https://prsguitars.com/"
+            },
+            {
+              "name": "millsage 공식",
+              "url": "https://bang-dream.com/artist/millsage/"
+            }
+          ],
+          "id": "nagi",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_kotohira-nagi.webp",
+          "guitar_img": "img/nagi.jpg",
+          "img_credit": {
+            "text": "Rachmaninoff / CC BY-SA 4.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File%3APRS_Custom_24_teal_black_2004%2C_body.jpg"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dumbrock",
+      "name": "一家Dumb Rock!",
+      "name_ko": "일가덤락",
+      "color": "#ff7043",
+      "official": "https://bang-dream.com/artist/",
+      "guitarists": [
+        {
+          "char": "須賀蕾叶",
+          "char_ko": "스가 라이카",
+          "part": "Gt. & Vo.",
+          "brand": "Fender",
+          "model": "Telecaster — Butterscotch Blonde",
+          "official_model": false,
+          "desc": "버터스카치 블론드 바디 + 블랙 픽가드 + 메이플 원피스 넥이라는, 1950년대 초기 텔레캐스터의 상징적인 조합. 一家Dumb Rock!은 드럼·키보드를 뺀 전원이 펜더 악기를 쓰며, 헤드스톡에 펜더 로고가 선명히 그려져 있어 펜더 본사와 정식 라이선스를 맺은 것으로 보인다. 밴드리 시리즈 최초 사례.",
+          "specs": {
+            "바디": "Ash / Alder (라인에 따라 상이)",
+            "넥": "Maple 원피스 (볼트온)",
+            "지판": "Maple",
+            "픽업": "싱글코일 2기 (텔레캐스터 표준 SS)",
+            "브리지": "3-saddle 또는 6-saddle 텔레 브리지"
+          },
+          "variants": [
+            {
+              "name": "Fender American Vintage II 1951 Telecaster (BSB)",
+              "price": "약 ¥400,000대"
+            },
+            {
+              "name": "Fender Player II Telecaster (멕시코 생산)",
+              "price": "약 ¥130,000대"
+            },
+            {
+              "name": "Squier Classic Vibe '50s Telecaster (입문)",
+              "price": "약 ¥60,000대"
+            }
+          ],
+          "shops": [
+            {
+              "name": "Fender 공식",
+              "url": "https://www.fender.com/"
+            },
+            {
+              "name": "Our Notes 공식",
+              "url": "https://bang-dream-on.bushimo.jp/"
+            }
+          ],
+          "id": "raika",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_suga-raika.webp",
+          "guitar_img": "img/raika.jpg",
+          "img_credit": {
+            "text": "John Tuggle from Decatur, Ga, USA / CC BY 2.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File%3ASquier_Classic_Vibe_Telecaster_%2750s_Butterscotch_Blonde_%282011-06-16_00.12.02_by_John_Tuggle%29.jpg"
+          }
+        },
+        {
+          "char": "馬橋心玖",
+          "char_ko": "마하시 미쿠",
+          "part": "Gt. & Vo.",
+          "brand": "Fender",
+          "model": "Stratocaster — Candy Apple Red",
+          "official_model": false,
+          "desc": "캔디 애플 레드 + 화이트 픽가드 + 메이플 지판의 정통 스트라토캐스터. 같은 밴드의 텔레캐스터·재즈베이스와 함께 '펜더 3종 세트'를 이루며, 전부 실제로 국내 악기점에서 흔히 구할 수 있는 양산 컬러라는 점이 이 밴드 기재 설정의 특징.",
+          "specs": {
+            "바디": "Alder",
+            "넥": "Maple (볼트온)",
+            "지판": "Maple",
+            "픽업": "싱글코일 3기 (SSS), 5-way 셀렉터",
+            "브리지": "6-saddle 싱크로나이즈드 트레몰로"
+          },
+          "variants": [
+            {
+              "name": "Fender American Professional II Stratocaster (CAR)",
+              "price": "약 ¥300,000대"
+            },
+            {
+              "name": "Fender Player II Stratocaster",
+              "price": "약 ¥130,000대"
+            },
+            {
+              "name": "Squier Affinity Stratocaster (입문)",
+              "price": "약 ¥40,000대"
+            }
+          ],
+          "shops": [
+            {
+              "name": "Fender 공식",
+              "url": "https://www.fender.com/"
+            },
+            {
+              "name": "Our Notes 공식",
+              "url": "https://bang-dream-on.bushimo.jp/"
+            }
+          ],
+          "id": "miku",
+          "char_img": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_mahashi-miku.webp",
+          "guitar_img": "img/miku.jpg",
+          "img_credit": {
+            "text": "Freebird / CC BY-SA 2.0 (Wikimedia Commons)",
+            "url": "https://commons.wikimedia.org/wiki/File%3ACustom_70s_Stratocaster%2C_Dakota_Red_-_Hard_Relic.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}

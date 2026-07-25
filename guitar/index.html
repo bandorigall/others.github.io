@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>뱅드림 기타 도감</title>
+<meta name="description" content="12밴드 기타 담당 캐릭터가 쓰는 기타 총정리">
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --panel2:#1d212a; --line:#2a2f3a;
+  --tx:#e8eaf0; --tx2:#a3a9b8; --tx3:#6e7686; --shadow:0 12px 40px rgba(0,0,0,.55);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f6f7fa; --panel:#fff; --panel2:#f0f2f7; --line:#e2e5ec;
+         --tx:#1a1d24; --tx2:#525a6b; --tx3:#8b93a3; --shadow:0 12px 40px rgba(20,25,40,.18); }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --panel:#171a21; --panel2:#1d212a; --line:#2a2f3a;
+  --tx:#e8eaf0; --tx2:#a3a9b8; --tx3:#6e7686; --shadow:0 12px 40px rgba(0,0,0,.55);
+}
+:root[data-theme="light"]{
+  --bg:#f6f7fa; --panel:#fff; --panel2:#f0f2f7; --line:#e2e5ec;
+  --tx:#1a1d24; --tx2:#525a6b; --tx3:#8b93a3; --shadow:0 12px 40px rgba(20,25,40,.18);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);
+  font-family:"Pretendard","Noto Sans KR",-apple-system,"Segoe UI",sans-serif;
+  line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px 80px}
+header.top{padding:52px 0 24px;border-bottom:1px solid var(--line);margin-bottom:20px}
+header.top h1{margin:0 0 8px;font-size:2rem;letter-spacing:-.02em}
+header.top p.sub{margin:0;color:var(--tx2)}
+.updated{font-size:.8rem;color:var(--tx3);margin-top:6px}
+header.top p.note{margin:14px 0 0;font-size:.82rem;color:var(--tx3);
+  background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.bandnav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px;
+  position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0}
+.bandnav a{font-size:.82rem;text-decoration:none;color:var(--tx2);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--panel);transition:.15s}
+.bandnav a:hover{color:var(--accent);border-color:var(--accent)}
+.band{margin:0 0 40px;scroll-margin-top:64px}
+.band-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-size:1.3rem;margin:0 0 14px;letter-spacing:-.01em}
+.band-title .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.band-title .orig{font-size:.84rem;color:var(--tx3);font-weight:400}
+.band-link{margin-left:auto;font-size:.78rem;color:var(--tx3);text-decoration:none}
+.band-link:hover{color:var(--accent)}
+
+/* ---- 썸네일 그리드 ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.thumb{all:unset;cursor:pointer;display:flex;flex-direction:column;
+  background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--accent);
+  border-radius:13px;overflow:hidden;transition:transform .12s,border-color .12s,box-shadow .12s}
+.thumb:hover,.thumb:focus-visible{transform:translateY(-3px);box-shadow:var(--shadow);
+  border-color:color-mix(in srgb,var(--accent) 60%,var(--line))}
+.thumb-imgs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.ti{position:relative;background:var(--panel2);aspect-ratio:3/4;overflow:hidden;display:block}
+.ti img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.ti.gt img{object-fit:contain;object-position:center;padding:6px}
+.ti.noimg img{display:none}
+.ti.noimg::after{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:var(--tx3);text-align:center;padding:6px;line-height:1.3}
+.ti.char.noimg::after{content:"이미지\A불러오기 실패";white-space:pre}
+.ti.gt.noimg::after{content:"기타 사진\A없음";white-space:pre}
+.thumb-body{padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px}
+.thumb-name{font-size:.95rem;font-weight:700}
+.thumb-model{font-size:.76rem;color:var(--tx2);line-height:1.35;word-break:break-word}
+.thumb-model b{color:var(--accent)}
+.badge{align-self:flex-start;margin-top:5px;font-size:.68rem;padding:2px 8px;border-radius:999px}
+.badge.official{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent)}
+.badge.fan{background:var(--panel2);color:var(--tx3);border:1px solid var(--line)}
+
+/* ---- 모달 ---- */
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.backdrop.on{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--accent);
+  border-radius:16px;box-shadow:var(--shadow);max-width:840px;width:100%;
+  max-height:88vh;overflow-y:auto;position:relative}
+.modal-close{position:sticky;float:right;top:10px;right:10px;margin:10px 12px 0 0;
+  all:unset;cursor:pointer;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--panel2);color:var(--tx2);font-size:1.1rem;z-index:2}
+.modal-close:hover{color:var(--accent)}
+.modal-in{padding:22px 24px 26px}
+.m-head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+.m-face{width:96px;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--panel2);flex:none}
+.m-face img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.m-who{min-width:0;flex:1}
+.m-band{font-size:.76rem;color:var(--accent);font-weight:700;letter-spacing:.02em}
+.m-who h3{margin:2px 0 2px;font-size:1.45rem;letter-spacing:-.01em}
+.m-jp{margin:0;font-size:.82rem;color:var(--tx3)}
+.part{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:5px;
+  background:var(--panel2);color:var(--tx2);font-size:.72rem}
+.m-model{margin:10px 0 0;font-size:1.05rem;font-weight:700;word-break:break-word}
+.m-model b{color:var(--accent)}
+.m-shot{width:100%;max-height:320px;object-fit:contain;background:var(--panel2);
+  border:1px solid var(--line);border-radius:12px;margin:0 0 16px;display:block;padding:8px}
+.m-shot.noimg{display:flex;align-items:center;justify-content:center;min-height:120px;
+  color:var(--tx3);font-size:.82rem;margin-bottom:16px;border:1px dashed var(--line)}
+.credit{margin:-8px 0 16px;font-size:.74rem;color:var(--tx3);text-align:right}
+.credit a{color:var(--tx3)}
+.credit a:hover{color:var(--accent)}
+.m-desc{margin:0 0 18px;font-size:.9rem;color:var(--tx2)}
+h4.sec{margin:20px 0 8px;font-size:.76rem;letter-spacing:.06em;color:var(--tx3);text-transform:uppercase}
+.specs{margin:0;border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:96px 1fr;gap:12px;
+  padding:8px 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.spec-row dt{color:var(--tx3);margin:0}
+.spec-row dd{margin:0;word-break:break-word}
+.tbl-wrap{overflow-x:auto}
+.variants{width:100%;border-collapse:collapse;font-size:.85rem;min-width:320px}
+.variants th{text-align:left;color:var(--tx3);font-weight:500;font-size:.76rem;
+  padding:5px 0;border-bottom:1px solid var(--line)}
+.variants td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.variants td.price{text-align:right;white-space:nowrap;color:var(--accent);font-weight:700;padding-left:12px}
+.empty{font-size:.85rem;color:var(--tx3);margin:0}
+.shops{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.shops a{font-size:.8rem;text-decoration:none;color:var(--tx2);background:var(--panel2);
+  border:1px solid var(--line);border-radius:8px;padding:5px 11px;display:inline-block}
+.shops a:hover{color:var(--accent);border-color:var(--accent)}
+footer{border-top:1px solid var(--line);padding-top:18px;color:var(--tx3);font-size:.8rem}
+@media (max-width:520px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  header.top h1{font-size:1.55rem}
+  .modal-in{padding:18px 16px 22px}
+  .spec-row{grid-template-columns:80px 1fr}
+  .m-face{width:76px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>뱅드림 기타 도감</h1>
+  <p class="sub">12밴드 기타 담당 캐릭터가 쓰는 기타 총정리</p>
+  <p class="updated">최종 갱신: 2026-07-26 · 카드를 누르면 상세 스펙·가격·판매처가 열립니다</p>
+  <p class="note">가격은 조사 시점(2026-07) 일본 내 정가/세금포함 기준이며 환율·시기에 따라 달라집니다. &#x27;공식 콜라보 모델&#x27;은 실제 발매된 시그니처 기타, &#x27;비공식/추정&#x27;은 작중 작화로 실기를 특정한 것입니다. 신규 3밴드(무겐다이·millsage·일가덤락)는 공식 아트의 악기 형태와 나무위키 기재 정보를 교차검증해 정리했습니다. 캐릭터 이미지는 BanG Dream! 공식 사이트 링크, 기타 이미지는 img/ 폴더의 로컬 파일입니다.</p>
+</header>
+<nav class="bandnav"><a href="#poppinparty" style="--accent:#ff5b8d">포핀파티</a><a href="#afterglow" style="--accent:#e2445c">애프터글로우</a><a href="#pastelpalettes" style="--accent:#4fc3f7">파스파레</a><a href="#roselia" style="--accent:#8e6bd8">로젤리아</a><a href="#hellohappyworld" style="--accent:#ffb300">하로하피</a><a href="#morfonica" style="--accent:#5c6bc0">모니카</a><a href="#ras" style="--accent:#ef5350">라스</a><a href="#mygo" style="--accent:#3f8ecc">마이고</a><a href="#avemujica" style="--accent:#7e57c2">무지카</a><a href="#yumemita" style="--accent:#26c6da">무겐다이 뮤타입</a><a href="#millsage" style="--accent:#aa22ee">밀싸주</a><a href="#dumbrock" style="--accent:#ff7043">일가덤락</a></nav>
+
+    <section class="band" id="poppinparty" style="--accent:#ff5b8d">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">포핀파티</span>
+        <span class="orig">Poppin&#x27;Party</span>
+        <a class="band-link" href="https://bang-dream.com/artist/poppinparty/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="kasumi" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_toyama-kasumi.webp" alt="토야마 카스미"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/kasumi.jpg" alt="RANDOM STAR Kasumi"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">토야마 카스미</span>
+            <span class="thumb-model"><b>ESP</b> RANDOM STAR Kasumi</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="tae" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_hanazono-tae.webp" alt="하나조노 타에"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/tae.jpg" alt="SNAPPER Tae"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">하나조노 타에</span>
+            <span class="thumb-model"><b>ESP</b> SNAPPER Tae</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="afterglow" style="--accent:#e2445c">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">애프터글로우</span>
+        <span class="orig">Afterglow</span>
+        <a class="band-link" href="https://bang-dream.com/artist/afterglow/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="ran" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_mitake-ran.webp" alt="미타케 란"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/ran.jpg" alt="Les Paul Special (기반 추정)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">미타케 란</span>
+            <span class="thumb-model"><b>Gibson</b> Les Paul Special (기반 추정)</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="moca" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_aoba-moca.webp" alt="아오바 모카"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/moca.jpg" alt="BH-1-STD-24 (Deep Blue)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">아오바 모카</span>
+            <span class="thumb-model"><b>SCHECTER</b> BH-1-STD-24 (Deep Blue)</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="pastelpalettes" style="--accent:#4fc3f7">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">파스파레</span>
+        <span class="orig">Pastel*Palettes</span>
+        <a class="band-link" href="https://bang-dream.com/artist/pastel-palettes/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="hina" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/pastel-palettes/img_list_hikawa-hina.webp" alt="히카와 히나"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="" alt="Telecaster 계열 커스텀 (추정)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">히카와 히나</span>
+            <span class="thumb-model"><b>미상 (텔레캐스터 타입)</b> Telecaster 계열 커스텀 (추정)</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="roselia" style="--accent:#8e6bd8">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">로젤리아</span>
+        <span class="orig">Roselia</span>
+        <a class="band-link" href="https://bang-dream.com/artist/roselia/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="sayo" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/roselia/img_list_hikawa-sayo.webp" alt="히카와 사요"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/sayo.jpg" alt="M-II SAYO"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">히카와 사요</span>
+            <span class="thumb-model"><b>ESP</b> M-II SAYO</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="hellohappyworld" style="--accent:#ffb300">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">하로하피</span>
+        <span class="orig">ハロー、ハッピーワールド！</span>
+        <a class="band-link" href="https://bang-dream.com/artist/hello-happy-world/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="kaoru" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/hello-happy-world/img_list_seta-kaoru.webp" alt="세타 카오루"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/kaoru.jpg" alt="White Falcon (더블컷 DC 사양, 추정)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">세타 카오루</span>
+            <span class="thumb-model"><b>Gretsch</b> White Falcon (더블컷 DC 사양, 추정)</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="morfonica" style="--accent:#5c6bc0">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">모니카</span>
+        <span class="orig">Morfonica</span>
+        <a class="band-link" href="https://bang-dream.com/artist/morfonica/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="toko" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/morfonica/img_list_kirigaya-toko.webp" alt="키리가야 토우코"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/toko.jpg" alt="ARROW FR TOKO"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">키리가야 토우코</span>
+            <span class="thumb-model"><b>ESP</b> ARROW FR TOKO</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="ras" style="--accent:#ef5350">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">라스</span>
+        <span class="orig">RAISE A SUILEN</span>
+        <a class="band-link" href="https://bang-dream.com/artist/raise-a-suilen/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="lock" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/raise-a-suilen/img_list_lock.webp" alt="아사히 롯카 (LOCK)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/lock.jpg" alt="Boden J6 RAS LOCK — Caribbean Light Blue"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">아사히 롯카 (LOCK)</span>
+            <span class="thumb-model"><b>.strandberg*</b> Boden J6 RAS LOCK — Caribbean Light Blue</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="mygo" style="--accent:#3f8ecc">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">마이고</span>
+        <span class="orig">MyGO!!!!!</span>
+        <a class="band-link" href="https://bang-dream.com/artist/mygo/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="anon" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_chihaya-anon.webp" alt="치하야 아논"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/anon.jpg" alt="ULTRATONE Anon"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">치하야 아논</span>
+            <span class="thumb-model"><b>ESP</b> ULTRATONE Anon</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="rana" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_kaname-rana.webp" alt="카나메 라나"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/rana.jpg" alt="POTBELLY Rāna"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">카나메 라나</span>
+            <span class="thumb-model"><b>ESP</b> POTBELLY Rāna</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="avemujica" style="--accent:#7e57c2">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">무지카</span>
+        <span class="orig">Ave Mujica</span>
+        <a class="band-link" href="https://bang-dream.com/artist/ave-mujica/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="uika" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_misumi-uika.webp" alt="미스미 우이카 (돌로리스)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/uika.jpg" alt="AC-AR-07-AveMujica/Doloris/SIG"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">미스미 우이카 (돌로리스)</span>
+            <span class="thumb-model"><b>SCHECTER</b> AC-AR-07-AveMujica/Doloris/SIG</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="mutsumi" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_wakaba-mutsumi.webp" alt="와카바 무츠미 (모르티스)"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/mutsumi.jpg" alt="AC-EX-7-AveMujica/Mortis/SIG"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">와카바 무츠미 (모르티스)</span>
+            <span class="thumb-model"><b>SCHECTER</b> AC-EX-7-AveMujica/Mortis/SIG</span>
+            <span class="badge official">공식</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="yumemita" style="--accent:#26c6da">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">무겐다이 뮤타입</span>
+        <span class="orig">夢限大みゅーたいぷ</span>
+        <a class="band-link" href="https://bang-dream.com/artist/yumemita/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="nonoka" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_miyanaga-nonoka_01.webp" alt="미야나가 노노카"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/nonoka.jpg" alt="THROBBER-STD"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">미야나가 노노카</span>
+            <span class="thumb-model"><b>ESP</b> THROBBER-STD</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="ritsu" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_minetsuki-ritsu_01.webp" alt="미네츠키 리츠"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/ritsu.jpg" alt="STREAM-GT"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">미네츠키 리츠</span>
+            <span class="thumb-model"><b>ESP</b> STREAM-GT</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="millsage" style="--accent:#aa22ee">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">밀싸주</span>
+        <span class="orig">millsage</span>
+        <a class="band-link" href="https://bang-dream.com/artist/millsage/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="natsume" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_izawa-natsume.webp" alt="이자와 나츠메"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/natsume.jpg" alt="j.custom RG8570"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">이자와 나츠메</span>
+            <span class="thumb-model"><b>Ibanez</b> j.custom RG8570</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="nagi" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_kotohira-nagi.webp" alt="코토히라 나기"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/nagi.jpg" alt="Custom 24"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">코토히라 나기</span>
+            <span class="thumb-model"><b>PRS (Paul Reed Smith)</b> Custom 24</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+    <section class="band" id="dumbrock" style="--accent:#ff7043">
+      <h2 class="band-title">
+        <span class="dot"></span>
+        <span class="ko">일가덤락</span>
+        <span class="orig">一家Dumb Rock!</span>
+        <a class="band-link" href="https://bang-dream.com/artist/" target="_blank" rel="noopener">공식 ↗</a>
+      </h2>
+      <div class="grid">
+        <button class="thumb" data-id="raika" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_suga-raika.webp" alt="스가 라이카"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/raika.jpg" alt="Telecaster — Butterscotch Blonde"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">스가 라이카</span>
+            <span class="thumb-model"><b>Fender</b> Telecaster — Butterscotch Blonde</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button>
+        <button class="thumb" data-id="miku" type="button">
+          <span class="thumb-imgs">
+            <span class="ti char"><img loading="lazy" src="https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_mahashi-miku.webp" alt="마하시 미쿠"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+            <span class="ti gt"><img loading="lazy" src="img/miku.jpg" alt="Stratocaster — Candy Apple Red"
+                 onerror="this.closest('.ti').classList.add('noimg')"></span>
+          </span>
+          <span class="thumb-body">
+            <span class="thumb-name">마하시 미쿠</span>
+            <span class="thumb-model"><b>Fender</b> Stratocaster — Candy Apple Red</span>
+            <span class="badge fan">추정</span>
+          </span>
+        </button></div>
+    </section>
+<footer>
+  데이터 출처: ESP GUITARS 공식, SCHECTER 재팬, .strandberg*(키쿠타니 뮤직), Ibanez / PRS / Fender 공식,
+  BanG Dream! 공식 사이트, 나무위키.<br>
+  캐릭터 이미지는 BanG Dream! 공식 사이트에서 불러옵니다. 비영리 팬 페이지이며 상표·이미지 권리는 각 권리자에게 있습니다.
+</footer>
+</div>
+
+<div class="backdrop" id="bd" role="dialog" aria-modal="true">
+  <div class="modal" id="mo">
+    <button class="modal-close" type="button" aria-label="닫기">✕</button>
+    <div class="modal-in"></div>
+  </div>
+</div>
+
+<script>
+const DATA = {"kasumi": {"band": "포핀파티", "bandOrig": "Poppin'Party", "color": "#ff5b8d", "char": "토야마 카스미", "charJp": "戸山香澄", "part": "Gt. & Vo.", "brand": "ESP", "model": "RANDOM STAR Kasumi", "official": true, "desc": "ESP의 별 모양 바디 'RANDOM STAR'를 베이스로 한 시그니처. 바디와 헤드에 LED가 들어가는 -LED- 사양이 상징. 헤드는 로켓형이 아닌 6-in-line 샤프 헤드로 변경.", "specs": {"바디": "Alder", "넥": "Hard Maple 3P (볼트온)", "지판": "Rosewood, 스타 인레이", "픽업": "Seymour Duncan SH-1n / SH-4 (험버커 2기)", "브리지": "GOTOH"}, "variants": [{"name": "ESP RANDOM STAR Kasumi III -LED-", "price": "¥957,000"}, {"name": "ESP RANDOM STAR Kasumi III", "price": "¥715,000"}, {"name": "ESP RANDOM STAR Kasumi -LED-", "price": "¥935,000"}, {"name": "ESP RANDOM STAR Kasumi", "price": "¥682,000"}, {"name": "BanG Dream! 브랜드 보급형", "price": "¥99,000"}], "shops": [{"name": "ESP 공식 (Poppin'Party 시리즈)", "url": "https://espguitars.co.jp/collaborate/10147/"}, {"name": "BIGBOSS (ESP 직영)", "url": "https://bigboss.jp/store/products/list?category_id=167"}, {"name": "뮤직랜드 KEY", "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-random-star-kasumi"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_toyama-kasumi.webp", "guitarImg": "img/kasumi.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "tae": {"band": "포핀파티", "bandOrig": "Poppin'Party", "color": "#ff5b8d", "char": "하나조노 타에", "charJp": "花園たえ", "part": "Gt.", "brand": "ESP", "model": "SNAPPER Tae", "official": true, "desc": "ESP 오리지널 스트랫 타입 'SNAPPER' 기반. 표준 색이 아닌 라이트 블루 커스텀 컬러 + 미러 픽가드가 특징. 리어는 싱글 사이즈 험버커.", "specs": {"바디": "Roasted Alder", "넥": "Hard Maple", "지판": "Indian Rosewood", "픽업": "Seymour Duncan SSL-6 x2 (프론트/미들) + SHR-1 (리어, 싱글사이즈 험버커)", "브리지": "트레몰로 (II FR은 Floyd Rose)"}, "variants": [{"name": "ESP SNAPPER Tae II FR", "price": "¥726,000"}, {"name": "ESP SNAPPER Tae", "price": "¥726,000"}, {"name": "BanG Dream! 브랜드 보급형", "price": "¥99,000"}, {"name": "SNAPPER Tae Mini (미니 사이즈)", "price": "¥48,400 전후"}], "shops": [{"name": "ESP 공식 (Poppin'Party 시리즈)", "url": "https://espguitars.co.jp/collaborate/10147/"}, {"name": "뮤직랜드 KEY", "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-snapper-tae"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/poppinparty/img_list_hanazono-tae.webp", "guitarImg": "img/tae.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "ran": {"band": "애프터글로우", "bandOrig": "Afterglow", "color": "#e2445c", "char": "미타케 란", "charJp": "美竹蘭", "part": "Gt. & Vo.", "brand": "Gibson", "model": "Les Paul Special (기반 추정)", "official": false, "desc": "ESP 콜라보 기타는 미발매(피크만 발매). 작화상 깁슨 레스폴 스페셜 계열의 플랫탑·더블컷 바디로 보인다. 레스폴 중에서도 저렴한 라인이며, 란의 캐릭터성과 맞물려 팬들 사이에서 정설로 통한다.", "specs": {"바디": "Mahogany (플랫탑, 아치드탑 아님)", "넥": "Mahogany", "지판": "Rosewood", "픽업": "P-90 계열 소프바 싱글 x2 (레스폴 스페셜 표준)", "비고": "공식 스펙 발표 없음 — 팬 추정"}, "variants": [{"name": "Gibson Les Paul Special (현행품 참고가)", "price": "약 ¥250,000~ / 국내 200만원대"}, {"name": "Epiphone Les Paul Special (입문 대체)", "price": "약 ¥50,000~"}], "shops": [{"name": "ESP 공식 Afterglow 시리즈 (피크류)", "url": "https://espguitars.co.jp/collaborate/10493/"}, {"name": "Gibson 공식", "url": "https://www.gibson.com/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_mitake-ran.webp", "guitarImg": "img/ran.jpg", "credit": {"text": "Sangandongo / CC BY-SA 3.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File:1960_Les_Paul_Special_Doublecut.jpg"}}, "moca": {"band": "애프터글로우", "bandOrig": "Afterglow", "color": "#e2445c", "char": "아오바 모카", "charJp": "青葉モカ", "part": "Gt.", "brand": "SCHECTER", "model": "BH-1-STD-24 (Deep Blue)", "official": false, "desc": "쉑터 재팬의 BH-1 시리즈(스트랫 셰이프, 24프렛) 기반. 딥 블루 바디 + 착색 넥, 픽업 커버를 흰색으로 바꾼 커스텀 사양. 일부 작화에서 헤드가 ESP풍으로 그려져 논란이 있으나 본체는 BH-1로 특정됨.", "specs": {"바디": "Ash", "넥": "Maple (볼트온)", "지판": "Maple", "픽업": "SCHECTER MONSTER TONE J x2 + SUPER ROCK J (SSH), 화이트 커버 커스텀", "비고": "공식 콜라보 모델 아님 — 실기 특정", "브리지": "Wilkinson VG300"}, "variants": [{"name": "SCHECTER BH-1-STD-24 (일본제 현행)", "price": "약 ¥190,000~"}], "shops": [{"name": "SCHECTER 공식 BH-1-STD-24", "url": "https://schecter.co.jp/schecterjapan/496/"}, {"name": "ESP 공식 Afterglow 시리즈 (피크류)", "url": "https://espguitars.co.jp/collaborate/10493/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/afterglow/img_list_aoba-moca.webp", "guitarImg": "img/moca.jpg", "credit": {"text": "SCHECTER 재팬 공식 (BH-1-STD-24 / Deep Blue)", "url": "https://schecter.co.jp/schecterjapan/496/"}}, "hina": {"band": "파스파레", "bandOrig": "Pastel*Palettes", "color": "#4fc3f7", "char": "히카와 히나", "charJp": "氷川日菜", "part": "Gt.", "brand": "미상 (텔레캐스터 타입)", "model": "Telecaster 계열 커스텀 (추정)", "official": false, "desc": "ESP 콜라보는 피크만 존재. 실루엣은 텔레캐스터지만 픽업이 HSH 배열에 픽가드 없는 다이렉트 마운트라 펜더 표준 사양과 다르다. 커스텀 오더 또는 부티크 빌더 제작으로 추정.", "specs": {"바디": "Alder / Ash 계열 (추정)", "넥": "Maple", "지판": "Maple 또는 Rosewood", "픽업": "HSH 배열, 픽가드 없는 다이렉트 마운트", "비고": "실존 모델 미특정 — 팬 추정"}, "variants": [{"name": "유사 사양 참고: Fender Player Telecaster HH 등", "price": "약 ¥120,000~"}], "shops": [{"name": "ESP 공식 Pastel*Palettes 시리즈 (피크류)", "url": "https://espguitars.co.jp/collaborate/10498/"}, {"name": "히카와 히나 공식 프로필", "url": "https://bang-dream.com/artist/pastel-palettes/hikawa-hina/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/pastel-palettes/img_list_hikawa-hina.webp", "guitarImg": "", "credit": null}, "sayo": {"band": "로젤리아", "bandOrig": "Roselia", "color": "#8e6bd8", "char": "히카와 사요", "charJp": "氷川紗夜", "part": "Gt.", "brand": "ESP", "model": "M-II SAYO", "official": true, "desc": "ESP 대표 기종 M-II 기반. 플레임 메이플 탑 + 앨더 백 라미네이트, 에보니 지판에 12프렛을 중심으로 축광 소재 장미 인레이. 메탈 지향 사운드로 로젤리아 사운드의 축.", "specs": {"바디": "Flame Maple top / Alder back (ROSELIA SAYO는 Basswood back)", "넥": "Hard Maple 3P (셋넥)", "지판": "Ebony, 축광 장미 인레이", "픽업": "Seymour Duncan SENTIENT / NAZGÛL (구 M-II ROSELIA SAYO는 EMG 81 x2)", "브리지": "GOTOH GE103B-T / FR 사양은 Floyd Rose + EVH D-Tuna"}, "variants": [{"name": "ESP M-II SAYO II", "price": "¥891,000"}, {"name": "ESP M-II SAYO II FR", "price": "¥1,001,000"}, {"name": "ESP M-II ROSELIA SAYO (EMG 81)", "price": "¥957,000"}, {"name": "BanG Dream! M-II SAYO (보급형, GH-1G x2)", "price": "¥110,000"}], "shops": [{"name": "ESP 공식 (Roselia 시리즈)", "url": "https://espguitars.co.jp/collaborate/10179/"}, {"name": "BIGBOSS (ESP 직영)", "url": "https://bigboss.jp/store/products/detail/8901"}, {"name": "이케베 악기", "url": "https://www.ikebe-gakki.com/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/roselia/img_list_hikawa-sayo.webp", "guitarImg": "img/sayo.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "kaoru": {"band": "하로하피", "bandOrig": "ハロー、ハッピーワールド！", "color": "#ffb300", "char": "세타 카오루", "charJp": "瀬田薫", "part": "Gt.", "brand": "Gretsch", "model": "White Falcon (더블컷 DC 사양, 추정)", "official": false, "desc": "ESP 콜라보는 피크만 존재. 작화의 화이트 할로우바디 + 골드 하드웨어는 그레치 최상급기 White Falcon의 더블컷 사양과 일치. 일부 아트에서는 Gibson ES-335 계열로 그려지기도 한다.", "specs": {"바디": "Maple 할로우 바디 (화이트 피니시)", "넥": "Maple", "지판": "Ebony, 골드 스파클 바인딩", "픽업": "TV Jones Filter'Tron 계열 험버커 x2", "비고": "공식 스펙 발표 없음 — 팬 추정"}, "variants": [{"name": "Gretsch G6136TDC / Players Edition White Falcon", "price": "약 ¥600,000~"}, {"name": "Gretsch Electromatic Falcon (보급 라인)", "price": "약 ¥150,000~"}], "shops": [{"name": "ESP 공식 하로하피 시리즈 (피크류)", "url": "https://espguitars.co.jp/collaborate/10500/"}, {"name": "Gretsch 공식", "url": "https://www.gretschguitars.com/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/hello-happy-world/img_list_seta-kaoru.webp", "guitarImg": "img/kaoru.jpg", "credit": {"text": "cortneymartin82 / CC BY 2.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File:Gretsch_White_Falcon.jpg"}}, "toko": {"band": "모니카", "bandOrig": "Morfonica", "color": "#5c6bc0", "char": "키리가야 토우코", "charJp": "桐ヶ谷透子", "part": "Gt.", "brand": "ESP", "model": "ARROW FR TOKO", "official": true, "desc": "ESP-ARROW FR 기반의 익스플로러/애로우 셰이프. 지판에 재구성석(reconstructed stone)으로 만든 모포니카 나비 인레이. 스루넥 구조 + EMG 81 액티브 픽업으로 공격적인 사운드.", "specs": {"바디": "Alder (보급형은 Basswood)", "넥": "Hard Maple 3P (스루넥)", "지판": "Ebony / Richlite (보급형은 Rosewood), 나비 인레이", "픽업": "EMG 81 (액티브) — 보급형은 GH-1G", "브리지": "Floyd Rose"}, "variants": [{"name": "ESP ARROW FR TOKO", "price": "¥858,000"}, {"name": "BanG Dream! ARROW FR TOKO (보급형)", "price": "¥107,800"}], "shops": [{"name": "ESP 공식 (Morfonica 시리즈)", "url": "https://espguitars.co.jp/collaborate/16587/"}, {"name": "ESP CRAFT HOUSE 라쿠텐점", "url": "https://item.rakuten.co.jp/esp/10013464/"}, {"name": "시마무라 악기", "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0112864"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/morfonica/img_list_kirigaya-toko.webp", "guitarImg": "img/toko.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "lock": {"band": "라스", "bandOrig": "RAISE A SUILEN", "color": "#ef5350", "char": "아사히 롯카 (LOCK)", "charJp": "朝日六花 (LOCK)", "part": "Gt.", "brand": ".strandberg*", "model": "Boden J6 RAS LOCK — Caribbean Light Blue", "official": true, "desc": "헤드리스 + 팬드 프렛(멀티스케일)로 유명한 스트란드베르그 Boden 기반. 12프렛에 RAS를 상징하는 헤드폰 축광 인레이. 'CHU²가 로카에게 맡긴 특별기'라는 설정으로 제작됐다.", "specs": {"바디": "Basswood + 5A 퀼티드 메이플 베니어 탑 (백: 솔리드 블랙)", "넥": "Roasted Maple", "지판": "Maple, 플레임 메이플 바인딩 / 스테인리스 프렛", "픽업": "Fishman Fluence (액티브 배터리 박스)", "컨트롤": "3-way + push/pull 볼륨(코일탭) + 톤", "브리지": "고정식 (블랙 하드웨어)"}, "variants": [{"name": "strandberg Boden J6 RAS LOCK (상위 모델)", "price": "¥547,800 (세금포함)"}, {"name": "strandberg Boden RAS 6 LOCK (코스트퍼포먼스 모델)", "price": "약 ¥150,000~170,000"}], "shops": [{"name": "키쿠타니 뮤직 RAS 특설 사이트", "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j6.html"}, {"name": "이시바시 악기", "url": "https://www.ishibashi.co.jp/ec/product/4580419321782"}, {"name": "쿠로사와 악기", "url": "https://www.shopping-kurosawagakki.com/shopdetail/000000195732/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/raise-a-suilen/img_list_lock.webp", "guitarImg": "img/lock.jpg", "credit": {"text": "키쿠타니 뮤직 RAS 특설 사이트", "url": "https://kcmusic.jp/bang_dream/strandberg_boden_j6.html"}}, "anon": {"band": "마이고", "bandOrig": "MyGO!!!!!", "color": "#3f8ecc", "char": "치하야 아논", "charJp": "千早愛音", "part": "Gt.", "brand": "ESP", "model": "ULTRATONE Anon", "official": true, "desc": "ESP 오리지널 기종 ULTRATONE 기반. 시스루 서프 그린 피니시가 특징이며, 장르를 가리지 않는 범용적인 사운드. 다이아몬드 포지션 마크.", "specs": {"바디": "Alder", "넥": "Hard Maple 3P (볼트온)", "지판": "Rosewood, 다이아몬드 포지션 마크", "픽업": "Seymour Duncan SH-1n '59 / SH-11 Custom Custom", "스케일": "648mm"}, "variants": [{"name": "ESP ULTRATONE Anon", "price": "¥625,000"}, {"name": "BanG Dream! ULTRATONE Anon (보급형)", "price": "¥78,000"}], "shops": [{"name": "ESP 공식 발표 (MyGO!!!!! 모델)", "url": "https://espguitars.co.jp/productinfo/34806/"}, {"name": "BIGBOSS (ESP 직영)", "url": "https://bigboss.jp/store/products/detail/30998"}, {"name": "뮤직랜드 KEY", "url": "https://www.musicland.co.jp/fs/musiclandkey/esp-ultratone-anon-cp"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_chihaya-anon.webp", "guitarImg": "img/anon.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "rana": {"band": "마이고", "bandOrig": "MyGO!!!!!", "color": "#3f8ecc", "char": "카나메 라나", "charJp": "要楽奈", "part": "Gt.", "brand": "ESP", "model": "POTBELLY Rāna", "official": true, "desc": "ESP 오리지널 기종 POTBELLY 기반. 강한 하드 에이징(레릭) 마감이 최대 특징. 메이플 지판 + Fish Eye 포지션 마크. ESP 사양 정가가 밴드리 콜라보 중 최고가.", "specs": {"바디": "Flamed Maple top / Mahogany back (FM) 또는 Plain Maple (PM)", "넥": "Mahogany (딥 조인트)", "지판": "Hard Maple, Fish Eye 마커", "픽업": "Seymour Duncan SH-1n '59 / SH-16 59 Custom Hybrid", "마감": "Hard Aged (레릭)"}, "variants": [{"name": "ESP POTBELLY Rāna FM", "price": "¥1,570,000"}, {"name": "ESP POTBELLY Rāna PM", "price": "¥1,320,000"}, {"name": "BanG Dream! POTBELLY Rāna (보급형)", "price": "¥98,000"}], "shops": [{"name": "ESP 공식 발표 (MyGO!!!!! 모델)", "url": "https://espguitars.co.jp/productinfo/34806/"}, {"name": "ESP 공식 블로그 — MyGO!!!!! 사용 악기 소개", "url": "https://espguitars.co.jp/espblog/2023/06/29/1914/"}, {"name": "BIGBOSS (ESP 직영)", "url": "https://bigboss.jp/store/products/detail/35979"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/mygo/img_list_kaname-rana.webp", "guitarImg": "img/rana.jpg", "credit": {"text": "ESP GUITARS 공식 제품 이미지", "url": "https://espguitars.co.jp/"}}, "uika": {"band": "무지카", "bandOrig": "Ave Mujica", "color": "#7e57c2", "char": "미스미 우이카 (돌로리스)", "charJp": "三角初華 (Doloris)", "part": "Gt. & Vo.", "brand": "SCHECTER", "model": "AC-AR-07-AveMujica/Doloris/SIG", "official": true, "desc": "쉑터 AR-07 기반의 7현 시그니처. 블랙 바디에 12프렛 Ave Mujica 로고(톱니바퀴) 인레이. 완전 수주생산으로 납기 약 2년, 1인 1대 한정. 세미하드 케이스 포함.", "specs": {"바디": "Alder", "넥": "Maple (Ultra Access 4-Bolt 조인트)", "지판": "Maple, 305R 라디우스 / Jescar 24프렛", "픽업": "프론트 MONSTERTONE-J-7st (싱글) / 리어 SUPER ROCK-J-7st", "컨트롤": "프론트·리어 코일탭 + 다이렉트 스위치", "스케일": "25 1/2\"", "브리지": "TOM 브리지 (7현)"}, "variants": [{"name": "SCHECTER AC-AR-07-AveMujica/Doloris/SIG (Full Spec, 수주생산 약 2년)", "price": "¥748,000 전후"}, {"name": "SCHECTER BC-AveMujica/Doloris (콜라보 시리즈)", "price": "¥203,500"}], "shops": [{"name": "SCHECTER 공식 Ave Mujica 페이지", "url": "https://schecter.co.jp/collaboration/avemujica/"}, {"name": "SCHECTER 재팬 공식", "url": "https://www.schecter.co.jp/"}, {"name": "BIGBOSS Ave Mujica 카테고리", "url": "https://bigboss.jp/store/products/list?category_id=2316"}, {"name": "이케베 악기", "url": "https://www.ikebe-gakki.com/Form/Product/ProductDetail.aspx?shop=0&pid=837626&bid=ec"}, {"name": "시마무라 악기", "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0184223"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_misumi-uika.webp", "guitarImg": "img/uika.jpg", "credit": {"text": "SCHECTER 재팬 공식", "url": "https://schecter.co.jp/collaboration/avemujica/"}}, "mutsumi": {"band": "무지카", "bandOrig": "Ave Mujica", "color": "#7e57c2", "char": "와카바 무츠미 (모르티스)", "charJp": "若葉睦 (Mortis)", "part": "Gt.", "brand": "SCHECTER", "model": "AC-EX-7-AveMujica/Mortis/SIG", "official": true, "desc": "핑크 글리터(PGL) 7현 시그니처. 지판에 톱니바퀴(Ave Mujica 로고) 인레이가 들어가며, CRYCHIC 시절부터 같은 기타를 계속 쓰고 있다는 설정. 극중·리얼 라이브에서 성우 와타세 유즈키가 쓰는 실기를 재현한 모델로, 2025년 SCHECTER 콜라보로 정식 발매됐다. 완전 수주생산, 납기 약 2년.", "specs": {"바디": "Alder", "넥": "Maple (Ultra Access 4-Bolt 조인트)", "지판": "Maple / 24프렛 (Jescar 프렛와이어)", "픽업": "SCHECTER SUPER ROCK-J-7st (프론트·리어) — BC 사양은 Humbucker-7st", "브리지": "GOTOH 510FX-7 (BC 사양은 고정식 7현 브리지)", "컨트롤": "Volume / Tone(스플릿 톤) / CRL 3-way / 코일 스플릿 미니 스위치", "컬러": "PGL (Pink Glitter)", "스케일": "25 1/2\""}, "variants": [{"name": "SCHECTER AC-EX-7-AveMujica/Mortis/SIG (Full Spec, 수주생산 약 2년)", "price": "¥748,000"}, {"name": "SCHECTER BC-AveMujica/Mortis (콜라보 시리즈)", "price": "¥209,000"}], "shops": [{"name": "SCHECTER 공식 Ave Mujica 페이지", "url": "https://schecter.co.jp/collaboration/avemujica/"}, {"name": "시마무라 악기", "url": "https://store.shimamura.co.jp/ec/pro/disp/1/mt0184224"}, {"name": "뮤직랜드 KEY", "url": "https://www.musicland.co.jp/fs/musiclandkey/schctr-ac-ex-7-avmjc-mortis-sig"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/avemujica/img_list_wakaba-mutsumi.webp", "guitarImg": "img/mutsumi.jpg", "credit": {"text": "SCHECTER 재팬 공식", "url": "https://schecter.co.jp/collaboration/avemujica/"}}, "nonoka": {"band": "무겐다이 뮤타입", "bandOrig": "夢限大みゅーたいぷ", "color": "#26c6da", "char": "미야나가 노노카", "charJp": "宮永ののか", "part": "Gt.", "brand": "ESP", "model": "THROBBER-STD", "official": false, "desc": "핑크 스파클 피니시의 ESP 오리지널 시리즈 THROBBER. 넥 픽업 부근부터 브리지 아래까지 이어지는 중공 구조 'Sound Reservoir'가 최대 특징으로, 세미어쿠스틱 같은 공기감과 솔리드 기타의 어택·서스테인을 동시에 낸다. 텔레캐스터풍 실루엣. 데뷔 후 처음 일렉을 배웠다는 설정.", "specs": {"구조": "Sound Reservoir 중공 바디 + CT System Type-3", "픽업": "ESP CUSTOM LAB (사양에 따라 Seymour Duncan)", "페그": "GOTOH MG-T 락킹 튜너", "비고": "밴드리 콜라보 모델은 미발매 — 작중기는 ESP THROBBER 기반"}, "variants": [{"name": "ESP THROBBER-STD (현행품 참고가)", "price": "약 ¥480,000"}, {"name": "GrassRoots THROBBER (보급 라인)", "price": "약 ¥50,000~"}], "shops": [{"name": "ESP 공식 THROBBER 페이지", "url": "https://espguitars.co.jp/original/throbber/"}, {"name": "공식 프로필", "url": "https://bang-dream.com/artist/yumemita/miyanaga-nonoka/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_miyanaga-nonoka_01.webp", "guitarImg": "img/nonoka.jpg", "credit": {"text": "ESP GUITARS 공식 (THROBBER-STD)", "url": "https://espguitars.co.jp/original/throbber/"}}, "ritsu": {"band": "무겐다이 뮤타입", "bandOrig": "夢限大みゅーたいぷ", "color": "#26c6da", "char": "미네츠키 리츠", "charJp": "峰月律", "part": "Gt.", "brand": "ESP", "model": "STREAM-GT", "official": false, "desc": "퍼플~블루 계열의 ESP 오리지널 시리즈 STREAM-GT. 유선형 바디 라인과 바디 톱·헤드 톱의 단차(step-off)가 시각적 포인트. 리듬 기타 담당으로 밴드 사운드를 차분히 잡아주는 역할.", "specs": {"바디": "Mahogany", "넥": "Hard Maple 3P (셋넥)", "지판": "Ebony (Classic은 Honduras Rosewood)", "픽업": "Seymour Duncan SH-2n / SH-15 (Classic은 SH-18)", "브리지": "TonePros T3BP + GOTOH 510FA"}, "variants": [{"name": "ESP STREAM-GT Standard", "price": "¥572,000"}, {"name": "ESP STREAM-GT Classic / Custom / Custom FM", "price": "상위 사양, 문의"}], "shops": [{"name": "ESP 공식 STREAM-GT Standard", "url": "https://espguitars.co.jp/original/streamgt/standard.html"}, {"name": "공식 프로필", "url": "https://bang-dream.com/artist/yumemita/minetsuki-ritsu/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/yumemita/img_list_minetsuki-ritsu_01.webp", "guitarImg": "img/ritsu.jpg", "credit": {"text": "ESP GUITARS 공식 (STREAM-GT Standard)", "url": "https://espguitars.co.jp/original/streamgt/standard.html"}}, "natsume": {"band": "밀싸주", "bandOrig": "millsage", "color": "#aa22ee", "char": "이자와 나츠메", "charJp": "伊沢なつめ", "part": "Gt.", "brand": "Ibanez", "model": "j.custom RG8570", "official": false, "desc": "아이바네즈 최상위 라인 j.custom의 RG. 붉은 플레임 메이플 탑 + 얇은 슈퍼 위저드 넥 + Edge-Zero 트레몰로로, 밴드리 캐릭터 중 가장 하이게인·테크니컬 지향. 자신감 넘치는 작곡 담당이라는 캐릭터와 잘 맞는 선택.", "specs": {"바디": "African Mahogany + AAA Flamed Maple 4mm 탑", "넥": "Super Wizard, Maple/Wenge 5피스", "지판": "바인딩 처리된 Macassar Ebony, Tree of Life 인레이 / 24프렛", "픽업": "DiMarzio Air Norton (넥) / True Velvet (미들) / Tone Zone (브리지), 5-way", "브리지": "Edge-Zero 트레몰로"}, "variants": [{"name": "Ibanez j.custom RG8570 (일본 정가, 하드케이스 포함)", "price": "¥506,000"}, {"name": "해외가 참고", "price": "약 $2,999~3,499"}], "shops": [{"name": "Ibanez 공식 RG8570", "url": "https://www.ibanez.com/jp/products/detail/rg8570_00_06.html"}, {"name": "millsage 공식", "url": "https://bang-dream.com/artist/millsage/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_izawa-natsume.webp", "guitarImg": "img/natsume.jpg", "credit": {"text": "jonXmack / CC BY 2.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File%3AIbanez_RG_Prestige_RG2620.jpg"}}, "nagi": {"band": "밀싸주", "bandOrig": "millsage", "color": "#aa22ee", "char": "코토히라 나기", "charJp": "琴平凪", "part": "Gt.", "brand": "PRS (Paul Reed Smith)", "model": "Custom 24", "official": false, "desc": "PRS의 간판 기종 Custom 24. 블루 계열 플레임 메이플 탑의 카브드 더블컷 바디에 버드 인레이가 특징. 차분하고 어른스러운 캐릭터에 맞게 밴드리 기타 중 가장 '정통 하이엔드' 선택.", "specs": {"바디": "Mahogany + Figured Maple 카브드 탑", "넥": "Mahogany (Pattern Thin 등 카브 선택)", "지판": "Rosewood, 버드 인레이 / 24프렛", "픽업": "PRS 85/15 (TCI 튠) 험버커 2기", "컨트롤": "볼륨 + 5-way 로터리/블레이드 (코일탭 가능)"}, "variants": [{"name": "PRS Core Custom 24 (미국 본사 라인)", "price": "약 $4,000대 / 국내 600만원대"}, {"name": "PRS S2 Custom 24", "price": "약 $1,700대"}, {"name": "PRS SE Custom 24 (입문 라인)", "price": "약 $650~900"}], "shops": [{"name": "PRS Guitars 공식", "url": "https://prsguitars.com/"}, {"name": "millsage 공식", "url": "https://bang-dream.com/artist/millsage/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/millsage/img_list_kotohira-nagi.webp", "guitarImg": "img/nagi.jpg", "credit": {"text": "Rachmaninoff / CC BY-SA 4.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File%3APRS_Custom_24_teal_black_2004%2C_body.jpg"}}, "raika": {"band": "일가덤락", "bandOrig": "一家Dumb Rock!", "color": "#ff7043", "char": "스가 라이카", "charJp": "須賀蕾叶", "part": "Gt. & Vo.", "brand": "Fender", "model": "Telecaster — Butterscotch Blonde", "official": false, "desc": "버터스카치 블론드 바디 + 블랙 픽가드 + 메이플 원피스 넥이라는, 1950년대 초기 텔레캐스터의 상징적인 조합. 一家Dumb Rock!은 드럼·키보드를 뺀 전원이 펜더 악기를 쓰며, 헤드스톡에 펜더 로고가 선명히 그려져 있어 펜더 본사와 정식 라이선스를 맺은 것으로 보인다. 밴드리 시리즈 최초 사례.", "specs": {"바디": "Ash / Alder (라인에 따라 상이)", "넥": "Maple 원피스 (볼트온)", "지판": "Maple", "픽업": "싱글코일 2기 (텔레캐스터 표준 SS)", "브리지": "3-saddle 또는 6-saddle 텔레 브리지"}, "variants": [{"name": "Fender American Vintage II 1951 Telecaster (BSB)", "price": "약 ¥400,000대"}, {"name": "Fender Player II Telecaster (멕시코 생산)", "price": "약 ¥130,000대"}, {"name": "Squier Classic Vibe '50s Telecaster (입문)", "price": "약 ¥60,000대"}], "shops": [{"name": "Fender 공식", "url": "https://www.fender.com/"}, {"name": "Our Notes 공식", "url": "https://bang-dream-on.bushimo.jp/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_suga-raika.webp", "guitarImg": "img/raika.jpg", "credit": {"text": "John Tuggle from Decatur, Ga, USA / CC BY 2.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File%3ASquier_Classic_Vibe_Telecaster_%2750s_Butterscotch_Blonde_%282011-06-16_00.12.02_by_John_Tuggle%29.jpg"}}, "miku": {"band": "일가덤락", "bandOrig": "一家Dumb Rock!", "color": "#ff7043", "char": "마하시 미쿠", "charJp": "馬橋心玖", "part": "Gt. & Vo.", "brand": "Fender", "model": "Stratocaster — Candy Apple Red", "official": false, "desc": "캔디 애플 레드 + 화이트 픽가드 + 메이플 지판의 정통 스트라토캐스터. 같은 밴드의 텔레캐스터·재즈베이스와 함께 '펜더 3종 세트'를 이루며, 전부 실제로 국내 악기점에서 흔히 구할 수 있는 양산 컬러라는 점이 이 밴드 기재 설정의 특징.", "specs": {"바디": "Alder", "넥": "Maple (볼트온)", "지판": "Maple", "픽업": "싱글코일 3기 (SSS), 5-way 셀렉터", "브리지": "6-saddle 싱크로나이즈드 트레몰로"}, "variants": [{"name": "Fender American Professional II Stratocaster (CAR)", "price": "약 ¥300,000대"}, {"name": "Fender Player II Stratocaster", "price": "약 ¥130,000대"}, {"name": "Squier Affinity Stratocaster (입문)", "price": "약 ¥40,000대"}], "shops": [{"name": "Fender 공식", "url": "https://www.fender.com/"}, {"name": "Our Notes 공식", "url": "https://bang-dream-on.bushimo.jp/"}], "charImg": "https://bang-dream.com/wordpress/wp-content/themes/bangdream-portal/assets/webp/common/artist/ikka-dumb-rock/img_list_mahashi-miku.webp", "guitarImg": "img/miku.jpg", "credit": {"text": "Freebird / CC BY-SA 2.0 (Wikimedia Commons)", "url": "https://commons.wikimedia.org/wiki/File%3ACustom_70s_Stratocaster%2C_Dakota_Red_-_Hard_Relic.jpg"}}};
+const bd = document.getElementById('bd');
+const mo = document.getElementById('mo');
+let lastFocus = null;
+
+function row(k,v){return '<div class="spec-row"><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>';}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function open(id){
+  const d = DATA[id]; if(!d) return;
+  lastFocus = document.activeElement;
+  const specs = Object.keys(d.specs).length
+    ? '<dl class="specs">'+Object.entries(d.specs).map(([k,v])=>row(k,v)).join('')+'</dl>' : '';
+  const vars = d.variants.length
+    ? '<div class="tbl-wrap"><table class="variants"><thead><tr><th>모델 / 사양</th><th>가격</th></tr></thead><tbody>'
+      + d.variants.map(v=>'<tr><td>'+esc(v.name)+'</td><td class="price">'+esc(v.price)+'</td></tr>').join('')
+      + '</tbody></table></div>'
+    : '<p class="empty">판매 중인 모델 정보 없음</p>';
+  const shops = d.shops.length
+    ? '<ul class="shops">'+d.shops.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">'+esc(s.name)+'</a>').join('')+'</ul>'
+    : '';
+  const badge = d.official
+    ? '<span class="badge official">공식 콜라보 모델</span>'
+    : '<span class="badge fan">비공식 / 추정</span>';
+  mo.style.setProperty('--accent', d.color);
+  mo.querySelector('.modal-in').innerHTML =
+    '<div class="m-head">'
+    + '<div class="m-face"><img src="'+esc(d.charImg)+'" alt="'+esc(d.char)+'" onerror="this.style.display=\'none\'"></div>'
+    + '<div class="m-who"><div class="m-band">'+esc(d.band)+' · '+esc(d.bandOrig)+'</div>'
+    + '<h3>'+esc(d.char)+'</h3>'
+    + '<p class="m-jp">'+esc(d.charJp)+'<span class="part">'+esc(d.part)+'</span></p>'
+    + '<p class="m-model"><b>'+esc(d.brand)+'</b> '+esc(d.model)+'</p>'
+    + '<div style="margin-top:8px">'+badge+'</div></div></div>'
+    + (d.guitarImg
+        ? '<img class="m-shot" src="'+esc(d.guitarImg)+'" alt="'+esc(d.model)+'"'
+          + ' onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),'
+          + '{className:\'m-shot noimg\',textContent:\'기타 사진 없음\'}))">'
+        : '<div class="m-shot noimg">모델이 특정되지 않아 사진 없음</div>')
+    + (d.credit
+        ? '<p class="credit">사진: <a href="'+esc(d.credit.url)+'" target="_blank" rel="noopener">'
+          + esc(d.credit.text)+'</a></p>' : '')
+    + '<p class="m-desc">'+esc(d.desc)+'</p>'
+    + (specs ? '<h4 class="sec">스펙</h4>'+specs : '')
+    + '<h4 class="sec">가격</h4>'+vars
+    + (shops ? '<h4 class="sec">공식 / 판매처</h4>'+shops : '');
+  bd.classList.add('on');
+  document.body.style.overflow='hidden';
+  mo.querySelector('.modal-close').focus();
+}
+function close(){
+  bd.classList.remove('on');
+  document.body.style.overflow='';
+  if(lastFocus) lastFocus.focus();
+}
+document.querySelectorAll('.thumb').forEach(t=>t.addEventListener('click',()=>open(t.dataset.id)));
+bd.addEventListener('click',ev=>{ if(ev.target===bd) close(); });
+mo.querySelector('.modal-close').addEventListener('click',close);
+document.addEventListener('keydown',ev=>{ if(ev.key==='Escape' && bd.classList.contains('on')) close(); });
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

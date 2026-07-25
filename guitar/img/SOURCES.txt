@@ -1,0 +1,80 @@
+기타 사진 출처 목록 (guitars.json 의 img_credit 과 동일)
+
+· ESP / SCHECTER / 키쿠타니뮤직: 각 제조사 공식 제품 이미지 (비영리 팬페이지 인용)
+· Wikimedia Commons: CC 라이선스, 저작자·라이선스 표기 필수 (페이지 모달에 표기됨)
+
+------------------------------------------------------------------------
+kasumi.jpg  토야마 카스미 / ESP RANDOM STAR Kasumi
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+tae.jpg  하나조노 타에 / ESP SNAPPER Tae
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+ran.jpg  미타케 란 / Gibson Les Paul Special (기반 추정)
+    Sangandongo / CC BY-SA 3.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File:1960_Les_Paul_Special_Doublecut.jpg
+
+moca.jpg  아오바 모카 / SCHECTER BH-1-STD-24 (Deep Blue)
+    SCHECTER 재팬 공식 (BH-1-STD-24 / Deep Blue)
+    https://schecter.co.jp/schecterjapan/496/
+
+hina.jpg  히카와 히나 / 미상 (텔레캐스터 타입) Telecaster 계열 커스텀 (추정)
+    사진 없음 (모델 미특정)
+
+sayo.jpg  히카와 사요 / ESP M-II SAYO
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+kaoru.jpg  세타 카오루 / Gretsch White Falcon (더블컷 DC 사양, 추정)
+    cortneymartin82 / CC BY 2.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File:Gretsch_White_Falcon.jpg
+
+toko.jpg  키리가야 토우코 / ESP ARROW FR TOKO
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+lock.jpg  아사히 롯카 (LOCK) / .strandberg* Boden J6 RAS LOCK — Caribbean Light Blue
+    키쿠타니 뮤직 RAS 특설 사이트
+    https://kcmusic.jp/bang_dream/strandberg_boden_j6.html
+
+anon.jpg  치하야 아논 / ESP ULTRATONE Anon
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+rana.jpg  카나메 라나 / ESP POTBELLY Rāna
+    ESP GUITARS 공식 제품 이미지
+    https://espguitars.co.jp/
+
+uika.jpg  미스미 우이카 (돌로리스) / SCHECTER AC-AR-07-AveMujica/Doloris/SIG
+    SCHECTER 재팬 공식
+    https://schecter.co.jp/collaboration/avemujica/
+
+mutsumi.jpg  와카바 무츠미 (모르티스) / SCHECTER AC-EX-7-AveMujica/Mortis/SIG
+    SCHECTER 재팬 공식
+    https://schecter.co.jp/collaboration/avemujica/
+
+nonoka.jpg  미야나가 노노카 / ESP THROBBER-STD
+    ESP GUITARS 공식 (THROBBER-STD)
+    https://espguitars.co.jp/original/throbber/
+
+ritsu.jpg  미네츠키 리츠 / ESP STREAM-GT
+    ESP GUITARS 공식 (STREAM-GT Standard)
+    https://espguitars.co.jp/original/streamgt/standard.html
+
+natsume.jpg  이자와 나츠메 / Ibanez j.custom RG8570
+    jonXmack / CC BY 2.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File%3AIbanez_RG_Prestige_RG2620.jpg
+
+nagi.jpg  코토히라 나기 / PRS (Paul Reed Smith) Custom 24
+    Rachmaninoff / CC BY-SA 4.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File%3APRS_Custom_24_teal_black_2004%2C_body.jpg
+
+raika.jpg  스가 라이카 / Fender Telecaster — Butterscotch Blonde
+    John Tuggle from Decatur, Ga, USA / CC BY 2.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File%3ASquier_Classic_Vibe_Telecaster_%2750s_Butterscotch_Blonde_%282011-06-16_00.12.02_by_John_Tuggle%29.jpg
+
+miku.jpg  마하시 미쿠 / Fender Stratocaster — Candy Apple Red
+    Freebird / CC BY-SA 2.0 (Wikimedia Commons)
+    https://commons.wikimedia.org/wiki/File%3ACustom_70s_Stratocaster%2C_Dakota_Red_-_Hard_Relic.jpg
