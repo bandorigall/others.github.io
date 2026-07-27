@@ -5,7 +5,7 @@
 window.DATA_cast = [
   {
     "id": "ayaka-ohashi",
-    "name": "Ayaka Ohashi",
+    "name": "Ayaka Ohashi (오오하시 아야카)",
     "nameJa": "大橋彩香",
     "img": "Ayaka Ohashi",
     "description": "성우 겸 가수. 뱅드림 포핀파티 야마부키 사아야 및 아이돌 마스터 신데렐라 걸즈 시마무라 우즈키 역. Lantis 소속.",
