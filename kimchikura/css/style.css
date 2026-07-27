@@ -800,3 +800,49 @@ tr:last-child td { border-bottom: none; }
 
 /* ---------- 접근성 ---------- */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- 경로 최적화(오시는 길) ---------- */
+.route-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+.route-field { display: flex; flex-direction: column; gap: 5px; font-size: .82rem; color: var(--text-muted); }
+.route-field select,
+.route-field input {
+  background: var(--surface-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 10px; font: inherit; font-size: .9rem; min-width: 140px;
+}
+
+.route-stops { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.route-stop {
+  display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+}
+.route-stop:hover { border-color: var(--accent); }
+.route-stop input { margin-top: 3px; accent-color: var(--accent); }
+.route-stop-body { display: flex; flex-direction: column; gap: 2px; }
+.route-stop-title { font-weight: 700; font-size: .9rem; }
+.route-stop-place { color: var(--text-muted); font-size: .8rem; }
+.route-empty { color: var(--text-muted); font-size: .88rem; }
+
+.route-result { margin-top: 18px; }
+.route-steps { list-style: none; }
+.route-step { display: flex; gap: 12px; padding: 7px 0; font-size: .9rem; align-items: baseline; }
+.route-step .route-time {
+  flex: 0 0 76px; text-align: right; color: var(--text-muted);
+  font-variant-numeric: tabular-nums; font-size: .82rem;
+}
+.route-step.start .route-time,
+.route-step.goal .route-time,
+.route-step.stop .route-time { color: var(--accent-strong); font-weight: 700; }
+.route-step.move { color: var(--text-muted); font-size: .82rem; }
+.route-step.move .route-node { border-left: 2px dashed var(--border); padding-left: 12px; }
+.route-node { display: flex; flex-direction: column; gap: 2px; }
+.route-sub { color: var(--text-muted); font-size: .78rem; }
+.route-total { margin-top: 10px; font-size: .92rem; }
+.route-verdict {
+  margin-top: 8px; padding: 10px 12px; border-radius: var(--radius-sm); font-size: .86rem;
+}
+.route-verdict.ok { background: var(--accent-soft); color: var(--accent-strong); }
+.route-verdict.bad { background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-border); }
+.route-line { color: var(--text); font-size: .84rem; font-weight: 600; }
+.route-step.move .route-node { gap: 3px; }
