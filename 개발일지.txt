@@ -89,6 +89,13 @@ others — 개발일지
     - data/lineup.js 가 옛 데이터(모르포니카/유노만) — lineup.html 이 cast.html 로
       리다이렉트라 화면엔 안 나오지만 정리 필요.
 
+  [경로 플래너 (2026-07-27 추가분)]
+    - tools/build_routes.py ORIGINS 에 고속터미널/수서역/김포공항 추가 → 총 7개.
+      재생성 결과 25건 전부 성공(data/routes.json).
+    - access.html 경로 섹션 상단에 "참고용, 출발 전 직접 확인" 경고 박스 추가.
+    - 출발지 추가는 build_routes.py ORIGINS 만 고치고 스크립트 재실행하면 됨
+      (access.html/route.js 는 origins 배열을 그대로 렌더 → 수정 불필요).
+
   [결정사항]
     - 공식 발표가 아닌 추정치는 반드시 "추정/비오피셜"이라고 표기.
     - 트위터(X) 정보 수집 우회법은 전역 CLAUDE.md 에 정리해 둠

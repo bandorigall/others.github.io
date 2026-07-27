@@ -39,6 +39,9 @@ ORIGINS = [
     {"id": "o_yongsan",  "name": "용산역",          "lat": 37.529849, "lng": 126.964561},
     {"id": "o_nambu",    "name": "남부버스터미널",   "lat": 37.484928, "lng": 127.016319},
     {"id": "o_dongseoul","name": "동서울버스터미널", "lat": 37.534605, "lng": 127.094889},
+    {"id": "o_expressbt","name": "고속터미널",       "lat": 37.504977, "lng": 127.004840},
+    {"id": "o_suseo",    "name": "수서역",          "lat": 37.487079, "lng": 127.101610},
+    {"id": "o_gimpo",    "name": "김포공항",        "lat": 37.562434, "lng": 126.801058},
 ]
 
 API = "https://map.naver.com/p/api/directions/pubtrans"

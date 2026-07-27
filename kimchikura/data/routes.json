@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-07-27 18:18:24",
+ "generatedAt": "2026-07-27 18:51:07",
  "date": "2026-08-08",
  "departureTime": "09:00",
  "source": "네이버 지도 대중교통 경로 (map.naver.com)",
@@ -34,6 +34,24 @@
    "name": "동서울버스터미널",
    "lat": 37.534605,
    "lng": 127.094889
+  },
+  {
+   "id": "o_expressbt",
+   "name": "고속터미널",
+   "lat": 37.504977,
+   "lng": 127.00484
+  },
+  {
+   "id": "o_suseo",
+   "name": "수서역",
+   "lat": 37.487079,
+   "lng": 127.10161
+  },
+  {
+   "id": "o_gimpo",
+   "name": "김포공항",
+   "lat": 37.562434,
+   "lng": 126.801058
   }
  ],
  "stops": [
@@ -140,6 +158,69 @@
    "fare": 1650,
    "type": "SUBWAY",
    "summary": "2호선 → 경의중앙선"
+  },
+  "o_expressbt>s0_0": {
+   "duration": 35,
+   "walk": 9,
+   "fare": 1650,
+   "type": "SUBWAY",
+   "summary": "3호선 → 경의중앙선"
+  },
+  "o_expressbt>s1_0": {
+   "duration": 35,
+   "walk": 10,
+   "fare": 1650,
+   "type": "BUS_AND_SUBWAY",
+   "summary": "9호선 → 5714"
+  },
+  "o_expressbt>goal": {
+   "duration": 61,
+   "walk": 24,
+   "fare": 1650,
+   "type": "BUS_AND_SUBWAY",
+   "summary": "3호선 → 경의중앙선 → 동대문02"
+  },
+  "o_suseo>s0_0": {
+   "duration": 47,
+   "walk": 4,
+   "fare": 1750,
+   "type": "SUBWAY",
+   "summary": "수인분당선 → 경의중앙선"
+  },
+  "o_suseo>s1_0": {
+   "duration": 58,
+   "walk": 7,
+   "fare": 1850,
+   "type": "SUBWAY",
+   "summary": "수인분당선 → 2호선"
+  },
+  "o_suseo>goal": {
+   "duration": 70,
+   "walk": 31,
+   "fare": 1750,
+   "type": "BUS_AND_SUBWAY",
+   "summary": "수인분당선 → 경의중앙선 → 1222"
+  },
+  "o_gimpo>s0_0": {
+   "duration": 60,
+   "walk": 15,
+   "fare": 1950,
+   "type": "SUBWAY",
+   "summary": "공항철도 → 1호선"
+  },
+  "o_gimpo>s1_0": {
+   "duration": 23,
+   "walk": 7,
+   "fare": 1650,
+   "type": "SUBWAY",
+   "summary": "공항철도"
+  },
+  "o_gimpo>goal": {
+   "duration": 85,
+   "walk": 28,
+   "fare": 1950,
+   "type": "BUS_AND_SUBWAY",
+   "summary": "공항철도 → 1호선 → 동대문02"
   },
   "s0_0>s1_0": {
    "duration": 37,
