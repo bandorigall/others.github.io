@@ -205,8 +205,19 @@
 
   function start() { buildQuiz(); renderQuestion(); }
 
+  function renderIntro() {
+    var h = '<div class="result">';
+    h += '<div class="quiz-progress">READY?</div>';
+    h += '<div class="msg">준비되면 시작 버튼을 눌러주세요. 문제마다 3초 클립이 자동 재생됩니다.</div>';
+    h += '<div class="btn-row" style="justify-content:center">';
+    h += '<button class="btn" id="begin">시작하기 →</button></div>';
+    h += '</div>';
+    card.innerHTML = h;
+    document.getElementById("begin").addEventListener("click", start);
+  }
+
   if (!SONGS.length) { card.innerHTML = '<p class="subtitle">퀴즈 데이터를 불러오지 못했습니다.</p>'; }
-  else start();
+  else renderIntro();
 })();
 </script>
 </body>
