@@ -74,12 +74,49 @@
         <a class="btn ghost" href="https://gall.dcinside.com/mgallery/board/view/?id=bang_dream&no=5983663" target="_blank" rel="noopener">방붕 맛집 가이드 (뱅드림 갤러리)</a>
       </div>
     </section>
+    <section id="route-planner">
+      <h2 class="section-title">당일 성지순례 경로 짜기 🚇</h2>
+      <p class="subtitle">
+        공연 당일(2026-08-08)에 열려 있는 다른 뱅드림 오프라인 이벤트(전광판·카페·전시 등)를 고르면,
+        출발지 → 선택한 장소들 → <strong>평화의전당</strong> 순서를 자동으로 최적화해 줍니다.
+      </p>
+
+      <div class="route-controls">
+        <label class="route-field">
+          <span>출발지</span>
+          <select class="route-origin"></select>
+        </label>
+        <label class="route-field">
+          <span>출발 시각</span>
+          <input class="route-start" type="time" value="09:00">
+        </label>
+        <label class="route-field">
+          <span>장소당 체류</span>
+          <input class="route-dwell" type="number" min="0" max="180" step="5" value="20">
+        </label>
+      </div>
+
+      <h3 class="fan-section-heading" style="margin-top:18px;">들를 곳 선택</h3>
+      <div class="route-stops"></div>
+
+      <div class="route-result"></div>
+
+      <p class="route-stamp" style="color:var(--text-muted);font-size:.75rem;margin-top:12px;"></p>
+      <p style="color:var(--text-muted);font-size:.78rem;margin-top:6px;">
+        ※ 각 구간 소요 시간·환승 노선·요금은 <strong>네이버 지도 대중교통 경로 실측값</strong>입니다
+        (공연 당일 오전 출발 기준으로 미리 조회해 둔 값이라, 시간대에 따라 몇 분 차이날 수 있습니다).
+        이벤트 목록은 <a href="../../한국오프이벤/index.html" target="_blank" rel="noopener">한국 오프이벤 페이지</a>의
+        데이터를 그대로 씁니다.
+      </p>
+    </section>
+
   </main>
 
   <footer class="site-footer">
     마지막 업데이트: 2026-06-28
   </footer>
 
+<script src="js/route.js"></script>
 <script src="nav.js"></script>
 </body>
 </html>

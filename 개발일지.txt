@@ -44,6 +44,56 @@ others — 개발일지
   - mygocenter는 로컬 venv(d:\venv_dev) 전제(run.bat). yt-dlp 필요.
   - mbti site/는 빌드 불필요(데이터 갱신 시에만 build_site_data.py).
 
+■ nav.js — 사이트 이동 메뉴 위치 변경 (2026-07-27)
+  [현재 상태]
+    - 기존: position:fixed; top:12px; right:12px 로 각 사이트 자체 헤더의
+      우상단(데스크톱 마지막 메뉴 / 모바일 햄버거 ☰)을 가려 메뉴가 안 보였음.
+    - 변경: 화면 오른쪽 '세로 중앙'(top:50%; right:0)에 세로 탭 형태로 부착.
+      writing-mode:vertical-rl 로 얇은 세로 버튼, 닫힘 상태 opacity .72,
+      메뉴는 왼쪽으로 펼침(flex row-reverse), max-height 80vh + 스크롤.
+      메뉴 내부 클릭 stopPropagation, Esc 로 닫기 추가.
+    - 15개 nav.js 사본 전체에 동일 적용(로젤내한만 자기 사이트 링크 1줄 추가).
+
+  [다음 할 일]
+    - push_all.sh 로 전체 레포 일괄 커밋/푸시 (아직 미푸시).
+    - 배포 후 모바일에서 하단 플로팅 버튼(kimchikura float-btns)과 겹침 여부 확인.
+
+  [결정사항]
+    - nav.js 는 15개 폴더에 복제된 동일 파일 → 한 곳(others/kimchikura/nav.js)을
+      고치고 나머지에 cp 하는 방식으로 유지. 항목 리스트 불일치 주의.
+    - 상단 고정은 각 사이트 헤더와 필연적으로 충돌하므로 다시 top-right 로
+      되돌리지 말 것. 하단도 플로팅 버튼과 충돌 → 오른쪽 세로중앙이 안전지대.
+
+  [관련 파일]
+    others/*/nav.js, 각 상위 프로젝트 폴더/nav.js  (총 15개 사본)
+    others/kimchikura/js/include.js               사이트 자체 헤더(가려지던 대상)
+
+■ kimchikura — 김치쿠라 Fes '26 콘텐츠 갱신 (2026-07-27)
+  [현재 상태]
+    - index.html: "당일 일정" 섹션 신설(화환 09~11시 도착 / 진열 10~21시 /
+      공연 14~20시 / 철거 21~22시) + 작년 VOL.4 공지 기반 입장·MD 추정 타임라인
+      (공연 3시간 전 티켓수령·MD 시작, 1.5시간 전 개장, 인터미션 20분,
+       종료 후 30분 MD 재개) — 추정임을 명시.
+    - fan.html: 화환 접수 '수량 도달 조기마감', 진열/도착/철거 시간·규정 반영.
+    - callguide.html: 벼락치기 모르포니카 콜가이드(2026-07-26) 카드,
+      이키즈라이브 콜가이드, 오오하시 아야카(핫시) 1~4부, 아이마스 모음 섹션 추가.
+      섹션 순서 = 뱅드림(벼락치기) → 아이마스 → 이키즈라이브 → 오오하시 아야카
+      (2026-07-27 사용자 지정 순서. 임의로 재정렬하지 말 것).
+    - data/cast.js: "Ayaka Ohashi (오오하시 아야카)" 표기.
+    - 커밋 b46b56c → 69aab22 → af41076 → d8368bd 푸시 완료.
+
+  [다음 할 일]
+    - 공식 타임테이블/입장 안내가 뜨면 index.html 추정 섹션을 실제 값으로 교체.
+      (김치쿠라는 공연 전날~당일 아침에 "회장 입장 및 공연 시간 안내"를 올림)
+    - 굿즈(MD) 판매 공지 나오면 goods.html 반영.
+    - data/lineup.js 가 옛 데이터(모르포니카/유노만) — lineup.html 이 cast.html 로
+      리다이렉트라 화면엔 안 나오지만 정리 필요.
+
+  [결정사항]
+    - 공식 발표가 아닌 추정치는 반드시 "추정/비오피셜"이라고 표기.
+    - 트위터(X) 정보 수집 우회법은 전역 CLAUDE.md 에 정리해 둠
+      (api.fxtwitter.com / syndication.twitter.com __NEXT_DATA__ / forms.gle og:description).
+
 ■ guitar (2026-07-26 신규)
   12밴드 기타 담당 캐릭터 19명의 사용 기타 도감.
   guitars.json(단일 소스) → generate_html.py → index.html + img/.
@@ -102,3 +152,53 @@ others — 개발일지
     others/guitar/index.html          생성물 (직접 수정 금지)
     others/guitar/img/*.jpg           기타 사진 (파일명 = guitarist id)
     others/guitar/img/SOURCES.txt     사진 출처·라이선스 일람
+
+
+================================================================
+[kimchikura] 오시는 길 — 당일 성지순례 경로 최적화 (2026-07-27)
+================================================================
+
+  [현재 상태]
+    access.html 맨 아래 #route-planner 섹션 완성·동작 확인.
+    공연 당일(2026-08-08) 활성 이벤트 장소를 체크박스로 고르면
+    출발지 → 경유지들 → 경희대 평화의전당 순서를 최적화해 타임라인 출력.
+    출발지 4곳 고정: 서울역 / 용산역 / 남부버스터미널 / 동서울버스터미널.
+    구간마다 실제 이용 노선·도보 분·요금 표시, 총 소요/교통비,
+    "추정 개장 12:30까지 여유 O분" 판정, 네이버·카카오 길찾기 링크.
+
+  [다음 할 일]
+    - events.csv 갱신되면 python tools/build_routes.py 재실행 (필수).
+    - 공식 타임테이블 발표되면 DOOR_OPEN(route.js, 12:30 추정) 실제값으로 교체.
+    - 실시간 시간대 반영이 필요해지면 CORS 우회 프록시(Cloudflare Worker) 검토.
+
+  [결정 사항 / 이유]
+    - 소요시간에 직선거리 추정 금지(사용자 요구). 전부 실측값으로 대체.
+    - 데이터 출처: 네이버 지도 내부 엔드포인트
+        https://map.naver.com/p/api/directions/pubtrans?start=lng,lat&goal=lng,lat&departureTime=ISO
+      키 없이 200. duration/walkingDuration/fare/fares[].routes[][].name(노선명) 제공.
+      (웹 번들 maps-service.pstatic.net/pcweb_navermap_v5/... 를 grep 해서 발견)
+    - CORS 헤더를 안 주므로 브라우저 직접 호출 불가 → 빌드 시점에 전 방향 쌍을
+      미리 조회해 data/routes.json 으로 굽는 구조 채택.
+      노드가 적어(출발지4 + 장소N + 공연장1) 쿼리 16건이면 충분.
+    - 순서 최적화는 종점 고정 open-path TSP. 경유지 7개 이하 완전탐색(5040),
+      초과 시 최근접이웃 + 2-opt.
+    - 경유지 후보는 한국오프이벤 events.csv 를 시작/종료일로 필터해서 자동 생성.
+      좌표가 JSON 배열인 다중 지점도 각각 분리. 공연장 자체(300m 이내)는 제외.
+    - 네트워크 전부 실패 시 기존 routes.json 을 덮어쓰지 않고 종료(안전).
+
+  [함정/메모]
+    - 시도했다 실패한 것: map.naver.com/p/api/pubtrans/... , /directions/point-to-point,
+      /directions/transit(BAD_REQUEST), kakao map/api/dapi/transit(302).
+      정답은 /p/api/directions/pubtrans 하나뿐.
+    - 요청 시 Referer: https://map.naver.com/ + 브라우저 UA 헤더 필요.
+    - 검증 결과 네 출발지 모두 홍대입구 → 회기역 → 평화의전당 순이 최적
+      (서울역 기준 112분 vs 역순 168분).
+    - file:// 로 열면 fetch(data/routes.json)가 막힘 → python -m http.server 로 확인.
+
+  [관련 파일]
+    others/kimchikura/tools/build_routes.py   경로 행렬 생성기(네이버 API 조회)
+    others/kimchikura/data/routes.json        생성물 (직접 수정 금지)
+    others/kimchikura/js/route.js             체크박스·TSP·타임라인 렌더
+    others/kimchikura/access.html             #route-planner 섹션
+    others/kimchikura/css/style.css           .route-* 스타일 (파일 하단)
+    한국오프이벤/events.csv                    경유지 후보 원본 (별도 리포)
