@@ -996,7 +996,9 @@
 
   function buildDomCanvas() {
     var src = $('screen-result');
-    var W = Math.max(720, Math.min(src.clientWidth, 1080));
+    // 폭은 화면과 무관하게 1080 고정. foreignObject 안에서는 미디어쿼리가
+    // SVG 뷰포트(=이 폭) 기준으로 걸리므로, 폰에서도 PC 배치(우승 카드+토너먼트 2단)로 찍힌다.
+    var W = 1080;
 
     var clone = src.cloneNode(true);
     clone.removeAttribute('id');
@@ -1077,33 +1079,56 @@
   }
 
   function savePng() {
-    shot().then(function (cv) {
-      cv.toBlob(function (blob) {
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'bangdream_sorter.png';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-        toast('이미지를 저장했어요');
-      }, 'image/png');
+    shot().then(toBlob).then(function (blob) {
+      var file = null;
+      // 모바일에선 '다운로드'가 어디로 갔는지 모르는 경우가 많다 →
+      // 공유 시트를 띄워 사진 앨범/앱으로 바로 보낼 수 있게 한다(지원할 때만).
+      try { file = new File([blob], 'bangdream_sorter.png', { type: 'image/png' }); } catch (e) {}
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file] })
+          .catch(function () { download(blob); });
+        return;
+      }
+      download(blob);
     });
+
+    function download(blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'bangdream_sorter.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      toast('이미지를 저장했어요');
+    }
   }
 
+  function toBlob(cv) {
+    return new Promise(function (res) { cv.toBlob(res, 'image/png'); });
+  }
+
+  /** 이미지 복사.
+   *  ★ 사파리(iOS 포함)는 클릭 직후 '동기적으로' clipboard.write 를 불러야 허용한다.
+   *    그래서 blob 을 기다렸다가 쓰지 않고, Promise<Blob> 을 그대로 ClipboardItem 에 넘긴다.
+   *    (크롬도 Promise 를 받는다. 안 받는 구형 브라우저는 catch 로 예전 방식 폴백) */
   function copyPng() {
     if (!navigator.clipboard || !window.ClipboardItem) {
       toast('이 브라우저는 이미지 복사가 안 돼요. 저장을 써주세요');
       return;
     }
-    shot().then(function (cv) {
-      cv.toBlob(function (blob) {
-        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
-          .then(function () { toast('이미지를 복사했어요'); })
-          .catch(function () { toast('복사 실패 — 저장을 써주세요'); });
-      }, 'image/png');
-    });
+    var blobP = shot().then(toBlob);
+    var done = function () { toast('이미지를 복사했어요'); };
+    var fail = function () { toast('복사 실패 — 저장을 써주세요'); };
+    try {
+      navigator.clipboard.write([new ClipboardItem({ 'image/png': blobP })])
+        .then(done).catch(fail);
+    } catch (e) {
+      blobP.then(function (blob) {
+        return navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      }).then(done).catch(fail);
+    }
   }
 
   function copyText() {
