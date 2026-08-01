@@ -16,6 +16,10 @@
 
 * { box-sizing: border-box; }
 
+/* 폼 요소는 브라우저마다 기본 글자색·폰트가 따로 논다(파폭은 검정 + 시스템 폰트).
+   다크 UI 에서 검은 글씨로 떨어지는 사고를 원천 차단한다. */
+button, input, select, textarea { color: inherit; font: inherit; }
+
 html, body {
   margin: 0;
   padding: 0;
@@ -235,8 +239,13 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
   letter-spacing: .08em;
 }
 
+/* ★ <button> 은 UA 기본값이 color:buttontext(검정) + 시스템 폰트다.
+   크롬은 appearance:none 이면 상속해주지만 파이어폭스/삼성인터넷은 기본값을 그대로 써서
+   대결 화면 캐릭터 이름이 검은 글씨로 떨어진다(2026-08-01 제보). 반드시 못 박을 것. */
 .char-card {
   appearance: none;
+  color: var(--text);
+  font: inherit;
   border: 2px solid var(--line);
   background: var(--bg-card);
   border-radius: var(--radius);
