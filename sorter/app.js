@@ -1,14 +1,22 @@
 /* 뱅드림 캐릭터 소터
  *
- * [정렬 방식]
- *   상향식 병합정렬을 쓰되, 비교 결과를 '답변 로그'에 순서대로 쌓아두고
- *   화면을 그릴 때마다 처음부터 다시 정렬을 돌린다.
- *   - 아직 답 없는 쌍을 만나면 NEED 를 던져서 그 쌍을 질문으로 띄운다.
- *   - 정렬이 끝까지 돌면 완료.
- *   이렇게 하면 되돌리기는 '로그 한 줄 빼고 다시 돌리기', 이어하기는
- *   '로그만 저장'으로 끝난다. 60명 재정렬은 1ms 도 안 걸리므로 매번 돌려도 된다.
+ * [공통 구조] '답변 로그 재생' 방식
+ *   비교 결과를 answers 배열에 순서대로 쌓고, 화면을 그릴 때마다 알고리즘을
+ *   처음부터 다시 돌린다. 답 없는 쌍을 만나면 NEED 를 던져 그 쌍을 질문으로 띄운다.
+ *   덕분에 되돌리기 = 로그 pop 후 재실행, 이어하기 = 로그만 저장으로 끝난다.
+ *   60명 재계산은 1ms 미만이라 매 질문마다 다시 돌려도 무방하다.
  *
- * [비김] 답변값 0. 병합 시 왼쪽을 먼저 넣어 순서를 안정적으로 유지하고,
+ * [모드]
+ *   full  : 상향식 병합정렬로 60명 전체를 정확히 정렬. 약 280문항.
+ *           참고로 60명 전체 순위를 확정하려면 정보이론상 log2(60!)≈273회가
+ *           최소이므로, 이보다 크게 줄이는 건 원리적으로 불가능하다.
+ *   top10 / top20 : 토너먼트 브래킷을 우승자를 빼면서 반복한다.
+ *           이미 답한 비교는 캐시되어 있어, 2위부터는 직전 우승자가 지나간
+ *           경로만 새로 물어보게 된다. 상위 K명은 '정확히' 맞으며
+ *           TOP10 약 150문항 / TOP20 약 215문항으로 끝난다.
+ *           (Elo·스위스 방식도 검토했지만 같은 질문 수에서 정확도가 크게 떨어져 채택하지 않음)
+ *
+ * [비김] 답변값 0. 왼쪽을 먼저 두어 순서를 안정적으로 유지하고,
  *   순위 계산에서 인접한 두 캐릭터의 답이 0이면 같은 순위로 묶는다.
  */
 (function () {
@@ -19,10 +27,18 @@
   var BY_ID = {};
   CHARS.forEach(function (c) { BY_ID[c.id] = c; });
 
-  var SAVE_KEY = 'bangdream_sorter_v1';
+  var SAVE_KEY = 'bangdream_sorter_v2';
   var NEED = {};                 // 비교가 필요할 때 던지는 신호 객체
 
+  // est = 진행률 분모(시뮬레이션 실측 최대치 + 여유). 실제론 이보다 적게 끝난다.
+  var MODES = {
+    full:  { label: '전체 순위', k: 0,  est: 297 },
+    top20: { label: 'TOP 20',   k: 20, est: 245 },
+    top10: { label: 'TOP 10',   k: 10, est: 185 }
+  };
+
   var state = {
+    mode: 'full',
     order: [],                   // 섞인 캐릭터 id 배열
     answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
     map: {},                     // "idA|idB" -> v
@@ -104,17 +120,44 @@
     return { done: true, list: arr };
   }
 
-  // 병합정렬 최악 비교 횟수 — 진행률 분모로만 쓴다(비김이 많으면 실제론 더 적게 끝남)
-  var EST_TOTAL = (function (n) {
-    var k = Math.ceil(Math.log2(n));
-    return n * k - Math.pow(2, k) + 1;
-  })(CHARS.length);
+  /** 토너먼트 브래킷 1회 → 우승자 반환. */
+  function bracket(list) {
+    var cur = list;
+    while (cur.length > 1) {
+      var next = [];
+      for (var i = 0; i < cur.length; i += 2) {
+        if (i + 1 >= cur.length) { next.push(cur[i]); continue; }
+        next.push(compare(cur[i], cur[i + 1]) >= 0 ? cur[i] : cur[i + 1]);
+      }
+      cur = next;
+    }
+    return cur[0];
+  }
+
+  /** 우승자를 빼면서 브래킷을 K번 반복 → 상위 K명을 정확히 뽑는다. */
+  function runTopK(k) {
+    var pool = state.order.slice();
+    var out = [];
+    try {
+      for (var i = 0; i < k && pool.length; i++) {
+        var w = bracket(pool);
+        out.push(w);
+        pool = pool.filter(function (x) { return x !== w; });
+      }
+    } catch (e) {
+      if (e !== NEED) throw e;
+      return { done: false, pair: NEED.pair };
+    }
+    return { done: true, list: out };
+  }
+
+  function estTotal() { return MODES[state.mode].est; }
 
   // ── 저장/복원 ────────────────────────────────────────────────────────
   function save() {
     try {
       localStorage.setItem(SAVE_KEY, JSON.stringify({
-        order: state.order, answers: state.answers, ts: Date.now()
+        mode: state.mode, order: state.order, answers: state.answers, ts: Date.now()
       }));
     } catch (e) { /* 사파리 프라이빗 모드 등 — 저장 실패해도 진행엔 지장 없음 */ }
   }
@@ -126,6 +169,7 @@
       var s = JSON.parse(raw);
       if (!s || !Array.isArray(s.order) || s.order.length !== CHARS.length) return null;
       if (!s.order.every(function (id) { return BY_ID[id]; })) return null;
+      if (!MODES[s.mode]) return null;
       return s;
     } catch (e) { return null; }
   }
@@ -144,7 +188,8 @@
     return a;
   }
 
-  function startNew() {
+  function startNew(mode) {
+    state.mode = MODES[mode] ? mode : 'full';
     state.order = shuffle(CHARS.map(function (c) { return c.id; }));
     state.answers = [];
     state.result = null;
@@ -154,6 +199,7 @@
   }
 
   function resume(s) {
+    state.mode = s.mode;
     state.order = s.order;
     state.answers = s.answers || [];
     state.result = null;
@@ -162,7 +208,8 @@
   }
 
   function step() {
-    var r = runSort();
+    var k = MODES[state.mode].k;
+    var r = k ? runTopK(k) : runSort();
     if (r.done) {
       state.result = r.list;
       renderResult();
@@ -205,7 +252,7 @@
     setSide('left', L);
     setSide('right', R);
 
-    var pct = Math.min(99, Math.round(state.answers.length / EST_TOTAL * 100));
+    var pct = Math.min(99, Math.round(state.answers.length / estTotal() * 100));
     $('progress-fill').style.width = pct + '%';
     $('progress-pct').textContent = pct;
     $('progress-cnt').textContent = state.answers.length + 1;
@@ -262,6 +309,8 @@
     $('result-date').textContent =
       d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate());
     $('result-qcount').textContent = state.answers.length;
+    $('result-mode').textContent = MODES[state.mode].label;
+    $('result-note').hidden = !MODES[state.mode].k;
 
     var podium = $('podium');
     podium.innerHTML = '';
@@ -302,7 +351,8 @@
   // ── 결과 이미지(캔버스 직접 그리기 — 외부 라이브러리 없음) ─────────────
   function buildCanvas() {
     var rows = lastRows;
-    var COLS = 3, PER = Math.ceil(rows.length / COLS);
+    var COLS = rows.length > 30 ? 3 : (rows.length > 12 ? 2 : 1);
+    var PER = Math.ceil(rows.length / COLS);
     var W = 1080, PAD = 40, HEAD = 190, FOOT = 92;
     var RH = 64, COLW = (W - PAD * 2) / COLS;
     var H = HEAD + PER * RH + FOOT;
@@ -327,13 +377,15 @@
     g.textAlign = 'center';
     g.fillStyle = '#ffffff';
     g.font = '900 52px "Noto Sans KR", sans-serif';
-    g.fillText('내 뱅드림 최애 순위', W / 2, 84);
+    g.fillText(MODES[state.mode].k
+      ? '내 뱅드림 최애 TOP ' + MODES[state.mode].k
+      : '내 뱅드림 최애 순위', W / 2, 84);
 
     var d = new Date();
     g.fillStyle = '#9a94b0';
     g.font = '500 22px "Noto Sans KR", sans-serif';
     g.fillText(d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate())
-      + ' · 캐릭터 ' + rows.length + '명 · 질문 ' + state.answers.length + '회',
+      + ' · ' + rows.length + '명 · 질문 ' + state.answers.length + '회',
       W / 2, 124);
 
     g.strokeStyle = 'rgba(255,255,255,.12)';
@@ -354,26 +406,28 @@
       var im = r.ch._im;
       if (im) {
         g.save();
-        roundRect(g, x + 14, y + 6, 34, 46, 6);
+        roundRect(g, x + 14, y + 10, 40, 40, 8);
+        g.fillStyle = 'rgba(255,255,255,.06)';
+        g.fill();
         g.clip();
-        g.drawImage(im, x + 14, y + 6, 34, 46);
+        g.drawImage(im, x + 14, y + 10, 40, 40);
         g.restore();
       }
 
       // 등수
       g.fillStyle = r.rank <= 3 ? '#ffd76a' : '#7d7794';
       g.font = '900 22px "Noto Sans KR", sans-serif';
-      g.fillText(String(r.rank), x + 58, y + 36);
+      g.fillText(String(r.rank), x + 64, y + 37);
 
       // 이름
       g.fillStyle = '#f2f0f8';
       g.font = '700 22px "Noto Sans KR", sans-serif';
-      g.fillText(r.ch.name, x + 100, y + 30);
+      g.fillText(r.ch.name, x + 106, y + 30);
 
       // 밴드
       g.fillStyle = '#8b85a3';
       g.font = '500 15px "Noto Sans KR", sans-serif';
-      g.fillText(r.ch.band, x + 100, y + 49);
+      g.fillText(r.ch.band, x + 106, y + 49);
     });
 
     // 푸터
@@ -491,8 +545,14 @@
     save();
     location.reload();
   });
-  $('btn-start').addEventListener('click', startNew);
-  $('btn-restart').addEventListener('click', startNew);
+  Array.prototype.forEach.call(
+    document.querySelectorAll('[data-mode]'), function (el) {
+      el.addEventListener('click', function () { startNew(el.dataset.mode); });
+    });
+  $('btn-restart').addEventListener('click', function () {
+    clearSaved();
+    location.reload();          // 모드를 다시 고를 수 있게 시작 화면으로
+  });
   $('btn-png').addEventListener('click', savePng);
   $('btn-copy-img').addEventListener('click', copyPng);
   $('btn-copy-txt').addEventListener('click', copyText);
@@ -510,8 +570,9 @@
 
   var saved = loadSaved();
   if (saved && saved.answers && saved.answers.length) {
-    var pct = Math.min(99, Math.round(saved.answers.length / EST_TOTAL * 100));
+    var pct = Math.min(99, Math.round(saved.answers.length / MODES[saved.mode].est * 100));
     $('resume-progress').textContent = pct;
+    $('resume-mode').textContent = MODES[saved.mode].label;
     $('resume-box').hidden = false;
     $('btn-resume').addEventListener('click', function () { resume(saved); });
     $('btn-discard').addEventListener('click', function () {

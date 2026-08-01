@@ -18,23 +18,35 @@
 <section id="screen-intro" class="screen">
   <div class="intro-wrap">
     <h1 class="logo">뱅드림 캐릭터 소터</h1>
-    <p class="lead">60명을 <b>둘 중 하나</b>씩 고르다 보면<br>1위부터 60위까지 내 순위표가 완성돼요.</p>
-
-    <div class="intro-card">
-      <div class="intro-row"><span class="k">캐릭터</span><span class="v" id="intro-count">60명</span></div>
-      <div class="intro-row"><span class="k">예상 질문</span><span class="v">약 300회 (5~10분)</span></div>
-      <div class="intro-row"><span class="k">중간 저장</span><span class="v">자동 (닫아도 이어하기)</span></div>
-    </div>
+    <p class="lead"><b id="intro-count">60명</b>을 <b>둘 중 하나</b>씩 고르다 보면<br>내 최애 순위표가 완성돼요.</p>
 
     <div id="resume-box" class="resume-box" hidden>
-      <p>진행 중이던 기록이 있어요. <b><span id="resume-progress">0</span>%</b> 완료</p>
+      <p><b id="resume-mode">전체 순위</b> 진행 기록이 있어요. <b><span id="resume-progress">0</span>%</b> 완료</p>
       <div class="btn-row">
         <button class="btn primary" id="btn-resume">이어하기</button>
         <button class="btn ghost" id="btn-discard">처음부터</button>
       </div>
     </div>
 
-    <button class="btn primary big" id="btn-start">시작하기</button>
+    <p class="mode-title">어디까지 정할까요?</p>
+    <div class="mode-list">
+      <button class="mode" data-mode="top10" type="button">
+        <span class="m-name">TOP 10</span>
+        <span class="m-q">약 150문항 · 4분</span>
+        <span class="m-desc">10위까지 정확하게. 가볍게 하고 싶다면 이거.</span>
+      </button>
+      <button class="mode" data-mode="top20" type="button">
+        <span class="m-name">TOP 20</span>
+        <span class="m-q">약 215문항 · 6분</span>
+        <span class="m-desc">20위까지 정확하게.</span>
+      </button>
+      <button class="mode recommended" data-mode="full" type="button">
+        <span class="m-name">전체 60위<em>추천</em></span>
+        <span class="m-q">약 280문항 · 8분</span>
+        <span class="m-desc">60명 전원 순위. 질문은 조금 더 늘지만 결과가 제일 알차요.</span>
+      </button>
+    </div>
+    <p class="mode-foot">중간 저장돼요. 닫았다 들어와도 이어서 할 수 있어요.</p>
 
     <details class="tips">
       <summary>조작법 · 팁</summary>
@@ -90,7 +102,8 @@
 <section id="screen-result" class="screen" hidden>
   <header class="result-head">
     <h2>내 뱅드림 최애 순위</h2>
-    <p class="result-sub"><span id="result-date"></span> · 질문 <span id="result-qcount">0</span>회</p>
+    <p class="result-sub"><span id="result-mode"></span> · <span id="result-date"></span> · 질문 <span id="result-qcount">0</span>회</p>
+    <p class="result-note" id="result-note" hidden>선택한 등수까지만 정확하게 가려냈어요. 나머지 캐릭터는 순위를 매기지 않았습니다.</p>
   </header>
 
   <div class="podium" id="podium"></div>
