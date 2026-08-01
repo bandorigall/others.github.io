@@ -184,8 +184,17 @@ sorter — 뱅드림 캐릭터 소터 개발일지
   ★ 키가 있어도 안 보이면 아무도 안 쓴다 — 카드·버튼에 단축키 배지를 표시하되
     @media (hover:hover) and (pointer:fine) 로 감싸 모바일에선 숨긴다.
 
-■ 결과 이미지(PNG)
-  외부 라이브러리(html2canvas 등) 없이 Canvas 2D 로 직접 그린다.
+■ 결과 이미지(PNG)  ★2026-08-01 변경: 화면 스냅샷 방식이 1순위
+  shot() = buildDomCanvas() 실패 시 withImages()(옛 캔버스 그림)로 자동 폴백.
+  buildDomCanvas: #screen-result 복제 → 버튼/토스트/전체 대진표/안내문 제거 →
+    <img> 전부 data URI 화(외부 참조가 하나라도 있으면 SVG 가 안 그려진다) →
+    styles.css 본문을 <style> 로 넣고 <foreignObject> 에 담아
+    data:image/svg+xml 이미지로 만들어 2배 크기 캔버스에 그린다. 라이브러리 없음.
+    높이는 화면 밖(position:fixed;left:-10000px) 에 잠깐 붙여 실측한다.
+    XMLSerializer 로 직렬화해야 XML 로 파싱된다(<img> 자동 닫힘 처리).
+    ※ 외부 폰트(Noto Sans KR)는 SVG 안에서 못 받으므로 시스템 폰트로 대체된다.
+    ※ 손으로 좌표를 계산하던 캔버스 그림이 PC 에서 깨져 보인다는 지적으로 바꿨다.
+  (폴백용) 예전 방식 — 외부 라이브러리 없이 Canvas 2D 로 직접 그린다.
   1080px 폭, 인원에 따라 1~3열, 밴드색 막대 + 썸네일 + 등수 + 이름 + 밴드.
   CDN 의존이 없어 오프라인·CSP 환경에서도 안전.
 
