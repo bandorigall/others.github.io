@@ -959,6 +959,115 @@
     }
   }
 
+  // ── 결과 이미지 ② 화면 그대로 찍기(DOM → SVG foreignObject → 캔버스) ────
+  //  캔버스로 다시 그린 그림은 화면과 미묘하게 달라서(레이아웃을 손으로 계산하니
+  //  글자가 겹치거나 잘렸다) 결국 화면 자체를 스냅샷 뜨는 쪽으로 바꿨다.
+  //  외부 라이브러리(html2canvas) 없이:
+  //    ① 결과 화면을 복제 → 버튼·토스트·전체 대진표를 뺀다
+  //    ② <img> 를 전부 data URI 로 바꾼다(외부 참조가 있으면 SVG 가 안 그려진다)
+  //    ③ styles.css 본문을 <style> 로 넣고 통째로 <foreignObject> 에 담아
+  //       data:image/svg+xml 이미지로 만들어 캔버스에 그린다.
+  //  ※ 외부 폰트(Noto Sans KR)는 SVG 안에서 못 받아오므로 시스템 폰트로 대체된다.
+  //  ※ 실패하면(구형 브라우저·fetch 차단 등) 예전 캔버스 그림으로 자동 폴백한다.
+  var CSS_TEXT = null;
+
+  function loadCss() {
+    if (CSS_TEXT !== null) return Promise.resolve(CSS_TEXT);
+    return fetch('styles.css').then(function (r) { return r.text(); })
+      .then(function (t) { CSS_TEXT = t; return t; });
+  }
+
+  /** 같은 폴더의 이미지들을 data URI 로 바꿔 끼운다. */
+  function inlineImages(root) {
+    var imgs = Array.prototype.slice.call(root.querySelectorAll('img'));
+    return Promise.all(imgs.map(function (im) {
+      return fetch(im.src).then(function (r) { return r.blob(); })
+        .then(function (b) {
+          return new Promise(function (res) {
+            var fr = new FileReader();
+            fr.onload = function () { im.setAttribute('src', fr.result); res(); };
+            fr.onerror = function () { res(); };
+            fr.readAsDataURL(b);
+          });
+        })
+        .catch(function () { im.removeAttribute('src'); });
+    }));
+  }
+
+  function buildDomCanvas() {
+    var src = $('screen-result');
+    var W = Math.max(720, Math.min(src.clientWidth, 1080));
+
+    var clone = src.cloneNode(true);
+    clone.removeAttribute('id');
+    // 이미지에 남으면 안 되는 것들(버튼·안내·토스트·긴 전체 대진표)
+    ['.result-actions', '.toast', '#bracket-wrap', '.result-note', '.bracket-hint']
+      .forEach(function (sel) {
+        Array.prototype.forEach.call(clone.querySelectorAll(sel), function (el) {
+          el.parentNode.removeChild(el);
+        });
+      });
+    var foot = document.createElement('p');
+    foot.className = 'shot-foot';
+    foot.textContent = '뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/';
+    clone.appendChild(foot);
+
+    // 높이를 재려면 실제로 배치해봐야 한다 → 화면 밖에 잠깐 붙였다 뗀다
+    var stage = document.createElement('div');
+    stage.setAttribute('style',
+      'position:fixed;left:-10000px;top:0;width:' + W + 'px;pointer-events:none;');
+    stage.appendChild(clone);
+    document.body.appendChild(stage);
+
+    return loadCss()
+      .then(function (css) { return inlineImages(clone).then(function () { return css; }); })
+      .then(function (css) {
+        var H = Math.ceil(clone.getBoundingClientRect().height);
+        var extra =
+          '.shot-root{width:' + W + 'px;background:#0e0d14;' +
+          'background-image:radial-gradient(1100px 520px at 12% -12%,rgba(255,92,158,.16),transparent 60%),' +
+          'radial-gradient(900px 480px at 88% 4%,rgba(123,140,255,.14),transparent 60%);}' +
+          '.shot-foot{text-align:center;color:#6f6a85;font-size:.72rem;margin:18px 0 0;}' +
+          '.screen{padding-bottom:22px;}';
+        var body = new XMLSerializer().serializeToString(clone);
+        document.body.removeChild(stage);
+
+        var svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '">' +
+          '<foreignObject x="0" y="0" width="100%" height="100%">' +
+          '<div xmlns="http://www.w3.org/1999/xhtml" class="shot-root">' +
+          '<style>' + xmlEsc(css + extra) + '</style>' + body +
+          '</div></foreignObject></svg>';
+
+        return new Promise(function (res, rej) {
+          var im = new Image();
+          im.onload = function () {
+            var S = 2;                     // 2배로 그려 글자를 또렷하게
+            var cv = document.createElement('canvas');
+            cv.width = W * S; cv.height = H * S;
+            var g = cv.getContext('2d');
+            g.fillStyle = '#0e0d14';
+            g.fillRect(0, 0, cv.width, cv.height);
+            g.drawImage(im, 0, 0, cv.width, cv.height);
+            res(cv);
+          };
+          im.onerror = function () { rej(new Error('svg render failed')); };
+          im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+        });
+      })
+      .catch(function (e) {
+        if (stage.parentNode) document.body.removeChild(stage);
+        throw e;
+      });
+  }
+
+  function xmlEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  /** 결과 이미지 한 장. 화면 스냅샷을 먼저 시도하고, 안 되면 캔버스로 그린다. */
+  function shot() {
+    return buildDomCanvas().catch(function () { return withImages(); });
+  }
+
   function toast(msg) {
     var t = $('toast');
     t.textContent = msg;
@@ -968,7 +1077,7 @@
   }
 
   function savePng() {
-    withImages().then(function (cv) {
+    shot().then(function (cv) {
       cv.toBlob(function (blob) {
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
@@ -988,7 +1097,7 @@
       toast('이 브라우저는 이미지 복사가 안 돼요. 저장을 써주세요');
       return;
     }
-    withImages().then(function (cv) {
+    shot().then(function (cv) {
       cv.toBlob(function (blob) {
         navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
           .then(function () { toast('이미지를 복사했어요'); })
