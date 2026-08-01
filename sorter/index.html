@@ -18,7 +18,7 @@
 <section id="screen-intro" class="screen">
   <div class="intro-wrap">
     <h1 class="logo">뱅드림 캐릭터 소터</h1>
-    <p class="lead"><b id="intro-count">60명</b>을 <b>둘 중 하나</b>씩 고르다 보면<br>내 최애 순위표가 완성돼요.</p>
+    <p class="lead"><b id="intro-count">60명</b>을 <b>둘 중 하나</b>씩 고르다 보면<br>내 최애가 가려져요.</p>
 
     <div id="resume-box" class="resume-box" hidden>
       <p><b id="resume-mode">전체 순위</b> 진행 기록이 있어요. <b><span id="resume-progress">0</span>%</b> 완료</p>
@@ -39,13 +39,13 @@
 
     <p class="mode-title">어디까지 정할까요?</p>
     <div class="mode-list">
-      <button class="mode" data-mode="cup" type="button">
-        <span class="m-name">월드컵<kbd class="k">1</kbd></span>
+      <button class="mode recommended" data-mode="cup" type="button">
+        <span class="m-name">월드컵<em>추천</em><kbd class="k">1</kbd></span>
         <span class="m-q">계산 중…</span>
         <span class="m-desc">토너먼트로 최애 한 명만. 32강 → 16강 → … → 결승, 순위는 안 나와요.</span>
       </button>
-      <button class="mode recommended" data-mode="full" type="button">
-        <span class="m-name">전체 60위<em>추천</em><kbd class="k">2</kbd></span>
+      <button class="mode" data-mode="full" type="button">
+        <span class="m-name">전체 60위<kbd class="k">2</kbd></span>
         <span class="m-q">계산 중…</span>
         <span class="m-desc">60명 전원 순위. 질문은 조금 더 늘지만 결과가 제일 알차요.</span>
       </button>
@@ -117,7 +117,13 @@
     <p class="result-note" id="result-note" hidden>월드컵은 우승자만 가려요. 전체 순위가 궁금하면 전체 모드로 해보세요.</p>
   </header>
 
-  <div class="champion" id="champion" hidden></div>
+  <div class="cup-top" id="cup-top" hidden>
+    <div class="champion" id="champion"></div>
+    <section class="top-bracket-wrap" id="top-bracket-wrap">
+      <h3 id="top-bracket-title">상위 토너먼트</h3>
+      <div class="top-bracket" id="top-bracket"></div>
+    </section>
+  </div>
 
   <section class="bracket-wrap" id="bracket-wrap" hidden>
     <h3>우승까지의 길</h3>
