@@ -110,6 +110,35 @@ body {
 }
 .resume-box p { margin: 0 0 10px; }
 
+/* ── 모드 선택 ── */
+.mode-title { font-weight: 700; font-size: .95rem; margin: 4px 0 10px; }
+.mode-list { display: grid; gap: 10px; }
+.mode {
+  appearance: none; text-align: left; cursor: pointer;
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 16px; color: var(--text);
+  font: inherit; display: grid; gap: 3px;
+  transition: transform .12s ease, border-color .16s ease, box-shadow .16s ease;
+  touch-action: manipulation;
+}
+.mode:active { transform: scale(.98); }
+@media (hover: hover) {
+  .mode:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 92, 158, .16); }
+}
+.mode.recommended { border-color: rgba(255, 92, 158, .55); background: linear-gradient(160deg, rgba(255, 92, 158, .12), var(--bg-card)); }
+.mode .m-name { font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+.mode .m-name em {
+  font-style: normal; font-size: .62rem; font-weight: 800; letter-spacing: .04em;
+  background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 999px;
+}
+.mode .m-q { font-size: .8rem; color: var(--accent-2); font-weight: 700; }
+.mode .m-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.6; }
+.mode-foot { color: var(--text-muted); font-size: .75rem; margin: 12px 0 0; }
+
+.result-note {
+  color: var(--text-muted); font-size: .78rem; margin: 8px auto 0; max-width: 460px; line-height: 1.6;
+}
+
 .tips { margin-top: 22px; text-align: left; color: var(--text-muted); font-size: .85rem; }
 .tips summary { cursor: pointer; padding: 10px 0; font-weight: 700; }
 .tips ul { margin: 4px 0 0; padding-left: 18px; line-height: 1.9; }
@@ -165,11 +194,11 @@ kbd {
 .char-card.picked { border-color: var(--band); box-shadow: 0 0 0 5px color-mix(in srgb, var(--band) 35%, transparent); }
 
 .card-img {
-  aspect-ratio: 3 / 4;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--band) 30%, #1a1826), #14121e);
-  display: flex; align-items: flex-start; justify-content: center;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--band) 32%, #1a1826), #14121e);
+  display: flex; align-items: center; justify-content: center;
 }
-.card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.card-img img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
 .card-meta { padding: 10px 8px 12px; text-align: center; }
 .c-name { display: block; font-weight: 700; font-size: clamp(.85rem, 3.4vw, 1.02rem); }
@@ -192,7 +221,8 @@ kbd {
   border-radius: var(--radius); overflow: hidden; text-align: center;
   border-top: 4px solid var(--band, var(--accent));
 }
-.podium .p-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top center; display: block; }
+.podium .p-item img { width: 100%; aspect-ratio: 1/1; object-fit: contain; display: block;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--band) 28%, #1a1826), #14121e); }
 .podium .p-rank { font-weight: 900; font-size: 1.1rem; padding-top: 8px; }
 .podium .p-name { padding: 2px 6px 10px; font-size: .82rem; font-weight: 700; }
 .podium .p-item:first-child .p-rank { color: #ffd76a; }
@@ -205,7 +235,8 @@ kbd {
   border-radius: 12px; padding: 6px 10px;
 }
 .rank-list .r-num { width: 34px; font-weight: 900; color: var(--text-muted); font-size: .9rem; text-align: right; }
-.rank-list img { width: 34px; height: 45px; object-fit: cover; object-position: top center; border-radius: 6px; }
+.rank-list img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px;
+    background: color-mix(in srgb, var(--band) 22%, #14121e); }
 .rank-list .r-name { font-weight: 700; font-size: .9rem; }
 .rank-list .r-band { margin-left: auto; font-size: .7rem; color: var(--text-muted); }
 
