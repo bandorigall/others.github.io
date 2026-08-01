@@ -73,7 +73,8 @@
     eqLink: {},                  // 비김으로 묶인 쌍 (idA -> idB)
     pending: null,               // 지금 화면에 띄운 [idA, idB]
     swapped: false,              // 화면에서 좌우를 뒤집어 보여주는 중인지
-    result: null                 // 완료 시 정렬된 id 배열
+    result: null,                // 완료 시 정렬된 id 배열
+    matches: null                // 월드컵 전 경기 기록(대진표용)
   };
 
   // ── 밴드 선택 ────────────────────────────────────────────────────────
@@ -244,13 +245,16 @@
    *  질문이 필요하면 NEED 에 지금 라운드 정보(round/matchNo/matchTotal)를 실어 던진다. */
   function runCup() {
     var round = { size: 0, no: 0, total: 0, prelim: false };
+    var matches = [];               // 대진표를 그리려고 모든 경기를 기록한다
 
     function play(a, b) {
       round.no++;
       NEED.round = {
         size: round.size, no: round.no, total: round.total, prelim: round.prelim
       };
-      return compare(a, b) >= 0 ? a : b;   // 월드컵엔 비김이 없다(0이면 앞쪽 승)
+      var w = compare(a, b) >= 0 ? a : b;   // 월드컵엔 비김이 없다(0이면 앞쪽 승)
+      matches.push({ size: round.size, prelim: round.prelim, a: a, b: b, w: w });
+      return w;
     }
 
     try {
@@ -277,7 +281,7 @@
       if (e !== NEED) throw e;
       return { done: false, pair: NEED.pair, round: NEED.round };
     }
-    return { done: true, list: cur };
+    return { done: true, list: cur, matches: matches };
   }
 
   /** '16강' · '결승' 같은 라운드 이름. */
@@ -352,6 +356,7 @@
     var r = MODES[state.mode].cup ? runCup() : runSort();
     if (r.done) {
       state.result = r.list;
+      state.matches = r.matches || null;
       renderResult();
       show('result');
       return;
@@ -488,6 +493,7 @@
 
     // 월드컵은 우승자 한 명만 크게 띄운다(순위표·시상대 없음)
     $('champion').hidden = !cup;
+    $('bracket-wrap').hidden = !cup;
     $('podium').hidden = cup;
     $('rank-list').hidden = cup;
     if (cup) {
@@ -499,6 +505,7 @@
         '<img src="' + w.img + '" alt="">' +
         '<div class="c-name">' + esc(w.name) + '</div>' +
         '<div class="c-band">' + esc(w.band) + '</div>';
+      renderBracket(w.id);
       clearSaved();
       return;
     }
@@ -530,6 +537,63 @@
     });
 
     clearSaved();   // 완료됐으므로 '이어하기' 대상에서 뺀다
+  }
+
+  /** 우승자가 밟고 온 경기들(예선 → 결승 순). */
+  function championPath(champId) {
+    return (state.matches || []).filter(function (m) { return m.w === champId; });
+  }
+
+  /** 대진표. 라운드별로 세로 한 칸씩, 가로로 훑어보는 형태(모바일은 좌우 스크롤).
+   *  경기 수가 많은 예선까지 전부 그리되 우승자 경로만 강조한다. */
+  function renderBracket(champId) {
+    var ms = state.matches || [];
+    var wrap = $('bracket');
+    wrap.innerHTML = '';
+    if (!ms.length) return;
+
+    // 우승자 경로 요약 (예선 vs OO → 32강 vs OO → …)
+    var path = championPath(champId);
+    $('bracket-path').innerHTML = path.map(function (m) {
+      var foe = BY_ID[m.a === champId ? m.b : m.a];
+      return '<span class="bp-item"><b>' + esc(roundLabel(m)) + '</b> ' + esc(foe.name) + '</span>';
+    }).join('<span class="bp-sep">›</span>');
+
+    // 라운드별로 묶기(기록 순서 = 진행 순서라 그대로 훑으면 된다)
+    var rounds = [], cur = null;
+    ms.forEach(function (m) {
+      var label = roundLabel(m);
+      if (!cur || cur.label !== label) { cur = { label: label, list: [] }; rounds.push(cur); }
+      cur.list.push(m);
+    });
+
+    rounds.forEach(function (r) {
+      var col = document.createElement('div');
+      col.className = 'br-round';
+      var html = '<h4>' + esc(r.label) + '<span>' + r.list.length + '경기</span></h4>';
+      r.list.forEach(function (m) {
+        html += '<div class="br-m">' + side(m.a, m) + side(m.b, m) + '</div>';
+      });
+      col.innerHTML = html;
+      wrap.appendChild(col);
+    });
+
+    // 마지막에 우승자 칸
+    var last = document.createElement('div');
+    last.className = 'br-round';
+    var ch = BY_ID[champId];
+    last.innerHTML = '<h4>우승<span>&nbsp;</span></h4>' +
+      '<div class="br-m"><span class="br-p win champ" style="--band:' + ch.color + '">' +
+      '<img src="' + ch.thumb + '" alt="" loading="lazy">' + esc(ch.name) + '</span></div>';
+    wrap.appendChild(last);
+
+    function side(id, m) {
+      var c = BY_ID[id];
+      return '<span class="br-p' + (m.w === id ? ' win' : '') +
+        (m.w === id && id === champId ? ' champ' : '') +
+        '" style="--band:' + c.color + '">' +
+        '<img src="' + c.thumb + '" alt="" loading="lazy">' + esc(c.name) + '</span>';
+    }
   }
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
@@ -635,7 +699,8 @@
   /** 월드컵 결과 이미지 — 우승자 한 명만 크게. */
   function buildCupCanvas() {
     var ch = lastRows[0].ch;
-    var W = 1080, H = 1080;
+    var path = championPath(ch.id);
+    var W = 1080, H = 940 + path.length * 34 + 96;
     var cv = document.createElement('canvas');
     cv.width = W; cv.height = H;
     var g = cv.getContext('2d');
@@ -662,7 +727,7 @@
 
     var im = ch._im;
     if (im) {
-      var S = 560, x = (W - S) / 2, y = 195;
+      var S = 500, x = (W - S) / 2, y = 190;
       g.save();
       roundRect(g, x, y, S, S, 28);
       g.fillStyle = 'rgba(255,255,255,.06)';
@@ -675,22 +740,50 @@
 
     g.fillStyle = '#ffffff';
     g.font = '900 62px "Noto Sans KR", sans-serif';
-    g.fillText(ch.name, W / 2, 848);
-    g.fillStyle = ch.color;
+    g.fillText(ch.name, W / 2, 772);
+    g.fillStyle = lighten(ch.color);   // 어두운 밴드색은 검은 배경에 묻힌다
     g.font = '700 30px "Noto Sans KR", sans-serif';
-    g.fillText(ch.band, W / 2, 898);
+    g.fillText(ch.band, W / 2, 818);
 
+    // 우승까지 이긴 상대들
+    g.fillStyle = '#8b85a3';
+    g.font = '700 22px "Noto Sans KR", sans-serif';
+    g.fillText('우승까지의 길', W / 2, 890);
+    path.forEach(function (m, i) {
+      var foe = BY_ID[m.a === ch.id ? m.b : m.a];
+      var y2 = 934 + i * 34;
+      g.textAlign = 'right';
+      g.fillStyle = '#ffd76a';
+      g.font = '700 21px "Noto Sans KR", sans-serif';
+      g.fillText(roundLabel(m), W / 2 - 14, y2);
+      g.textAlign = 'left';
+      g.fillStyle = '#cfcadd';
+      g.font = '500 21px "Noto Sans KR", sans-serif';
+      g.fillText('vs ' + foe.name, W / 2 + 14, y2);
+    });
+
+    g.textAlign = 'center';
     var d = new Date();
     g.fillStyle = '#8b85a3';
     g.font = '500 22px "Noto Sans KR", sans-serif';
     g.fillText(d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate())
-      + ' · ' + state.order.length + '명 · ' + state.answers.length + '경기', W / 2, 968);
+      + ' · ' + state.order.length + '명 · ' + state.answers.length + '경기',
+      W / 2, 940 + path.length * 34 + 34);
 
     g.fillStyle = '#6f6a85';
     g.font = '500 19px "Noto Sans KR", sans-serif';
     g.fillText('뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/',
       W / 2, H - 38);
     return cv;
+  }
+
+  /** 밴드색에 흰색을 섞어 밝게. 검은 배경 위 글자색으로 쓰려고(CSS 쪽도 같은 처리). */
+  function lighten(hex, amt) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex));
+    if (!m) return '#ffffff';
+    var n = parseInt(m[1], 16), a = amt === undefined ? .45 : amt;
+    function mix(c) { return Math.round(c + (255 - c) * a); }
+    return 'rgb(' + mix(n >> 16 & 255) + ',' + mix(n >> 8 & 255) + ',' + mix(n & 255) + ')';
   }
 
   /** '#rrggbb' + 알파 → rgba() 문자열. 밴드색을 그라데이션에 쓰려고. */
