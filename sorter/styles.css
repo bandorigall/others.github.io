@@ -24,6 +24,8 @@ html, body {
   font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior-y: none;
+  /* 대진표가 넘쳐도 페이지 자체가 좌우로 밀리지 않게(자기 컨테이너 안에서만 스크롤) */
+  overflow-x: hidden;
 }
 
 body {
@@ -183,6 +185,13 @@ kbd {
 }
 
 /* ══════════ 대결 화면 ══════════ */
+/* 대결은 '한 화면에 다 들어오는' 게 생명이다. 화면을 세로 flex 로 잡고
+   가운데 아레나가 남는 높이를 먹게 해서, 스크롤 없이 카드 2장 + 버튼이 보이게 한다. */
+#screen-battle { display: flex; flex-direction: column; min-height: 100dvh; }
+#screen-battle .arena { flex: 1 1 auto; align-content: center; }
+/* 대결 중엔 아래 저작권 푸터를 숨긴다. 안 그러면 100dvh + 푸터라 늘 스크롤이 생긴다.
+   (:has 미지원 브라우저는 그냥 예전처럼 푸터가 보일 뿐, 깨지지 않는다) */
+body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
 .battle-head { text-align: center; margin-bottom: 14px; }
 .progress-line { display: flex; align-items: center; gap: 10px; }
 .progress-bar {
@@ -435,13 +444,53 @@ kbd {
   font-size: .7rem; padding: 20px 16px calc(30px + var(--safe-b)); line-height: 1.7;
 }
 
-/* ══════════ 좁은 화면 ══════════ */
+/* 좁은 화면에서만 보이는 안내(가로 스크롤 힌트 등) */
+.narrow-only { display: none; }
+
+/* ══════════ 좁은 화면(폰) ══════════ */
 @media (max-width: 560px) {
+  .narrow-only { display: block; }
+  .screen { padding: 14px 12px calc(20px + var(--safe-b)); }
+  .intro-wrap { padding-top: 2vh; }
+
+  /* 대결 */
   .arena { gap: 6px; }
   .vs { font-size: .7rem; }
   .card-meta { padding: 8px 5px 10px; }
-  .rank-list { grid-template-columns: 1fr; }
+  .battle-q { font-size: .95rem; margin-top: 12px; }
   .battle-actions .btn { padding: 12px 10px; font-size: .88rem; min-width: 0; }
+
+  /* 손가락으로 누를 것들은 최소 높이를 확보한다(칩이 너무 얇았다) */
+  .band { padding: 9px 12px; font-size: .8rem; }
+  .chip { padding: 8px 13px; }
+
+  /* 결과 */
+  .rank-list { grid-template-columns: 1fr; }
+  .rank-list .r-band { display: none; }        /* 폭이 좁으면 이름이 잘린다 → 밴드명 생략 */
+  .champion .c-name { font-size: 1.3rem; }
+  .result-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .result-actions .btn { min-width: 0; padding: 12px 8px; font-size: .86rem; }
+
+  /* 상위 토너먼트 — 폰에서는 좌우 스크롤 + 스냅. 칸을 좁혀 두 칸씩 보이게 한다 */
+  .top-bracket { gap: 6px; scroll-snap-type: x proximity; }
+  .tb-round { min-width: 108px; scroll-snap-align: start; }
+  .tb-m { padding: 4px; }
+  .tb-p { padding: 3px; }
+  .tb-p b { font-size: .6rem; }
+  .br-round { width: 132px; }
+}
+
+/* 세로가 짧은 화면(폰 가로 모드 등) — 카드를 줄여 한 화면을 지킨다 */
+@media (max-height: 520px) and (orientation: landscape) {
+  .screen { padding-top: 8px; }
+  .battle-head { margin-bottom: 6px; }
+  .battle-q { margin-top: 8px; font-size: .9rem; }
+  .arena { margin: 8px auto 10px; }
+  .card-img { max-height: 46dvh; }
+  .card-meta { padding: 5px 4px 7px; }
+  .arena .c-band { display: none; }   /* 우승 카드(.champion .c-band)까지 숨지 않게 범위를 좁힌다 */
+  .battle-actions .btn { padding: 9px 14px; font-size: .85rem; }
+  .intro-wrap { padding-top: 0; }
 }
 
 /* 넓은 화면에선 순위표를 2열로 */
