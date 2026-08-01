@@ -66,7 +66,7 @@
   }
 
   var state = {
-    mode: 'full',
+    mode: 'cup',
     order: [],                   // 시작 명단(무작위로 섞음)
     answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
     map: {},                     // "idA|idB" -> v
@@ -127,7 +127,7 @@
         // '전체 60위' 라벨도 선택 인원에 맞춘다
         if (m === 'full') {
           var nm = el.querySelector('.m-name');
-          if (nm) nm.innerHTML = '전체 ' + n + '위<em>추천</em>';
+          if (nm) nm.innerHTML = '전체 ' + n + '위<kbd class="k">2</kbd>';
         }
         var q = el.querySelector('.m-q');
         if (q) {
@@ -331,7 +331,7 @@
   }
 
   function startNew(mode) {
-    state.mode = MODES[mode] ? mode : 'full';
+    state.mode = MODES[mode] ? mode : 'cup';
     // 시작 명단은 무작위로 섞는다.
     //   밴드 군집은 쓰지 않기로 했으므로(=이미 취향과 무관한 순서) 섞어도
     //   질문 수가 늘지 않는다. 대신 매번 다른 대진이 나와 덜 지루하다.
@@ -492,7 +492,7 @@
     $('result-title').textContent = cup ? '내 뱅드림 최애 월드컵 우승' : '내 뱅드림 최애 순위';
 
     // 월드컵은 우승자 한 명만 크게 띄운다(순위표·시상대 없음)
-    $('champion').hidden = !cup;
+    $('cup-top').hidden = !cup;
     $('bracket-wrap').hidden = !cup;
     $('podium').hidden = cup;
     $('rank-list').hidden = cup;
@@ -505,6 +505,7 @@
         '<img src="' + w.img + '" alt="">' +
         '<div class="c-name">' + esc(w.name) + '</div>' +
         '<div class="c-band">' + esc(w.band) + '</div>';
+      renderTopBracket(w.id);
       renderBracket(w.id);
       clearSaved();
       return;
@@ -544,6 +545,53 @@
     return (state.matches || []).filter(function (m) { return m.w === champId; });
   }
 
+  /** 경기 기록을 라운드별로 묶는다(기록 순서 = 진행 순서라 그대로 훑으면 된다). */
+  function groupRounds(ms) {
+    var rounds = [], cur = null;
+    ms.forEach(function (m) {
+      var label = roundLabel(m);
+      if (!cur || cur.label !== label) { cur = { label: label, list: [], size: m.size, prelim: m.prelim }; rounds.push(cur); }
+      cur.list.push(m);
+    });
+    return rounds;
+  }
+
+  /** 우승 카드 오른쪽의 '상위 토너먼트'. 예선·초반 라운드는 빼고 8강부터만 그린다.
+   *  (인원이 적어 8강이 없으면 있는 라운드만. 전체 대진표는 아래에 따로 있다)
+   *  라운드 j번째 경기의 승자가 다음 라운드 j/2번째 경기로 가므로,
+   *  기록 순서대로 칸을 세우면 그대로 대진표 모양이 된다.
+   *  ★ 칸 순서는 뒤집어서(결승 → 4강 → 8강) 왼쪽 우승 카드 쪽으로 좁아지게 그린다.
+   *    그래야 왼쪽 우승 카드가 대진표의 끝점처럼 이어져 보인다. */
+  function renderTopBracket(champId) {
+    var wrap = $('top-bracket');
+    wrap.innerHTML = '';
+    var rounds = groupRounds(state.matches || []).filter(function (r) {
+      return !r.prelim && r.size <= 8;
+    });
+    if (!rounds.length) { $('top-bracket-wrap').hidden = true; return; }
+    $('top-bracket-wrap').hidden = false;
+    $('top-bracket-title').textContent = '상위 토너먼트 · ' + rounds[0].label + '부터';
+
+    rounds.slice().reverse().forEach(function (r) {
+      var col = document.createElement('div');
+      col.className = 'tb-round';
+      var html = '<h4>' + esc(r.label) + '</h4><div class="tb-col">';
+      r.list.forEach(function (m) {
+        html += '<div class="tb-m">' + tbSide(m.a, m) + '<span class="tb-vs">vs</span>' + tbSide(m.b, m) + '</div>';
+      });
+      col.innerHTML = html + '</div>';
+      wrap.appendChild(col);
+    });
+
+    function tbSide(id, m) {
+      var c = BY_ID[id];
+      return '<span class="tb-p' + (m.w === id ? ' win' : ' lose') +
+        '" style="--band:' + c.color + '">' +
+        '<img src="' + c.img + '" alt="" loading="lazy">' +
+        '<b>' + esc(c.name) + '</b></span>';
+    }
+  }
+
   /** 대진표. 라운드별로 세로 한 칸씩, 가로로 훑어보는 형태(모바일은 좌우 스크롤).
    *  경기 수가 많은 예선까지 전부 그리되 우승자 경로만 강조한다. */
   function renderBracket(champId) {
@@ -559,15 +607,7 @@
       return '<span class="bp-item"><b>' + esc(roundLabel(m)) + '</b> ' + esc(foe.name) + '</span>';
     }).join('<span class="bp-sep">›</span>');
 
-    // 라운드별로 묶기(기록 순서 = 진행 순서라 그대로 훑으면 된다)
-    var rounds = [], cur = null;
-    ms.forEach(function (m) {
-      var label = roundLabel(m);
-      if (!cur || cur.label !== label) { cur = { label: label, list: [] }; rounds.push(cur); }
-      cur.list.push(m);
-    });
-
-    rounds.forEach(function (r) {
+    groupRounds(ms).forEach(function (r) {
       var col = document.createElement('div');
       col.className = 'br-round';
       var html = '<h4>' + esc(r.label) + '<span>' + r.list.length + '경기</span></h4>';
@@ -936,7 +976,7 @@
 
     // 시작 화면: 1/2/3 또는 Enter 로 모드 선택
     if (!screens.intro.hidden) {
-      var modeKeys = { '1': 'cup', '2': 'full', 'Enter': 'full' };
+      var modeKeys = { '1': 'cup', '2': 'full', 'Enter': 'cup' };
       var m = modeKeys[e.key];
       if (m) {
         var btn = document.querySelector('[data-mode="' + m + '"]');
