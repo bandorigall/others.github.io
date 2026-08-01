@@ -28,21 +28,29 @@
       </div>
     </div>
 
+    <p class="mode-title">누구를 넣을까요?</p>
+    <div class="band-pick" id="band-pick"></div>
+    <div class="band-quick">
+      <button class="chip" id="btn-band-all" type="button">전체 선택</button>
+      <button class="chip" id="btn-band-none" type="button">전체 해제</button>
+      <span class="band-count"><b id="picked-count">60</b>명 선택됨</span>
+    </div>
+
     <p class="mode-title">어디까지 정할까요?</p>
     <div class="mode-list">
       <button class="mode" data-mode="top10" type="button">
         <span class="m-name">TOP 10</span>
-        <span class="m-q">약 150문항 · 4분</span>
+        <span class="m-q">계산 중…</span>
         <span class="m-desc">10위까지 정확하게. 가볍게 하고 싶다면 이거.</span>
       </button>
       <button class="mode" data-mode="top20" type="button">
         <span class="m-name">TOP 20</span>
-        <span class="m-q">약 215문항 · 6분</span>
+        <span class="m-q">계산 중…</span>
         <span class="m-desc">20위까지 정확하게.</span>
       </button>
       <button class="mode recommended" data-mode="full" type="button">
         <span class="m-name">전체 60위<em>추천</em></span>
-        <span class="m-q">약 280문항 · 8분 (비김 쓰면 230~250)</span>
+        <span class="m-q">계산 중…</span>
         <span class="m-desc">60명 전원 순위. 질문은 조금 더 늘지만 결과가 제일 알차요.</span>
       </button>
     </div>
@@ -55,8 +63,9 @@
         <li><b>비김</b>은 둘 다 똑같이 좋을 때. 같은 순위로 묶입니다.</li>
         <li><b>되돌리기</b>로 직전 선택을 취소할 수 있어요.</li>
         <li>키보드: <kbd>←</kbd> <kbd>→</kbd> 선택 · <kbd>스페이스</kbd> 비김 · <kbd>Z</kbd> 되돌리기</li>
-        <li><b>전체 60위</b> 모드에서는 비김을 쓸수록 질문이 확 줄어요.
-            (비김 10%면 약 255문항, 20%면 약 235문항)</li>
+        <li><b>전체</b> 모드에서는 비김을 쓸수록 질문이 확 줄어요.
+            (60명 기준 비김 없이 280문항 → 10%면 225, 20%면 200)</li>
+        <li>밴드 단위로 최애가 뚜렷할수록 질문이 더 빨리 끝나요.</li>
       </ul>
     </details>
   </div>
