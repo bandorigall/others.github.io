@@ -526,10 +526,22 @@
       podium.appendChild(el);
     });
 
+    // 순위표는 3단으로 차등 강조한다: 1~3위(가장 크게) → 4~10위 → 11위 이하.
+    // 아래로 갈수록 카드/썸네일/글자가 작아지고 색이 옅어진다.
     var list = $('rank-list');
     list.innerHTML = '';
+    var lastTier = 0;
     rows.forEach(function (r) {
+      var tier = r.rank <= 3 ? 1 : (r.rank <= 10 ? 2 : 3);
+      if (tier !== lastTier) {
+        lastTier = tier;
+        var sep = document.createElement('li');
+        sep.className = 'tier-sep tier-sep-' + tier;
+        sep.textContent = tier === 1 ? 'TOP 3' : (tier === 2 ? 'TOP 10' : '그 외');
+        list.appendChild(sep);
+      }
       var li = document.createElement('li');
+      li.className = 'tier-' + tier;
       li.style.setProperty('--band', r.ch.color);
       li.innerHTML =
         '<span class="r-num">' + r.rank + '</span>' +

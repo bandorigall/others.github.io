@@ -271,3 +271,9 @@ sorter — 뱅드림 캐릭터 소터 개발일지
   - [결정/금지] 이미지 저장은 PC·모바일 **모두** navigator.share 안 씀. 공유 시트 분기 완전 삭제.
     savePng() = shot() -> toBlob -> a[download] 만. 다시 공유 시트 넣지 말 것.
   - 파일명에 날짜시간 꼬릿말: bangdream_sorter_YYYYMMDD_HHMMSS.png (로컬 시각).
+  - 푸시 완료(others.github.io main 56b94d1). 소터는 상위 BangDream 리포가 아니라
+    others/ 자체 리포(bandorigall/others.github.io)이며 others/git_auto.sh 로 푸시한다.
+  - [전체 순위표 차등 강조] rank-list 를 3단으로: 1~3위 / 4~10위 / 11위 이하.
+    app.js renderResult() 가 li 에 tier-1/2/3 클래스 + 구분 헤더(li.tier-sep, "TOP 3"/"TOP 10"/"그 외") 삽입,
+    styles.css 에서 단계별로 카드 패딩·썸네일(56/46/38px)·글자·색 차등. 1~3위는 2단 배치에서도 한 줄 통째 사용.
+    selftest.sh 전부 통과(가로 넘침·이미지 크기·글자색).
