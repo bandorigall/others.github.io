@@ -31,7 +31,9 @@ sorter — 뱅드림 캐릭터 소터 개발일지
   - 모바일 최적화(2026-08-01 2차):
       · #screen-battle 을 세로 flex + min-height:100dvh, .arena 가 남는 높이를 먹는다.
         대결 중엔 :has() 로 .site-footer 를 숨긴다(안 그러면 100dvh+푸터라 늘 스크롤).
-      · html,body overflow-x:hidden — 대진표는 자기 컨테이너 안에서만 가로 스크롤.
+      · 가로 넘침은 .screen { overflow-x: clip } 으로만 막는다.
+        ★[금지] html/body 에 overflow-x:hidden 을 걸지 말 것 — 모바일에서 세로 스크롤이
+          통째로 죽는다(2026-08-01 실기기에서 확인하고 되돌림).
       · ≤560px: 밴드칩/퀵칩 터치 높이 확대, 순위표 1열 + 밴드명 생략,
         결과 버튼 2열 그리드, 상위 토너먼트 칸 108px + 스크롤 스냅, .narrow-only 힌트 노출.
       · 가로모드(max-height:520px): 카드 46dvh, .arena .c-band 숨김, 여백 축소.
