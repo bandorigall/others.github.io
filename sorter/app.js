@@ -89,7 +89,12 @@
     var out = [], i = 0, j = 0;
     while (i < left.length && j < right.length) {
       var v = compare(left[i], right[j]);
-      if (v >= 0) out.push(left[i++]);   // 비김(0)이면 왼쪽 먼저 — 안정 정렬
+      if (v === 0) {
+        // 비김: 두 명을 한 번에 확정한다(원본 소터와 동일).
+        // 한 명만 넣으면 진 쪽을 또 물어보게 되어 질문이 줄지 않는다.
+        out.push(left[i++]);
+        out.push(right[j++]);
+      } else if (v > 0) out.push(left[i++]);
       else out.push(right[j++]);
     }
     while (i < left.length) out.push(left[i++]);
