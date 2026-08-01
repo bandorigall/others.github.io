@@ -556,6 +556,13 @@
     return rounds;
   }
 
+  /** 상위 토너먼트에 그릴 라운드(8강·4강·결승). 화면과 결과 이미지가 같이 쓴다. */
+  function topRounds() {
+    return groupRounds(state.matches || []).filter(function (r) {
+      return !r.prelim && r.size <= 8;
+    });
+  }
+
   /** 우승 카드 오른쪽의 '상위 토너먼트'. 예선·초반 라운드는 빼고 8강부터만 그린다.
    *  (인원이 적어 8강이 없으면 있는 라운드만. 전체 대진표는 아래에 따로 있다)
    *  라운드 j번째 경기의 승자가 다음 라운드 j/2번째 경기로 가므로,
@@ -565,9 +572,7 @@
   function renderTopBracket(champId) {
     var wrap = $('top-bracket');
     wrap.innerHTML = '';
-    var rounds = groupRounds(state.matches || []).filter(function (r) {
-      return !r.prelim && r.size <= 8;
-    });
+    var rounds = topRounds();
     if (!rounds.length) { $('top-bracket-wrap').hidden = true; return; }
     $('top-bracket-wrap').hidden = false;
     $('top-bracket-title').textContent = '상위 토너먼트 · ' + rounds[0].label + '부터';
@@ -736,11 +741,19 @@
     return cv;
   }
 
-  /** 월드컵 결과 이미지 — 우승자 한 명만 크게. */
+  /** 월드컵 결과 이미지.
+   *  화면과 같은 구성 — 왼쪽에 우승 카드, 오른쪽에 상위 토너먼트(결승 → 4강 → 8강).
+   *  라운드가 없을 만큼 인원이 적으면 우승 카드만 가운데에 크게 그린다. */
   function buildCupCanvas() {
     var ch = lastRows[0].ch;
+    var rounds = topRounds().slice().reverse();   // 왼쪽부터 결승 → 4강 → 8강
     var path = championPath(ch.id);
-    var W = 1080, H = 940 + path.length * 34 + 96;
+    var solo = !rounds.length;
+
+    var W = 1080, CT = 176, CH = 560;             // 내용 시작 y, 내용 높이
+    var pathH = solo ? 56 + path.length * 34 : 0;
+    var H = CT + CH + pathH + 122;
+
     var cv = document.createElement('canvas');
     cv.width = W; cv.height = H;
     var g = cv.getContext('2d');
@@ -751,56 +764,59 @@
     bg.addColorStop(1, '#1a1428');
     g.fillStyle = bg; g.fillRect(0, 0, W, H);
 
-    var glow = g.createRadialGradient(W / 2, 470, 0, W / 2, 470, 520);
+    var cx = solo ? W / 2 : 254;                  // 우승 카드 가로 중심
+    var glow = g.createRadialGradient(cx, CT + 240, 0, cx, CT + 240, 520);
     glow.addColorStop(0, hexA(ch.color, .34));
     glow.addColorStop(1, hexA(ch.color, 0));
     g.fillStyle = glow; g.fillRect(0, 0, W, H);
 
+    // 머리말
     g.textAlign = 'center';
     g.fillStyle = '#9a94b0';
     g.font = '700 26px "Noto Sans KR", sans-serif';
-    g.fillText('뱅드림 캐릭터 월드컵 · ' + cupTop(state.order.length) + '강', W / 2, 80);
-
+    g.fillText('뱅드림 캐릭터 월드컵 · ' + cupTop(state.order.length) + '강', W / 2, 72);
     g.fillStyle = '#ffd76a';
     g.font = '900 44px "Noto Sans KR", sans-serif';
-    g.fillText('우승', W / 2, 148);
+    g.fillText('우승', cx, 136);
 
-    var im = ch._im;
-    if (im) {
-      var S = 500, x = (W - S) / 2, y = 190;
+    // 우승자 카드
+    var S = solo ? 460 : 420, ix = cx - S / 2, iy = CT;
+    if (ch._im) {
       g.save();
-      roundRect(g, x, y, S, S, 28);
+      roundRect(g, ix, iy, S, S, 28);
       g.fillStyle = 'rgba(255,255,255,.06)';
       g.fill();
       g.strokeStyle = ch.color; g.lineWidth = 5; g.stroke();
       g.clip();
-      g.drawImage(im, x, y, S, S);
+      g.drawImage(ch._im, ix, iy, S, S);
       g.restore();
     }
-
     g.fillStyle = '#ffffff';
-    g.font = '900 62px "Noto Sans KR", sans-serif';
-    g.fillText(ch.name, W / 2, 772);
+    g.font = '900 54px "Noto Sans KR", sans-serif';
+    g.fillText(ch.name, cx, iy + S + 60);
     g.fillStyle = lighten(ch.color);   // 어두운 밴드색은 검은 배경에 묻힌다
-    g.font = '700 30px "Noto Sans KR", sans-serif';
-    g.fillText(ch.band, W / 2, 818);
+    g.font = '700 26px "Noto Sans KR", sans-serif';
+    g.fillText(ch.band, cx, iy + S + 98);
 
-    // 우승까지 이긴 상대들
-    g.fillStyle = '#8b85a3';
-    g.font = '700 22px "Noto Sans KR", sans-serif';
-    g.fillText('우승까지의 길', W / 2, 890);
-    path.forEach(function (m, i) {
-      var foe = BY_ID[m.a === ch.id ? m.b : m.a];
-      var y2 = 934 + i * 34;
-      g.textAlign = 'right';
-      g.fillStyle = '#ffd76a';
-      g.font = '700 21px "Noto Sans KR", sans-serif';
-      g.fillText(roundLabel(m), W / 2 - 14, y2);
-      g.textAlign = 'left';
-      g.fillStyle = '#cfcadd';
-      g.font = '500 21px "Noto Sans KR", sans-serif';
-      g.fillText('vs ' + foe.name, W / 2 + 14, y2);
-    });
+    if (solo) {
+      // 대진표를 그릴 라운드가 없을 때만 '우승까지의 길'을 글로 적는다
+      g.fillStyle = '#8b85a3';
+      g.font = '700 22px "Noto Sans KR", sans-serif';
+      g.fillText('우승까지의 길', W / 2, CT + CH + 20);
+      path.forEach(function (m, i) {
+        var foe = BY_ID[m.a === ch.id ? m.b : m.a], y = CT + CH + 62 + i * 34;
+        g.textAlign = 'right';
+        g.fillStyle = '#ffd76a';
+        g.font = '700 21px "Noto Sans KR", sans-serif';
+        g.fillText(roundLabel(m), W / 2 - 14, y);
+        g.textAlign = 'left';
+        g.fillStyle = '#cfcadd';
+        g.font = '500 21px "Noto Sans KR", sans-serif';
+        g.fillText('vs ' + foe.name, W / 2 + 14, y);
+      });
+    } else {
+      drawTopBracket(g, rounds, ch.id, 512, CT - 40, W - 512 - 40, CH + 40);
+    }
 
     g.textAlign = 'center';
     var d = new Date();
@@ -808,13 +824,75 @@
     g.font = '500 22px "Noto Sans KR", sans-serif';
     g.fillText(d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate())
       + ' · ' + state.order.length + '명 · ' + state.answers.length + '경기',
-      W / 2, 940 + path.length * 34 + 34);
+      W / 2, H - 78);
 
     g.fillStyle = '#6f6a85';
     g.font = '500 19px "Noto Sans KR", sans-serif';
     g.fillText('뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/',
-      W / 2, H - 38);
+      W / 2, H - 34);
     return cv;
+  }
+
+  /** 상위 토너먼트를 (x,y,w,h) 안에 그린다. 라운드 = 세로 칸, 경기 = 칸 안 셀.
+   *  경기 수가 절반씩 줄어드는 걸 이용해 셀을 균등 배치하면 대진표 모양이 된다. */
+  function drawTopBracket(g, rounds, champId, x, y, w, h) {
+    var GAP = 12;
+    var CW = (w - GAP * (rounds.length - 1)) / rounds.length;
+    var TOP = y + 34;                   // 라운드 이름 아래부터가 경기 영역
+    var BH = h - 34;
+
+    rounds.forEach(function (r, ri) {
+      var cxx = x + ri * (CW + GAP);
+      g.textAlign = 'center';
+      g.fillStyle = '#8b85a3';
+      g.font = '900 20px "Noto Sans KR", sans-serif';
+      g.fillText(r.label, cxx + CW / 2, y + 22);
+
+      var cell = BH / r.list.length;
+      r.list.forEach(function (m, mi) {
+        var cy = TOP + cell * (mi + .5);           // 셀 세로 중심
+        var boxH = 116;
+        g.fillStyle = 'rgba(255,255,255,.04)';
+        roundRect(g, cxx, cy - boxH / 2, CW, boxH, 12);
+        g.fill();
+        player(m.a, m, cxx + 6, cy - boxH / 2 + 6, CW - 12);
+        g.fillStyle = '#6f6a85';
+        g.font = '500 13px "Noto Sans KR", sans-serif';
+        g.textAlign = 'center';
+        g.fillText('vs', cxx + CW / 2, cy + 4);
+        player(m.b, m, cxx + 6, cy + 6, CW - 12);
+      });
+    });
+
+    /** 한 명 = 썸네일 + 이름. 이긴 쪽만 밴드색으로 켠다(진 쪽은 흐리게). */
+    function player(id, m, px, py, pw) {
+      var c = BY_ID[id], win = m.w === id, T = 40;
+      if (win) {
+        g.fillStyle = hexA(c.color, .18);
+        roundRect(g, px, py, pw, T + 8, 9);
+        g.fill();
+      }
+      g.save();
+      g.globalAlpha = win ? 1 : .4;
+      roundRect(g, px + 4, py + 4, T, T, 8);
+      g.fillStyle = 'rgba(255,255,255,.06)';
+      g.fill();
+      g.clip();
+      if (c._imT) g.drawImage(c._imT, px + 4, py + 4, T, T);
+      g.restore();
+
+      g.textAlign = 'left';
+      g.fillStyle = win ? (id === champId ? lighten(c.color, .6) : '#f2f0f8') : '#7d7794';
+      g.font = (win ? '700 ' : '500 ') + '18px "Noto Sans KR", sans-serif';
+      fitText(g, c.name, px + T + 12, py + 30, pw - T - 16);
+    }
+  }
+
+  /** 폭을 넘치면 뒤를 잘라 '…' 를 붙여 그린다. */
+  function fitText(g, text, x, y, max) {
+    var t = text;
+    while (t.length > 1 && g.measureText(t + '…').width > max) t = t.slice(0, -1);
+    g.fillText(t === text ? t : t + '…', x, y);
   }
 
   /** 밴드색에 흰색을 섞어 밝게. 검은 배경 위 글자색으로 쓰려고(CSS 쪽도 같은 처리). */
@@ -848,15 +926,37 @@
   function withImages() {
     // 월드컵은 우승자를 크게 그리므로 썸네일 대신 카드 이미지를 쓴다
     var big = MODES[state.mode].cup;
-    return Promise.all(lastRows.map(function (r) {
+    var jobs = lastRows.map(function (r) {
       if (r.ch._im && r.ch._imBig === big) return Promise.resolve();
+      return load(big ? r.ch.img : r.ch.thumb).then(function (im) {
+        if (im) { r.ch._im = im; r.ch._imBig = big; }
+      });
+    });
+
+    // 월드컵이면 대진표에 나오는 캐릭터들의 썸네일(_imT)도 같이 받아둔다
+    if (big) {
+      var seen = {};
+      topRounds().forEach(function (r) {
+        r.list.forEach(function (m) {
+          [m.a, m.b].forEach(function (id) {
+            var c = BY_ID[id];
+            if (seen[id] || c._imT) return;
+            seen[id] = 1;
+            jobs.push(load(c.thumb).then(function (im) { if (im) c._imT = im; }));
+          });
+        });
+      });
+    }
+    return Promise.all(jobs).then(buildCanvas);
+
+    function load(src) {
       return new Promise(function (res) {
         var im = new Image();
-        im.onload = function () { r.ch._im = im; r.ch._imBig = big; res(); };
-        im.onerror = function () { res(); };   // 한 장 실패해도 나머지는 그린다
-        im.src = big ? r.ch.img : r.ch.thumb;
+        im.onload = function () { res(im); };
+        im.onerror = function () { res(null); };   // 한 장 실패해도 나머지는 그린다
+        im.src = src;
       });
-    })).then(buildCanvas);
+    }
   }
 
   function toast(msg) {
