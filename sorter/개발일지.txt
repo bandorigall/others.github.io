@@ -141,6 +141,15 @@ sorter — 뱅드림 캐릭터 소터 개발일지
     #EE0022 애프터글로우 등)가 검은 배경에 묻혀 안 보인다.
     → CSS 는 color-mix(... 55%, #fff), 캔버스는 lighten() 으로 흰색을 섞어 쓴다.
       [규칙] 앞으로도 밴드색은 '테두리·막대·배경'에만 그대로 쓰고, 글자에 쓸 땐 반드시 밝힐 것.
+  - [2026-08-01] 대결 화면 캐릭터 이름이 검은 글씨로 보인다는 제보(파폭·모바일·타인 스샷 모두).
+    원인: .char-card 가 <button> 인데 color/font 미지정 → UA 기본값(color:buttontext=검정,
+    시스템 폰트)을 쓰는 브라우저에서 검게 나옴. 크롬은 appearance:none 이면 상속해줘서
+    크롬 헤드리스 검증(selftest·스크린샷)에서 전혀 안 걸렸다.
+    수정: .char-card 에 color:var(--text); font:inherit + 전역
+          `button,input,select,textarea{color:inherit;font:inherit}` (커밋 bb40e77, 배포 확인).
+    ★[교훈] 다크 UI 에서 <button>·<input> 은 반드시 color/font 를 명시할 것.
+    ★[교훈] 색·폰트 문제는 크롬만으로 검증하면 못 잡는다. selftest 는 결과 화면만 보고
+      대결 화면은 안 본다 → 색 관련 제보는 파이어폭스로도 눈으로 확인할 것.
 
 ■ 이미지 파이프라인
   - 전신 아트를 그대로 쓰면 무겁고 얼굴이 작다 → lbpcascade_animeface 로 얼굴 상자를
