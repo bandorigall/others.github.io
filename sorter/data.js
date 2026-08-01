@@ -771,56 +771,6 @@ window.SORTER_DATA = {
   },
   {
    "optional": true,
-   "id": "harumi",
-   "name": "하루미",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/harumi.webp",
-   "thumb": "assets/harumi_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "michelle",
-   "name": "미셸",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/michelle.webp",
-   "thumb": "assets/michelle_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "marie",
-   "name": "마리 안드로메다",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/marie.webp",
-   "thumb": "assets/marie_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "nao",
-   "name": "히가시나카노 나오",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/nao.webp",
-   "thumb": "assets/nao_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "ayumi",
-   "name": "아유미",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/ayumi.webp",
-   "thumb": "assets/ayumi_t.webp"
-  },
-  {
-   "optional": true,
    "id": "charlotte",
    "name": "샤를로트 루이즈 미소노",
    "band": "부가 캐릭터",
@@ -838,26 +788,6 @@ window.SORTER_DATA = {
    "color": "#8A8FA8",
    "img": "assets/principal.webp",
    "thumb": "assets/principal_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "nicolina",
-   "name": "니콜리나",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/nicolina.webp",
-   "thumb": "assets/nicolina_t.webp"
-  },
-  {
-   "optional": true,
-   "id": "akari",
-   "name": "아카리",
-   "band": "부가 캐릭터",
-   "bandKey": "sub",
-   "color": "#8A8FA8",
-   "img": "assets/akari.webp",
-   "thumb": "assets/akari_t.webp"
   }
  ]
 };
