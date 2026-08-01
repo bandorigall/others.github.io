@@ -977,6 +977,29 @@
       .then(function (t) { CSS_TEXT = t; return t; });
   }
 
+  /** 스냅샷 안에서 쓸 웹폰트를 통째로 심는다.
+   *  SVG(foreignObject) 안에서는 외부 폰트를 못 받아오므로, 안 심으면 시스템 폰트로
+   *  대체돼 화면과 굵기·모양이 달라진다(= '화면이랑 다르게 찍힌다'의 원인).
+   *  구글 폰트의 text= 파라미터로 '실제로 쓰인 글자'만 뽑아 오면 몇십 KB면 된다. */
+  function fontCss(chars) {
+    var url = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900'
+      + '&text=' + encodeURIComponent(chars);
+    return fetch(url).then(function (r) { return r.text(); }).then(function (css) {
+      var links = css.match(/https:\/\/fonts\.gstatic\.com[^)'"]+/g) || [];
+      var uniq = links.filter(function (u, i) { return links.indexOf(u) === i; });
+      return Promise.all(uniq.map(function (u) {
+        return fetch(u).then(function (r) { return r.blob(); }).then(function (b) {
+          return new Promise(function (res) {
+            var fr = new FileReader();
+            fr.onload = function () { css = css.split(u).join(fr.result); res(); };
+            fr.onerror = function () { res(); };
+            fr.readAsDataURL(b);
+          });
+        }).catch(function () {});
+      })).then(function () { return css; });
+    }).catch(function () { return ''; });   // 폰트를 못 받아도 그림은 나오게
+  }
+
   /** 같은 폴더의 이미지들을 data URI 로 바꿔 끼운다. */
   function inlineImages(root) {
     var imgs = Array.prototype.slice.call(root.querySelectorAll('img'));
@@ -1021,16 +1044,27 @@
     stage.appendChild(clone);
     document.body.appendChild(stage);
 
-    return loadCss()
-      .then(function (css) { return inlineImages(clone).then(function () { return css; }); })
-      .then(function (css) {
+    // 이미지에 실제로 들어가는 글자만 모아 폰트를 subset 으로 받는다
+    var used = (clone.textContent || '').replace(/\s+/g, '');
+    var chars = '';
+    for (var ci = 0; ci < used.length; ci++) {
+      if (chars.indexOf(used[ci]) < 0) chars += used[ci];
+    }
+
+    return Promise.all([loadCss(), fontCss(chars), inlineImages(clone)])
+      .then(function (r) {
+        var css = r[1] + '\n' + r[0];
         var H = Math.ceil(clone.getBoundingClientRect().height);
         var extra =
           '.shot-root{width:' + W + 'px;background:#0e0d14;' +
           'background-image:radial-gradient(1100px 520px at 12% -12%,rgba(255,92,158,.16),transparent 60%),' +
           'radial-gradient(900px 480px at 88% 4%,rgba(123,140,255,.14),transparent 60%);}' +
           '.shot-foot{text-align:center;color:#6f6a85;font-size:.72rem;margin:18px 0 0;}' +
-          '.screen{padding-bottom:22px;}';
+          '.screen{padding-bottom:22px;}' +
+          // 어두운 배경에 묻히지 않게 글자색을 못 박는다(색 계산이 렌더러마다 달라질 여지 제거)
+          '.champion .c-crown{color:#ffd76a;background:none;}' +
+          '.tb-p.win,.tb-p.win b{color:#f2f0f8;}' +
+          '.result-head h2{color:#ffffff;}';
         var body = new XMLSerializer().serializeToString(clone);
         document.body.removeChild(stage);
 
