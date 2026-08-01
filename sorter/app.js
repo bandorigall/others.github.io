@@ -1142,29 +1142,27 @@
   }
 
   function savePng() {
-    shot().then(toBlob).then(function (blob) {
-      var file = null;
-      // 모바일에선 '다운로드'가 어디로 갔는지 모르는 경우가 많다 →
-      // 공유 시트를 띄워 사진 앨범/앱으로 바로 보낼 수 있게 한다(지원할 때만).
-      try { file = new File([blob], 'bangdream_sorter.png', { type: 'image/png' }); } catch (e) {}
-      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({ files: [file] })
-          .catch(function () { download(blob); });
-        return;
-      }
-      download(blob);
-    });
+    // PC/모바일 모두 공유 시트 없이 그냥 로컬에 저장한다.
+    shot().then(toBlob).then(download);
 
     function download(blob) {
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'bangdream_sorter.png';
+      a.download = 'bangdream_sorter_' + stamp() + '.png';
       document.body.appendChild(a);
       a.click();
       a.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
       toast('이미지를 저장했어요');
+    }
+
+    // 파일명 꼬릿말: 로컬 시각 기준 YYYYMMDD_HHMMSS
+    function stamp() {
+      var d = new Date();
+      function p(n) { return (n < 10 ? '0' : '') + n; }
+      return '' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
+        '_' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
     }
   }
 

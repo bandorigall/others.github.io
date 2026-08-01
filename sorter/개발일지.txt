@@ -261,3 +261,13 @@ sorter — 뱅드림 캐릭터 소터 개발일지
     공식/팬덤에서 개별 색이 확인되면 build_characters.py 에 반영.
   - 결과 URL 공유(순위 인코딩) — 요청 있으면 추가.
   - 유메미타 매니저 초상: 더 선명한 컷이나 공식 아트가 나오면 교체.
+
+■ 2026-08-01 4차
+  - [버그수정] PC(윈도우)에서 이미지 저장 시 윈도우 공유 시트가 뜨던 문제.
+    원인: Windows Edge/Chrome도 navigator.canShare(files)를 지원 → 공유 분기로 빠짐.
+    해결: app.js savePng() 에서 터치기기 조건 추가
+      (matchMedia('(pointer: coarse)').matches && navigator.maxTouchPoints > 0)
+    → PC는 항상 a[download] 직접 저장, 모바일만 공유 시트.
+  - [결정/금지] 이미지 저장은 PC·모바일 **모두** navigator.share 안 씀. 공유 시트 분기 완전 삭제.
+    savePng() = shot() -> toBlob -> a[download] 만. 다시 공유 시트 넣지 말 것.
+  - 파일명에 날짜시간 꼬릿말: bangdream_sorter_YYYYMMDD_HHMMSS.png (로컬 시각).
