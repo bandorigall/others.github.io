@@ -19,11 +19,16 @@
  * [비김] 답변값 0. 두 캐릭터를 eqLink 로 묶어 이후 병합에서 질문 없이 딸려보낸다.
  *   순위 계산에서 인접한 두 캐릭터의 답이 0이면 같은 순위로 묶는다.
  *
- * [시작 명단] 데이터 순서 그대로. 섞지 않고, 밴드로 묶지도 않는다.
- *   초기 순서는 결과 정확도에 영향이 없고 질문 수에만 영향을 준다.
- *   ※ 셔플을 되살리지 말 것(이득이 없다).
- *   ※ 밴드 군집도 되살리지 말 것 — 밴드 단위로 취향이 갈리는 사람에게만
- *     이득인데, 실제 사용자 판단상 그렇지 않아 2026-08-01 제거했다.
+ * [시작 명단] 무작위로 섞는다. 밴드로는 묶지 않는다.
+ *   초기 순서는 결과 정확도에 영향이 없고 질문 수에만 영향을 주는데,
+ *   밴드 군집을 안 쓰는 이상 어떤 순서든 질문 수가 같다(실측 280 내외).
+ *   그래서 매번 다른 대진이 나오도록 섞는 쪽을 택했다.
+ *   ※ 밴드 군집은 되살리지 말 것 — 밴드 단위로 취향이 갈리는 사람에게만
+ *     이득인데, 실제로는 그렇지 않다는 판단(2026-08-01 사용자 결정).
+ *
+ * [좌우 배치] 매 질문마다 좌우를 결정적 해시로 뒤집는다.
+ *   병합정렬은 한쪽을 고정한 채 상대만 바꿔 묻기 때문에, 자리까지 고정하면
+ *   같은 캐릭터가 계속 왼쪽에 박혀 보여 편향·지루함을 준다.
  */
 (function () {
   'use strict';
@@ -56,11 +61,12 @@
 
   var state = {
     mode: 'full',
-    order: [],                   // 시작 명단(데이터 순서 그대로)
+    order: [],                   // 시작 명단(무작위로 섞음)
     answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
     map: {},                     // "idA|idB" -> v
     eqLink: {},                  // 비김으로 묶인 쌍 (idA -> idB)
     pending: null,               // 지금 화면에 띄운 [idA, idB]
+    swapped: false,              // 화면에서 좌우를 뒤집어 보여주는 중인지
     result: null                 // 완료 시 정렬된 id 배열
   };
 
@@ -278,12 +284,21 @@
   }
 
   // ── 게임 진행 ────────────────────────────────────────────────────────
+  function shuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
   function startNew(mode) {
     state.mode = MODES[mode] ? mode : 'full';
-    // 시작 명단은 데이터 순서 그대로. 섞지도 않고 밴드로 묶지도 않는다.
-    //   (밴드 군집은 '밴드 단위로 취향이 갈리는 사람'에게만 이득인데
-    //    실제로는 그렇지 않다고 판단해서 뺐다. 2026-08-01 사용자 결정)
-    state.order = pickedChars().map(function (c) { return c.id; });
+    // 시작 명단은 무작위로 섞는다.
+    //   밴드 군집은 쓰지 않기로 했으므로(=이미 취향과 무관한 순서) 섞어도
+    //   질문 수가 늘지 않는다. 대신 매번 다른 대진이 나와 덜 지루하다.
+    state.order = shuffle(pickedChars().map(function (c) { return c.id; }));
     state.answers = [];
     state.result = null;
     rebuildMap();
@@ -339,8 +354,25 @@
     im.src = BY_ID[id].img;
   }
 
+  /** 카드를 어느 쪽에 놓을지 결정한다.
+   *  병합정렬은 한쪽 캐릭터를 고정한 채 상대만 바꿔가며 묻기 때문에,
+   *  자리까지 고정하면 "같은 애가 계속 왼쪽에 박혀 있다"는 느낌이 강해진다.
+   *  쌍과 진행도로 해시를 만들어 좌우를 섞되, 되돌리기를 해도 같은 배치가
+   *  다시 나오도록 '결정적으로' 계산한다. */
+  function isSwapped(pair) {
+    var s = pair[0] + '|' + pair[1] + '|' + state.answers.length;
+    var h = 0;
+    for (var i = 0; i < s.length; i++) {
+      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    }
+    return (h & 1) === 1;
+  }
+
   function renderBattle(pair) {
-    var L = BY_ID[pair[0]], R = BY_ID[pair[1]];
+    state.swapped = isSwapped(pair);
+    var first = state.swapped ? pair[1] : pair[0];
+    var second = state.swapped ? pair[0] : pair[1];
+    var L = BY_ID[first], R = BY_ID[second];
 
     setSide('left', L);
     setSide('right', R);
@@ -371,8 +403,11 @@
   function pick(side) {
     var card = $('card-' + side);
     card.classList.add('picked');
+    // 화면에서 좌우를 뒤집었을 수 있으므로, 누른 자리를 원래 쌍 기준으로 되돌린다.
+    var leftIsFirst = !state.swapped;
+    var v = (side === 'left') === leftIsFirst ? 1 : -1;
     // 눌린 게 보이도록 아주 짧게 지연
-    setTimeout(function () { answer(side === 'left' ? 1 : -1); }, 90);
+    setTimeout(function () { answer(v); }, 90);
   }
 
   // ── 순위 계산 (비김 = 같은 순위) ──────────────────────────────────────
