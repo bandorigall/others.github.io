@@ -238,6 +238,31 @@ kbd {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+/* 단축키 배지 — 키보드가 있는 환경에서만 보인다(모바일엔 무의미하므로 숨김) */
+.keyhint, kbd.k { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .keyhint {
+    display: block;
+    position: absolute; top: 8px; left: 8px; z-index: 2;
+    background: rgba(0, 0, 0, .55); color: #fff;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 7px; padding: 1px 8px;
+    font-size: .8rem; font-weight: 800; line-height: 1.5;
+    pointer-events: none;
+  }
+  #card-right .keyhint { left: auto; right: 8px; }
+
+  kbd.k {
+    display: inline-block; margin-left: 6px;
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 5px; padding: 0 5px;
+    font-size: .72em; font-weight: 700; vertical-align: middle;
+  }
+  .mode .m-name kbd.k { margin-left: auto; }
+}
+.char-card { position: relative; }
+
 .battle-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .battle-actions .btn { flex: 1 1 auto; min-width: 110px; max-width: 220px; }
 

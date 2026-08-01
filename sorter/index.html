@@ -39,12 +39,12 @@
     <p class="mode-title">어디까지 정할까요?</p>
     <div class="mode-list">
       <button class="mode" data-mode="top10" type="button">
-        <span class="m-name">TOP 10</span>
+        <span class="m-name">TOP 10<kbd class="k">1</kbd></span>
         <span class="m-q">계산 중…</span>
         <span class="m-desc">10위까지 정확하게. 가볍게 하고 싶다면 이거.</span>
       </button>
       <button class="mode" data-mode="top20" type="button">
-        <span class="m-name">TOP 20</span>
+        <span class="m-name">TOP 20<kbd class="k">2</kbd></span>
         <span class="m-q">계산 중…</span>
         <span class="m-desc">20위까지 정확하게.</span>
       </button>
@@ -62,7 +62,8 @@
         <li>카드를 <b>탭/클릭</b>하면 그 캐릭터를 고릅니다.</li>
         <li><b>비김</b>은 둘 다 똑같이 좋을 때. 같은 순위로 묶입니다.</li>
         <li><b>되돌리기</b>로 직전 선택을 취소할 수 있어요.</li>
-        <li>키보드: <kbd>←</kbd> <kbd>→</kbd> 선택 · <kbd>스페이스</kbd> 비김 · <kbd>Z</kbd> 되돌리기</li>
+        <li>마우스 없이도 됩니다. 선택 <kbd>←</kbd><kbd>→</kbd> (또는 <kbd>A</kbd><kbd>D</kbd>, <kbd>1</kbd><kbd>2</kbd>)
+            · 비김 <kbd>Space</kbd> · 되돌리기 <kbd>Z</kbd></li>
         <li><b>전체</b> 모드에서는 비김을 쓸수록 질문이 확 줄어요.
             (60명 기준 비김 없이 280문항 → 10%면 225, 20%면 200)</li>
         <li>밴드 단위로 최애가 뚜렷할수록 질문이 더 빨리 끝나요.</li>
@@ -83,6 +84,7 @@
 
   <div class="arena">
     <button class="char-card" id="card-left" type="button">
+      <span class="keyhint">←</span>
       <div class="card-img"><img id="img-left" alt="" decoding="async"></div>
       <div class="card-meta">
         <span class="c-name" id="name-left"></span>
@@ -93,6 +95,7 @@
     <div class="vs">VS</div>
 
     <button class="char-card" id="card-right" type="button">
+      <span class="keyhint">→</span>
       <div class="card-img"><img id="img-right" alt="" decoding="async"></div>
       <div class="card-meta">
         <span class="c-name" id="name-right"></span>
@@ -102,8 +105,8 @@
   </div>
 
   <div class="battle-actions">
-    <button class="btn tie" id="btn-tie">둘 다 좋아 (비김)</button>
-    <button class="btn ghost" id="btn-undo">되돌리기</button>
+    <button class="btn tie" id="btn-tie">둘 다 좋아 <kbd class="k">Space</kbd></button>
+    <button class="btn ghost" id="btn-undo">되돌리기 <kbd class="k">Z</kbd></button>
     <button class="btn ghost" id="btn-quit">그만두기</button>
   </div>
 </section>
@@ -120,9 +123,9 @@
   <ol class="rank-list" id="rank-list"></ol>
 
   <div class="result-actions">
-    <button class="btn primary" id="btn-png">이미지로 저장</button>
+    <button class="btn primary" id="btn-png">이미지로 저장 <kbd class="k">S</kbd></button>
     <button class="btn" id="btn-copy-img">이미지 복사</button>
-    <button class="btn" id="btn-copy-txt">순위 텍스트 복사</button>
+    <button class="btn" id="btn-copy-txt">순위 텍스트 복사 <kbd class="k">C</kbd></button>
     <button class="btn ghost" id="btn-restart">다시 하기</button>
   </div>
   <p class="toast" id="toast" hidden></p>
