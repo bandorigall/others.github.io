@@ -30,21 +30,89 @@
   var SAVE_KEY = 'bangdream_sorter_v2';
   var NEED = {};                 // 비교가 필요할 때 던지는 신호 객체
 
-  // est = 진행률 분모(시뮬레이션 실측 최대치 + 여유). 실제론 이보다 적게 끝난다.
   var MODES = {
-    full:  { label: '전체 순위', k: 0,  est: 297 },
-    top20: { label: 'TOP 20',   k: 20, est: 245 },
-    top10: { label: 'TOP 10',   k: 10, est: 185 }
+    full:  { label: '전체 순위', k: 0 },
+    top20: { label: 'TOP 20',   k: 20 },
+    top10: { label: 'TOP 10',   k: 10 }
   };
+
+  /** 진행률 분모(= 예상 최대 질문 수). 인원수 n 에 따라 계산한다.
+   *  full  : 병합정렬 최악 비교 횟수 n*ceil(log2 n) - 2^ceil(log2 n) + 1
+   *  topK  : 브래킷 n-1 회 + 2위부터 우승자 경로 재질문(실측 계수 2.2)
+   *  비김을 쓰면 실제론 이보다 훨씬 적게 끝난다(진행률은 99%에서 멈춰 둔다). */
+  function estFor(mode, n) {
+    if (n < 2) return 1;
+    var lg = Math.ceil(Math.log2(n));
+    var k = MODES[mode].k;
+    if (!k) return n * lg - Math.pow(2, lg) + 1;
+    return Math.round((n - 1) + Math.min(k, n) * lg * 2.2);
+  }
 
   var state = {
     mode: 'full',
     order: [],                   // 섞인 캐릭터 id 배열
     answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
     map: {},                     // "idA|idB" -> v
+    eqLink: {},                  // 비김으로 묶인 쌍 (idA -> idB)
     pending: null,               // 지금 화면에 띄운 [idA, idB]
     result: null                 // 완료 시 정렬된 id 배열
   };
+
+  // ── 밴드 선택 ────────────────────────────────────────────────────────
+  var BAND_ORDER = [];
+  CHARS.forEach(function (c) {
+    if (BAND_ORDER.indexOf(c.bandKey) < 0) BAND_ORDER.push(c.bandKey);
+  });
+  var picked = {};
+  BAND_ORDER.forEach(function (b) { picked[b] = true; });
+
+  function pickedChars() {
+    return CHARS.filter(function (c) { return picked[c.bandKey]; });
+  }
+
+  function renderBands() {
+    var box = $('band-pick');
+    box.innerHTML = '';
+    BAND_ORDER.forEach(function (b) {
+      var info = DATA.bands[b] || { name: b, color: '#888' };
+      var n = CHARS.filter(function (c) { return c.bandKey === b; }).length;
+      var el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'band' + (picked[b] ? ' on' : '');
+      el.style.setProperty('--band', info.color);
+      el.innerHTML = '<span class="b-dot"></span>' + esc(info.name) +
+        '<span class="b-n">' + n + '</span>';
+      el.addEventListener('click', function () {
+        picked[b] = !picked[b];
+        el.classList.toggle('on', picked[b]);
+        updatePicked();
+      });
+      box.appendChild(el);
+    });
+    updatePicked();
+  }
+
+  function updatePicked() {
+    var n = pickedChars().length;
+    $('picked-count').textContent = n;
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-mode]'), function (el) {
+        var m = el.dataset.mode;
+        var few = n < 2 || (MODES[m].k && n <= MODES[m].k);
+        el.disabled = few;
+        // '전체 60위' 라벨도 선택 인원에 맞춘다
+        if (m === 'full') {
+          var nm = el.querySelector('.m-name');
+          if (nm) nm.innerHTML = '전체 ' + n + '위<em>추천</em>';
+        }
+        var q = el.querySelector('.m-q');
+        if (q) {
+          q.textContent = few
+            ? (n < 2 ? '2명 이상 골라주세요' : (MODES[m].k + '명보다 많이 골라주세요'))
+            : '최대 ' + estFor(m, n) + '문항' + (m === 'full' ? ' (비김 쓰면 더 줄어요)' : '');
+        }
+      });
+  }
 
   // ── DOM ─────────────────────────────────────────────────────────────
   var $ = function (id) { return document.getElementById(id); };
@@ -64,9 +132,14 @@
 
   function rebuildMap() {
     state.map = {};
+    state.eqLink = {};
     state.answers.forEach(function (r) {
       state.map[keyOf(r[0], r[1])] = r[2];
       state.map[keyOf(r[1], r[0])] = -r[2];
+      // 비김이면 두 캐릭터를 '동점 링크'로 묶는다(원본 ary_EqualData 와 동일).
+      // 한 번 묶이면 출력에서 늘 붙어 다니므로, 이후 모든 병합 단계에서
+      // 이 묶음은 질문 한 번으로 통과한다 — 비김의 절약 효과가 누적된다.
+      if (r[2] === 0) state.eqLink[r[0]] = r[1];
     });
   }
 
@@ -87,15 +160,30 @@
 
   function merge(left, right) {
     var out = [], i = 0, j = 0;
+
+    // 방금 내보낸 캐릭터에 동점 링크가 걸려 있고 같은 쪽 다음 캐릭터가
+    // 그 상대라면, 물어보지 않고 딸려 내보낸다(묶음은 절대 갈라지지 않는다).
+    function drain(list, idx) {
+      while (idx < list.length && state.eqLink[out[out.length - 1]] === list[idx]) {
+        out.push(list[idx++]);
+      }
+      return idx;
+    }
+
     while (i < left.length && j < right.length) {
       var v = compare(left[i], right[j]);
       if (v === 0) {
-        // 비김: 두 명을 한 번에 확정한다(원본 소터와 동일).
-        // 한 명만 넣으면 진 쪽을 또 물어보게 되어 질문이 줄지 않는다.
         out.push(left[i++]);
+        i = drain(left, i);
         out.push(right[j++]);
-      } else if (v > 0) out.push(left[i++]);
-      else out.push(right[j++]);
+        j = drain(right, j);
+      } else if (v > 0) {
+        out.push(left[i++]);
+        i = drain(left, i);
+      } else {
+        out.push(right[j++]);
+        j = drain(right, j);
+      }
     }
     while (i < left.length) out.push(left[i++]);
     while (j < right.length) out.push(right[j++]);
@@ -156,7 +244,7 @@
     return { done: true, list: out };
   }
 
-  function estTotal() { return MODES[state.mode].est; }
+  function estTotal() { return estFor(state.mode, state.order.length); }
 
   // ── 저장/복원 ────────────────────────────────────────────────────────
   function save() {
@@ -172,7 +260,7 @@
       var raw = localStorage.getItem(SAVE_KEY);
       if (!raw) return null;
       var s = JSON.parse(raw);
-      if (!s || !Array.isArray(s.order) || s.order.length !== CHARS.length) return null;
+      if (!s || !Array.isArray(s.order) || s.order.length < 2) return null;
       if (!s.order.every(function (id) { return BY_ID[id]; })) return null;
       if (!MODES[s.mode]) return null;
       return s;
@@ -195,7 +283,19 @@
 
   function startNew(mode) {
     state.mode = MODES[mode] ? mode : 'full';
-    state.order = shuffle(CHARS.map(function (c) { return c.id; }));
+    // 밴드끼리 뭉쳐서 시작한다(밴드 안에서만 섞음).
+    //   병합정렬은 초기 순서가 취향과 비슷할수록 질문이 줄어드는데,
+    //   밴드 단위로 최애/비최애가 갈리는 사람이 많아서 이 배치가 크게 유리하다.
+    //   같은 취향으로 실측: 무작위 취향 282→281(손해 없음),
+    //   밴드끼리 뭉친 취향 281→248, 밴드 순서까지 맞으면 282→207.
+    //   (참고 사이트도 셔플 없이 밴드 순서 그대로 시작한다 — 45명에 136~150문항)
+    var byBand = [];
+    BAND_ORDER.forEach(function (b) {
+      byBand = byBand.concat(shuffle(
+        pickedChars().filter(function (c) { return c.bandKey === b; })
+          .map(function (c) { return c.id; })));
+    });
+    state.order = byBand;
     state.answers = [];
     state.result = null;
     rebuildMap();
@@ -572,10 +672,19 @@
 
   // ── 초기화 ───────────────────────────────────────────────────────────
   $('intro-count').textContent = CHARS.length + '명';
+  $('btn-band-all').addEventListener('click', function () {
+    BAND_ORDER.forEach(function (b) { picked[b] = true; });
+    renderBands();
+  });
+  $('btn-band-none').addEventListener('click', function () {
+    BAND_ORDER.forEach(function (b) { picked[b] = false; });
+    renderBands();
+  });
+  renderBands();
 
   var saved = loadSaved();
   if (saved && saved.answers && saved.answers.length) {
-    var pct = Math.min(99, Math.round(saved.answers.length / MODES[saved.mode].est * 100));
+    var pct = Math.min(99, Math.round(saved.answers.length / estFor(saved.mode, saved.order.length) * 100));
     $('resume-progress').textContent = pct;
     $('resume-mode').textContent = MODES[saved.mode].label;
     $('resume-box').hidden = false;
