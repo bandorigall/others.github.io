@@ -368,6 +368,8 @@
 
   function answer(v) {
     if (!state.pending) return;
+    // 카드/버튼이 focus 로 남으면 다음 문제에서도 강조가 붙어 보인다(모바일 제보).
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     state.answers.push([state.pending[0], state.pending[1], v]);
     rebuildMap();
     save();
