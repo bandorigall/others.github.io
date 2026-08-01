@@ -507,6 +507,8 @@
         '<div class="c-band">' + esc(w.band) + '</div>';
       renderTopBracket(w.id);
       renderBracket(w.id);
+      // 예선까지 든 전체 대진표는 세로로 아주 길다. 폰에서는 접어둔다.
+      $('full-bracket').open = window.innerWidth > 780;
       clearSaved();
       return;
     }

@@ -405,6 +405,15 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
 .br-p.champ { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--band) 55%, transparent); }
 .bracket-hint { font-size: .72rem; color: var(--text-muted); margin: 6px 0 0; }
 
+/* 예선까지 든 전체 대진표는 접어둘 수 있게 */
+.full-bracket > summary {
+  cursor: pointer; font-weight: 900; font-size: .95rem;
+  padding: 10px 0; list-style: none;
+}
+.full-bracket > summary::-webkit-details-marker { display: none; }
+.full-bracket > summary::before { content: '▸ '; color: var(--text-muted); }
+.full-bracket[open] > summary::before { content: '▾ '; }
+
 .podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
 .podium .p-item {
   background: var(--bg-card); border: 1px solid var(--line);
@@ -446,12 +455,8 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
   font-size: .7rem; padding: 20px 16px calc(30px + var(--safe-b)); line-height: 1.7;
 }
 
-/* 좁은 화면에서만 보이는 안내(가로 스크롤 힌트 등) */
-.narrow-only { display: none; }
-
 /* ══════════ 좁은 화면(폰) ══════════ */
 @media (max-width: 560px) {
-  .narrow-only { display: block; }
   .screen { padding: 14px 12px calc(20px + var(--safe-b)); }
   .intro-wrap { padding-top: 2vh; }
 
@@ -473,13 +478,21 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
   .result-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .result-actions .btn { min-width: 0; padding: 12px 8px; font-size: .86rem; }
 
-  /* 상위 토너먼트 — 폰에서는 좌우 스크롤 + 스냅. 칸을 좁혀 두 칸씩 보이게 한다 */
-  .top-bracket { gap: 6px; scroll-snap-type: x proximity; }
-  .tb-round { min-width: 108px; scroll-snap-align: start; }
-  .tb-m { padding: 4px; }
-  .tb-p { padding: 3px; }
-  .tb-p b { font-size: .6rem; }
+  /* 상위 토너먼트 — 폰에서는 가로 스크롤 대신 라운드를 세로로 쌓는다.
+     (3칸을 320px 안에 밀어넣으면 얼굴이 손톱만 해진다)
+     위에서부터 결승 → 4강 → 8강. 바로 위 우승 카드에서 이어지는 순서다. */
+  .top-bracket { display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; }
+  .tb-round { min-width: 0; }
+  .tb-round h4 {
+    text-align: left; font-size: .8rem; color: var(--text);
+    border-bottom: 1px solid var(--line); padding-bottom: 5px;
+  }
+  .tb-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tb-round:first-child .tb-col { grid-template-columns: 1fr; }   /* 결승은 한 판이니 크게 */
+  .tb-p b { font-size: .7rem; }
+
   .br-round { width: 132px; }
+  .full-bracket > summary { font-size: .85rem; }
 }
 
 /* 세로가 짧은 화면(폰 가로 모드 등) — 카드를 줄여 한 화면을 지킨다 */

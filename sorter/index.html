@@ -6,8 +6,8 @@
 <title>뱅드림 캐릭터 소터 — 최애 순위 정하기</title>
 <meta name="description" content="뱅드림 캐릭터 60명을 이지선다로 비교해서 1위부터 60위까지 나만의 최애 순위를 만들어보세요.">
 <meta property="og:title" content="뱅드림 캐릭터 소터">
-<meta property="og:description" content="60명 이지선다로 정하는 나만의 최애 순위">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta property="og:description" content="60명 이지선다로 정하는 나만의 최애 순위">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -122,16 +122,17 @@
     <section class="top-bracket-wrap" id="top-bracket-wrap">
       <h3 id="top-bracket-title">상위 토너먼트</h3>
       <div class="top-bracket" id="top-bracket"></div>
-      <p class="bracket-hint narrow-only">좌우로 밀어서 볼 수 있어요.</p>
     </section>
   </div>
 
   <section class="bracket-wrap" id="bracket-wrap" hidden>
     <h3>우승까지의 길</h3>
     <p class="bracket-path" id="bracket-path"></p>
-    <h3>전체 대진표</h3>
-    <div class="bracket" id="bracket"></div>
-    <p class="bracket-hint">좌우로 밀어서 볼 수 있어요. 색이 켜진 쪽이 이긴 캐릭터예요.</p>
+    <details class="full-bracket" id="full-bracket">
+      <summary>전체 대진표 (예선부터)</summary>
+      <div class="bracket" id="bracket"></div>
+      <p class="bracket-hint">좌우로 밀어서 볼 수 있어요. 색이 켜진 쪽이 이긴 캐릭터예요.</p>
+    </details>
   </section>
   <div class="podium" id="podium"></div>
   <ol class="rank-list" id="rank-list"></ol>
