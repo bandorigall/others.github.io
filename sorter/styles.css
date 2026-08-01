@@ -41,6 +41,15 @@ body {
 .screen { max-width: 1080px; margin: 0 auto; padding: 22px 16px calc(28px + var(--safe-b)); overflow-x: clip; }
 [hidden] { display: none !important; }
 
+/* ★ 모바일(특히 갤럭시 크롬)에서 카드를 탭하면 다음 질문에도 파란 하이라이트가
+   남아 있는 제보(2026-08-01). 원인 두 가지를 같이 막는다.
+   ① 안드로이드 크롬 기본 탭 하이라이트(반투명 파랑) → transparent
+   ② 탭한 요소가 계속 focus 로 남아, 같은 DOM 을 재사용하는 다음 문제에서
+      기본 focus 링이 그대로 보인다 → 키보드 조작(:focus-visible)일 때만 링을 준다. */
+* { -webkit-tap-highlight-color: transparent; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 /* ── 버튼 공통 ── */
 .btn {
   appearance: none;

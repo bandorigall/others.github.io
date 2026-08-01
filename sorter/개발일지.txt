@@ -277,3 +277,8 @@ sorter — 뱅드림 캐릭터 소터 개발일지
     app.js renderResult() 가 li 에 tier-1/2/3 클래스 + 구분 헤더(li.tier-sep, "TOP 3"/"TOP 10"/"그 외") 삽입,
     styles.css 에서 단계별로 카드 패딩·썸네일(56/46/38px)·글자·색 차등. 1~3위는 2단 배치에서도 한 줄 통째 사용.
     selftest.sh 전부 통과(가로 넘침·이미지 크기·글자색).
+  - [모바일 제보] 갤럭시 크롬에서 카드 탭 후 다음 문제에도 파란 강조가 남음(일부 기기만 발생).
+    원인 ①안드로이드 크롬 기본 탭 하이라이트 ②탭한 요소가 focus 로 남는데 카드 DOM 을 재사용해
+    다음 문제에도 focus 링이 보임. (:hover 는 이미 @media(hover:hover) 로 막혀 있어 무관)
+    해결: styles.css 상단에 -webkit-tap-highlight-color:transparent + :focus{outline:none} /
+    :focus-visible 에만 링. app.js answer() 첫머리에서 activeElement.blur().
