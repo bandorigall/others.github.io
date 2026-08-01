@@ -1,0 +1,522 @@
+/* 뱅드림 캐릭터 소터
+ *
+ * [정렬 방식]
+ *   상향식 병합정렬을 쓰되, 비교 결과를 '답변 로그'에 순서대로 쌓아두고
+ *   화면을 그릴 때마다 처음부터 다시 정렬을 돌린다.
+ *   - 아직 답 없는 쌍을 만나면 NEED 를 던져서 그 쌍을 질문으로 띄운다.
+ *   - 정렬이 끝까지 돌면 완료.
+ *   이렇게 하면 되돌리기는 '로그 한 줄 빼고 다시 돌리기', 이어하기는
+ *   '로그만 저장'으로 끝난다. 60명 재정렬은 1ms 도 안 걸리므로 매번 돌려도 된다.
+ *
+ * [비김] 답변값 0. 병합 시 왼쪽을 먼저 넣어 순서를 안정적으로 유지하고,
+ *   순위 계산에서 인접한 두 캐릭터의 답이 0이면 같은 순위로 묶는다.
+ */
+(function () {
+  'use strict';
+
+  var DATA = window.SORTER_DATA;
+  var CHARS = DATA.characters;
+  var BY_ID = {};
+  CHARS.forEach(function (c) { BY_ID[c.id] = c; });
+
+  var SAVE_KEY = 'bangdream_sorter_v1';
+  var NEED = {};                 // 비교가 필요할 때 던지는 신호 객체
+
+  var state = {
+    order: [],                   // 섞인 캐릭터 id 배열
+    answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
+    map: {},                     // "idA|idB" -> v
+    pending: null,               // 지금 화면에 띄운 [idA, idB]
+    result: null                 // 완료 시 정렬된 id 배열
+  };
+
+  // ── DOM ─────────────────────────────────────────────────────────────
+  var $ = function (id) { return document.getElementById(id); };
+  var screens = {
+    intro: $('screen-intro'),
+    battle: $('screen-battle'),
+    result: $('screen-result')
+  };
+
+  function show(name) {
+    Object.keys(screens).forEach(function (k) { screens[k].hidden = (k !== name); });
+    window.scrollTo(0, 0);
+  }
+
+  // ── 답변 로그 ────────────────────────────────────────────────────────
+  function keyOf(a, b) { return a + '|' + b; }
+
+  function rebuildMap() {
+    state.map = {};
+    state.answers.forEach(function (r) {
+      state.map[keyOf(r[0], r[1])] = r[2];
+      state.map[keyOf(r[1], r[0])] = -r[2];
+    });
+  }
+
+  function lookup(a, b) {
+    var k = keyOf(a, b);
+    return Object.prototype.hasOwnProperty.call(state.map, k) ? state.map[k] : null;
+  }
+
+  // ── 정렬 ─────────────────────────────────────────────────────────────
+  function compare(a, b) {
+    var v = lookup(a, b);
+    if (v === null) {
+      NEED.pair = [a, b];
+      throw NEED;
+    }
+    return v;   // 1 이면 a 가 앞(더 선호)
+  }
+
+  function merge(left, right) {
+    var out = [], i = 0, j = 0;
+    while (i < left.length && j < right.length) {
+      var v = compare(left[i], right[j]);
+      if (v >= 0) out.push(left[i++]);   // 비김(0)이면 왼쪽 먼저 — 안정 정렬
+      else out.push(right[j++]);
+    }
+    while (i < left.length) out.push(left[i++]);
+    while (j < right.length) out.push(right[j++]);
+    return out;
+  }
+
+  /** 정렬을 처음부터 다시 돌린다.
+   *  끝까지 돌면 {done:true, list}, 질문이 필요하면 {done:false, pair}. */
+  function runSort() {
+    var arr = state.order.slice();
+    var width = 1;
+    try {
+      while (width < arr.length) {
+        var next = [];
+        for (var i = 0; i < arr.length; i += 2 * width) {
+          var L = arr.slice(i, i + width);
+          var R = arr.slice(i + width, i + 2 * width);
+          next = next.concat(R.length ? merge(L, R) : L);
+        }
+        arr = next;
+        width *= 2;
+      }
+    } catch (e) {
+      if (e !== NEED) throw e;
+      return { done: false, pair: NEED.pair };
+    }
+    return { done: true, list: arr };
+  }
+
+  // 병합정렬 최악 비교 횟수 — 진행률 분모로만 쓴다(비김이 많으면 실제론 더 적게 끝남)
+  var EST_TOTAL = (function (n) {
+    var k = Math.ceil(Math.log2(n));
+    return n * k - Math.pow(2, k) + 1;
+  })(CHARS.length);
+
+  // ── 저장/복원 ────────────────────────────────────────────────────────
+  function save() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        order: state.order, answers: state.answers, ts: Date.now()
+      }));
+    } catch (e) { /* 사파리 프라이빗 모드 등 — 저장 실패해도 진행엔 지장 없음 */ }
+  }
+
+  function loadSaved() {
+    try {
+      var raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (!s || !Array.isArray(s.order) || s.order.length !== CHARS.length) return null;
+      if (!s.order.every(function (id) { return BY_ID[id]; })) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+
+  function clearSaved() {
+    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* noop */ }
+  }
+
+  // ── 게임 진행 ────────────────────────────────────────────────────────
+  function shuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function startNew() {
+    state.order = shuffle(CHARS.map(function (c) { return c.id; }));
+    state.answers = [];
+    state.result = null;
+    rebuildMap();
+    clearSaved();
+    step();
+  }
+
+  function resume(s) {
+    state.order = s.order;
+    state.answers = s.answers || [];
+    state.result = null;
+    rebuildMap();
+    step();
+  }
+
+  function step() {
+    var r = runSort();
+    if (r.done) {
+      state.result = r.list;
+      renderResult();
+      show('result');
+      return;
+    }
+    state.pending = r.pair;
+    renderBattle(r.pair);
+    show('battle');
+  }
+
+  function answer(v) {
+    if (!state.pending) return;
+    state.answers.push([state.pending[0], state.pending[1], v]);
+    rebuildMap();
+    save();
+    step();
+  }
+
+  function undo() {
+    if (!state.answers.length) return;
+    state.answers.pop();
+    rebuildMap();
+    save();
+    step();
+  }
+
+  // ── 대결 화면 렌더 ───────────────────────────────────────────────────
+  var preloaded = {};
+  function preload(id) {
+    if (!id || preloaded[id]) return;
+    preloaded[id] = true;
+    var im = new Image();
+    im.src = BY_ID[id].img;
+  }
+
+  function renderBattle(pair) {
+    var L = BY_ID[pair[0]], R = BY_ID[pair[1]];
+
+    setSide('left', L);
+    setSide('right', R);
+
+    var pct = Math.min(99, Math.round(state.answers.length / EST_TOTAL * 100));
+    $('progress-fill').style.width = pct + '%';
+    $('progress-pct').textContent = pct;
+    $('progress-cnt').textContent = state.answers.length + 1;
+    $('btn-undo').disabled = state.answers.length === 0;
+
+    // 다음에 나올 법한 카드 몇 장을 미리 받아둔다(모바일 체감 개선)
+    var nextGuess = state.order.indexOf(pair[1]) + 1;
+    preload(state.order[nextGuess]);
+    preload(state.order[nextGuess + 1]);
+  }
+
+  function setSide(side, ch) {
+    var card = $('card-' + side);
+    card.style.setProperty('--band', ch.color);
+    card.classList.remove('picked');
+    var img = $('img-' + side);
+    img.src = ch.img;
+    img.alt = ch.name;
+    $('name-' + side).textContent = ch.name;
+    $('band-' + side).textContent = ch.band;
+  }
+
+  function pick(side) {
+    var card = $('card-' + side);
+    card.classList.add('picked');
+    // 눌린 게 보이도록 아주 짧게 지연
+    setTimeout(function () { answer(side === 'left' ? 1 : -1); }, 90);
+  }
+
+  // ── 순위 계산 (비김 = 같은 순위) ──────────────────────────────────────
+  function rankedGroups() {
+    var groups = [], cur = [state.result[0]];
+    for (var i = 1; i < state.result.length; i++) {
+      var prev = state.result[i - 1], now = state.result[i];
+      if (lookup(prev, now) === 0) cur.push(now);
+      else { groups.push(cur); cur = [now]; }
+    }
+    groups.push(cur);
+
+    var rows = [], rank = 1;
+    groups.forEach(function (g) {
+      g.forEach(function (id) { rows.push({ rank: rank, ch: BY_ID[id] }); });
+      rank += g.length;   // 공동 2위가 둘이면 다음은 4위
+    });
+    return rows;
+  }
+
+  // ── 결과 화면 렌더 ───────────────────────────────────────────────────
+  var lastRows = [];
+
+  function renderResult() {
+    var rows = lastRows = rankedGroups();
+    var d = new Date();
+    $('result-date').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate());
+    $('result-qcount').textContent = state.answers.length;
+
+    var podium = $('podium');
+    podium.innerHTML = '';
+    rows.slice(0, 3).forEach(function (r) {
+      var el = document.createElement('div');
+      el.className = 'p-item';
+      el.style.setProperty('--band', r.ch.color);
+      el.innerHTML =
+        '<img src="' + r.ch.img + '" alt="" loading="lazy">' +
+        '<div class="p-rank">' + r.rank + '위</div>' +
+        '<div class="p-name">' + esc(r.ch.name) + '</div>';
+      podium.appendChild(el);
+    });
+
+    var list = $('rank-list');
+    list.innerHTML = '';
+    rows.forEach(function (r) {
+      var li = document.createElement('li');
+      li.style.setProperty('--band', r.ch.color);
+      li.innerHTML =
+        '<span class="r-num">' + r.rank + '</span>' +
+        '<img src="' + r.ch.thumb + '" alt="" loading="lazy">' +
+        '<span class="r-name">' + esc(r.ch.name) + '</span>' +
+        '<span class="r-band">' + esc(r.ch.band) + '</span>';
+      list.appendChild(li);
+    });
+
+    clearSaved();   // 완료됐으므로 '이어하기' 대상에서 뺀다
+  }
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  // ── 결과 이미지(캔버스 직접 그리기 — 외부 라이브러리 없음) ─────────────
+  function buildCanvas() {
+    var rows = lastRows;
+    var COLS = 3, PER = Math.ceil(rows.length / COLS);
+    var W = 1080, PAD = 40, HEAD = 190, FOOT = 92;
+    var RH = 64, COLW = (W - PAD * 2) / COLS;
+    var H = HEAD + PER * RH + FOOT;
+
+    var cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    var g = cv.getContext('2d');
+
+    // 배경
+    var bg = g.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#15121f');
+    bg.addColorStop(.5, '#0e0d14');
+    bg.addColorStop(1, '#1a1428');
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+    var glow = g.createRadialGradient(W * .15, 0, 0, W * .15, 0, 620);
+    glow.addColorStop(0, 'rgba(255,92,158,.30)');
+    glow.addColorStop(1, 'rgba(255,92,158,0)');
+    g.fillStyle = glow; g.fillRect(0, 0, W, 620);
+
+    // 헤더
+    g.textAlign = 'center';
+    g.fillStyle = '#ffffff';
+    g.font = '900 52px "Noto Sans KR", sans-serif';
+    g.fillText('내 뱅드림 최애 순위', W / 2, 84);
+
+    var d = new Date();
+    g.fillStyle = '#9a94b0';
+    g.font = '500 22px "Noto Sans KR", sans-serif';
+    g.fillText(d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate())
+      + ' · 캐릭터 ' + rows.length + '명 · 질문 ' + state.answers.length + '회',
+      W / 2, 124);
+
+    g.strokeStyle = 'rgba(255,255,255,.12)';
+    g.lineWidth = 1;
+    g.beginPath(); g.moveTo(PAD, HEAD - 34); g.lineTo(W - PAD, HEAD - 34); g.stroke();
+
+    // 순위 행
+    g.textAlign = 'left';
+    rows.forEach(function (r, i) {
+      var col = Math.floor(i / PER), row = i % PER;
+      var x = PAD + col * COLW, y = HEAD + row * RH;
+
+      // 밴드 색 막대
+      g.fillStyle = r.ch.color;
+      g.fillRect(x, y + 6, 4, 46);
+
+      // 썸네일
+      var im = r.ch._im;
+      if (im) {
+        g.save();
+        roundRect(g, x + 14, y + 6, 34, 46, 6);
+        g.clip();
+        g.drawImage(im, x + 14, y + 6, 34, 46);
+        g.restore();
+      }
+
+      // 등수
+      g.fillStyle = r.rank <= 3 ? '#ffd76a' : '#7d7794';
+      g.font = '900 22px "Noto Sans KR", sans-serif';
+      g.fillText(String(r.rank), x + 58, y + 36);
+
+      // 이름
+      g.fillStyle = '#f2f0f8';
+      g.font = '700 22px "Noto Sans KR", sans-serif';
+      g.fillText(r.ch.name, x + 100, y + 30);
+
+      // 밴드
+      g.fillStyle = '#8b85a3';
+      g.font = '500 15px "Noto Sans KR", sans-serif';
+      g.fillText(r.ch.band, x + 100, y + 49);
+    });
+
+    // 푸터
+    g.textAlign = 'center';
+    g.fillStyle = '#6f6a85';
+    g.font = '500 19px "Noto Sans KR", sans-serif';
+    g.fillText('뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/',
+      W / 2, H - 38);
+
+    return cv;
+  }
+
+  function roundRect(g, x, y, w, h, r) {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  }
+
+  /** 썸네일을 전부 로드한 뒤 캔버스를 만든다(그릴 때 비어 있으면 안 되므로). */
+  function withImages() {
+    return Promise.all(lastRows.map(function (r) {
+      if (r.ch._im) return Promise.resolve();
+      return new Promise(function (res) {
+        var im = new Image();
+        im.onload = function () { r.ch._im = im; res(); };
+        im.onerror = function () { res(); };   // 한 장 실패해도 나머지는 그린다
+        im.src = r.ch.thumb;
+      });
+    })).then(buildCanvas);
+  }
+
+  function toast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.hidden = false;
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { t.hidden = true; }, 2200);
+  }
+
+  function savePng() {
+    withImages().then(function (cv) {
+      cv.toBlob(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'bangdream_sorter.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+        toast('이미지를 저장했어요');
+      }, 'image/png');
+    });
+  }
+
+  function copyPng() {
+    if (!navigator.clipboard || !window.ClipboardItem) {
+      toast('이 브라우저는 이미지 복사가 안 돼요. 저장을 써주세요');
+      return;
+    }
+    withImages().then(function (cv) {
+      cv.toBlob(function (blob) {
+        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
+          .then(function () { toast('이미지를 복사했어요'); })
+          .catch(function () { toast('복사 실패 — 저장을 써주세요'); });
+      }, 'image/png');
+    });
+  }
+
+  function copyText() {
+    var byRank = {};
+    lastRows.forEach(function (r) {
+      (byRank[r.rank] = byRank[r.rank] || []).push(r.ch.name);
+    });
+    var lines = Object.keys(byRank)
+      .sort(function (a, b) { return a - b; })
+      .map(function (k) { return k + '위 ' + byRank[k].join(', '); });
+    var txt = '[내 뱅드림 최애 순위]\n' + lines.join('\n')
+      + '\n\nbandorigall.github.io/others.github.io/sorter/';
+
+    copyToClipboard(txt)
+      .then(function () { toast('순위를 복사했어요'); })
+      .catch(function () { toast('복사 실패'); });
+  }
+
+  function copyToClipboard(txt) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(txt);
+    }
+    // 구형 브라우저 폴백
+    return new Promise(function (res, rej) {
+      var ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      ta.remove();
+      ok ? res() : rej();
+    });
+  }
+
+  // ── 이벤트 ───────────────────────────────────────────────────────────
+  $('card-left').addEventListener('click', function () { pick('left'); });
+  $('card-right').addEventListener('click', function () { pick('right'); });
+  $('btn-tie').addEventListener('click', function () { answer(0); });
+  $('btn-undo').addEventListener('click', undo);
+  $('btn-quit').addEventListener('click', function () {
+    save();
+    location.reload();
+  });
+  $('btn-start').addEventListener('click', startNew);
+  $('btn-restart').addEventListener('click', startNew);
+  $('btn-png').addEventListener('click', savePng);
+  $('btn-copy-img').addEventListener('click', copyPng);
+  $('btn-copy-txt').addEventListener('click', copyText);
+
+  document.addEventListener('keydown', function (e) {
+    if (screens.battle.hidden) return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); pick('left'); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); pick('right'); }
+    else if (e.key === ' ') { e.preventDefault(); answer(0); }
+    else if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); undo(); }
+  });
+
+  // ── 초기화 ───────────────────────────────────────────────────────────
+  $('intro-count').textContent = CHARS.length + '명';
+
+  var saved = loadSaved();
+  if (saved && saved.answers && saved.answers.length) {
+    var pct = Math.min(99, Math.round(saved.answers.length / EST_TOTAL * 100));
+    $('resume-progress').textContent = pct;
+    $('resume-box').hidden = false;
+    $('btn-resume').addEventListener('click', function () { resume(saved); });
+    $('btn-discard').addEventListener('click', function () {
+      clearSaved();
+      $('resume-box').hidden = true;
+    });
+  }
+})();
