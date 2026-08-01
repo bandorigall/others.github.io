@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>뱅드림 캐릭터 소터 — 최애 순위 정하기</title>
+<meta name="description" content="뱅드림 캐릭터 60명을 이지선다로 비교해서 1위부터 60위까지 나만의 최애 순위를 만들어보세요.">
+<meta property="og:title" content="뱅드림 캐릭터 소터">
+<meta property="og:description" content="60명 이지선다로 정하는 나만의 최애 순위">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ══════════ 시작 화면 ══════════ -->
+<section id="screen-intro" class="screen">
+  <div class="intro-wrap">
+    <h1 class="logo">뱅드림 캐릭터 소터</h1>
+    <p class="lead">60명을 <b>둘 중 하나</b>씩 고르다 보면<br>1위부터 60위까지 내 순위표가 완성돼요.</p>
+
+    <div class="intro-card">
+      <div class="intro-row"><span class="k">캐릭터</span><span class="v" id="intro-count">60명</span></div>
+      <div class="intro-row"><span class="k">예상 질문</span><span class="v">약 300회 (5~10분)</span></div>
+      <div class="intro-row"><span class="k">중간 저장</span><span class="v">자동 (닫아도 이어하기)</span></div>
+    </div>
+
+    <div id="resume-box" class="resume-box" hidden>
+      <p>진행 중이던 기록이 있어요. <b><span id="resume-progress">0</span>%</b> 완료</p>
+      <div class="btn-row">
+        <button class="btn primary" id="btn-resume">이어하기</button>
+        <button class="btn ghost" id="btn-discard">처음부터</button>
+      </div>
+    </div>
+
+    <button class="btn primary big" id="btn-start">시작하기</button>
+
+    <details class="tips">
+      <summary>조작법 · 팁</summary>
+      <ul>
+        <li>카드를 <b>탭/클릭</b>하면 그 캐릭터를 고릅니다.</li>
+        <li><b>비김</b>은 둘 다 똑같이 좋을 때. 같은 순위로 묶입니다.</li>
+        <li><b>되돌리기</b>로 직전 선택을 취소할 수 있어요.</li>
+        <li>키보드: <kbd>←</kbd> <kbd>→</kbd> 선택 · <kbd>스페이스</kbd> 비김 · <kbd>Z</kbd> 되돌리기</li>
+        <li>고민되면 부담 없이 비김을 쓰세요. 질문 수는 그대로지만 순위가 더 정확해집니다.</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- ══════════ 대결 화면 ══════════ -->
+<section id="screen-battle" class="screen" hidden>
+  <header class="battle-head">
+    <div class="progress-line">
+      <div class="progress-bar"><i id="progress-fill"></i></div>
+      <span class="progress-txt"><b id="progress-pct">0</b>% · <span id="progress-cnt">0</span>번째 질문</span>
+    </div>
+    <p class="battle-q">더 좋아하는 쪽은?</p>
+  </header>
+
+  <div class="arena">
+    <button class="char-card" id="card-left" type="button">
+      <div class="card-img"><img id="img-left" alt="" decoding="async"></div>
+      <div class="card-meta">
+        <span class="c-name" id="name-left"></span>
+        <span class="c-band" id="band-left"></span>
+      </div>
+    </button>
+
+    <div class="vs">VS</div>
+
+    <button class="char-card" id="card-right" type="button">
+      <div class="card-img"><img id="img-right" alt="" decoding="async"></div>
+      <div class="card-meta">
+        <span class="c-name" id="name-right"></span>
+        <span class="c-band" id="band-right"></span>
+      </div>
+    </button>
+  </div>
+
+  <div class="battle-actions">
+    <button class="btn tie" id="btn-tie">둘 다 좋아 (비김)</button>
+    <button class="btn ghost" id="btn-undo">되돌리기</button>
+    <button class="btn ghost" id="btn-quit">그만두기</button>
+  </div>
+</section>
+
+<!-- ══════════ 결과 화면 ══════════ -->
+<section id="screen-result" class="screen" hidden>
+  <header class="result-head">
+    <h2>내 뱅드림 최애 순위</h2>
+    <p class="result-sub"><span id="result-date"></span> · 질문 <span id="result-qcount">0</span>회</p>
+  </header>
+
+  <div class="podium" id="podium"></div>
+  <ol class="rank-list" id="rank-list"></ol>
+
+  <div class="result-actions">
+    <button class="btn primary" id="btn-png">이미지로 저장</button>
+    <button class="btn" id="btn-copy-img">이미지 복사</button>
+    <button class="btn" id="btn-copy-txt">순위 텍스트 복사</button>
+    <button class="btn ghost" id="btn-restart">다시 하기</button>
+  </div>
+  <p class="toast" id="toast" hidden></p>
+</section>
+
+<footer class="site-footer">
+  캐릭터 데이터·이미지 저작권은 Bushiroad 에 있으며 비상업적 팬 용도로만 사용합니다.
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
