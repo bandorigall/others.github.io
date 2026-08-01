@@ -1057,8 +1057,15 @@
       .then(function (r) {
         var css = r[1] + '\n' + r[0];
         var H = Math.ceil(clone.getBoundingClientRect().height);
+        // ★ SVG 안에는 <html>/<body> 가 없다. styles.css 의 글자색·폰트·CSS 변수는
+        //   html,body / :root 에 걸려 있어서 그대로 두면 전부 기본값(검은 글씨)이 된다.
+        //   → 루트 div 에 직접 다시 박아준다. (2026-08-01 '복사하면 검은 글씨' 원인)
         var extra =
-          '.shot-root{width:' + W + 'px;background:#0e0d14;' +
+          '.shot-root{--bg:#0e0d14;--bg-soft:#171522;--bg-card:#1e1b2c;--line:#2e2a40;' +
+          '--text:#f2f0f8;--text-muted:#9a94b0;--accent:#ff5c9e;--accent-2:#7b8cff;' +
+          '--radius:18px;--safe-b:0px;' +
+          'color:#f2f0f8;font-family:"Noto Sans KR",system-ui,sans-serif;font-size:16px;' +
+          'width:' + W + 'px;background:#0e0d14;' +
           'background-image:radial-gradient(1100px 520px at 12% -12%,rgba(255,92,158,.16),transparent 60%),' +
           'radial-gradient(900px 480px at 88% 4%,rgba(123,140,255,.14),transparent 60%);}' +
           '.shot-foot{text-align:center;color:#6f6a85;font-size:.72rem;margin:18px 0 0;}' +
