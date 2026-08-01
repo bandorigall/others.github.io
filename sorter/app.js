@@ -16,8 +16,14 @@
  *           TOP10 약 150문항 / TOP20 약 215문항으로 끝난다.
  *           (Elo·스위스 방식도 검토했지만 같은 질문 수에서 정확도가 크게 떨어져 채택하지 않음)
  *
- * [비김] 답변값 0. 왼쪽을 먼저 두어 순서를 안정적으로 유지하고,
+ * [비김] 답변값 0. 두 캐릭터를 eqLink 로 묶어 이후 병합에서 질문 없이 딸려보낸다.
  *   순위 계산에서 인접한 두 캐릭터의 답이 0이면 같은 순위로 묶는다.
+ *
+ * [시작 명단] 섞지 않는다. 밴드 순서 그대로 시작한다(원본 소터와 동일).
+ *   병합정렬은 초기 순서가 취향과 비슷할수록 질문이 줄어들고, 밴드 단위로
+ *   취향이 갈리는 사람이 많아 이 배치가 유리하다. 정확도에는 영향이 없다.
+ *   실측(60명): 무작위 취향 282, 밴드끼리 뭉친 취향 244, 밴드 순서까지 맞으면 207.
+ *   ※ 셔플을 되살리지 말 것. 셔플하면 무조건 282 로 고정된다.
  */
 (function () {
   'use strict';
@@ -50,7 +56,7 @@
 
   var state = {
     mode: 'full',
-    order: [],                   // 섞인 캐릭터 id 배열
+    order: [],                   // 시작 명단(밴드 순서, 섞지 않음)
     answers: [],                 // [[idA, idB, v], ...]  v: 1=A선호, -1=B선호, 0=비김
     map: {},                     // "idA|idB" -> v
     eqLink: {},                  // 비김으로 묶인 쌍 (idA -> idB)
@@ -272,18 +278,9 @@
   }
 
   // ── 게임 진행 ────────────────────────────────────────────────────────
-  function shuffle(list) {
-    var a = list.slice();
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
-
   function startNew(mode) {
     state.mode = MODES[mode] ? mode : 'full';
-    // 밴드끼리 뭉쳐서 시작한다(밴드 안에서만 섞음).
+    // 밴드끼리 뭉쳐서, 섞지 않고 시작한다(원본 소터와 동일).
     //   병합정렬은 초기 순서가 취향과 비슷할수록 질문이 줄어드는데,
     //   밴드 단위로 최애/비최애가 갈리는 사람이 많아서 이 배치가 크게 유리하다.
     //   같은 취향으로 실측: 무작위 취향 282→281(손해 없음),
@@ -291,9 +288,9 @@
     //   (참고 사이트도 셔플 없이 밴드 순서 그대로 시작한다 — 45명에 136~150문항)
     var byBand = [];
     BAND_ORDER.forEach(function (b) {
-      byBand = byBand.concat(shuffle(
+      byBand = byBand.concat(
         pickedChars().filter(function (c) { return c.bandKey === b; })
-          .map(function (c) { return c.id; })));
+          .map(function (c) { return c.id; }));
     });
     state.order = byBand;
     state.answers = [];
