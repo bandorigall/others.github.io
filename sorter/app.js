@@ -1039,12 +1039,6 @@
     foot.textContent = '뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/';
     clone.appendChild(foot);
 
-    // 높이를 재려면 실제로 배치해봐야 한다 → 화면 밖에 잠깐 붙였다 뗀다
-    var stage = document.createElement('div');
-    stage.setAttribute('style',
-      'position:fixed;left:-10000px;top:0;width:' + W + 'px;pointer-events:none;');
-    stage.appendChild(clone);
-    document.body.appendChild(stage);
 
     // 이미지에 실제로 들어가는 글자만 모아 폰트를 subset 으로 받는다
     var used = (clone.textContent || '').replace(/\s+/g, '');
@@ -1056,7 +1050,6 @@
     return Promise.all([loadCss(), fontCss(chars), inlineImages(clone)])
       .then(function (r) {
         var css = r[1] + '\n' + r[0];
-        var H = Math.ceil(clone.getBoundingClientRect().height);
         // ★ SVG 안에는 <html>/<body> 가 없다. styles.css 의 글자색·폰트·CSS 변수는
         //   html,body / :root 에 걸려 있어서 그대로 두면 전부 기본값(검은 글씨)이 된다.
         //   → 루트 div 에 직접 다시 박아준다. (2026-08-01 '복사하면 검은 글씨' 원인)
@@ -1075,35 +1068,62 @@
           '.tb-p.win,.tb-p.win b{color:#f2f0f8;}' +
           '.result-head h2{color:#ffffff;}';
         var body = new XMLSerializer().serializeToString(clone);
-        document.body.removeChild(stage);
+        var style = '<style>' + xmlEsc(css + extra) + '</style>';
 
-        var svg =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '">' +
-          '<foreignObject x="0" y="0" width="100%" height="100%">' +
-          '<div xmlns="http://www.w3.org/1999/xhtml" class="shot-root">' +
-          '<style>' + xmlEsc(css + extra) + '</style>' + body +
-          '</div></foreignObject></svg>';
+        // ★ 높이는 '폭 1080짜리 뷰포트'에서 재야 한다.
+        //   미디어쿼리는 요소 폭이 아니라 뷰포트 기준이라, 폰에서 그냥 재면
+        //   모바일 배치(세로로 긴) 높이가 나오고 SVG 안은 PC 배치라 아래가 텅 빈다.
+        //   → 1080px 짜리 iframe 안에 똑같이 넣어 실제 높이를 잰다.
+        return measure(style + body, W).then(function (H) {
+          var svg =
+            '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '">' +
+            '<foreignObject x="0" y="0" width="100%" height="100%">' +
+            '<div xmlns="http://www.w3.org/1999/xhtml" class="shot-root">' +
+            style + body +
+            '</div></foreignObject></svg>';
 
-        return new Promise(function (res, rej) {
-          var im = new Image();
-          im.onload = function () {
-            var S = 2;                     // 2배로 그려 글자를 또렷하게
-            var cv = document.createElement('canvas');
-            cv.width = W * S; cv.height = H * S;
-            var g = cv.getContext('2d');
-            g.fillStyle = '#0e0d14';
-            g.fillRect(0, 0, cv.width, cv.height);
-            g.drawImage(im, 0, 0, cv.width, cv.height);
-            res(cv);
-          };
-          im.onerror = function () { rej(new Error('svg render failed')); };
-          im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+          return new Promise(function (res, rej) {
+            var im = new Image();
+            im.onload = function () {
+              var S = 2;                     // 2배로 그려 글자를 또렷하게
+              var cv = document.createElement('canvas');
+              cv.width = W * S; cv.height = H * S;
+              var g = cv.getContext('2d');
+              g.fillStyle = '#0e0d14';
+              g.fillRect(0, 0, cv.width, cv.height);
+              g.drawImage(im, 0, 0, cv.width, cv.height);
+              res(cv);
+            };
+            im.onerror = function () { rej(new Error('svg render failed')); };
+            im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+          });
         });
-      })
-      .catch(function (e) {
-        if (stage.parentNode) document.body.removeChild(stage);
-        throw e;
       });
+  }
+
+  /** 폭 W 짜리 iframe 에 넣어 실제 높이를 잰다(미디어쿼리를 제대로 태우려고). */
+  function measure(html, W) {
+    return new Promise(function (res) {
+      var fr = document.createElement('iframe');
+      fr.setAttribute('aria-hidden', 'true');
+      fr.setAttribute('style',
+        'position:fixed;left:-10000px;top:0;border:0;width:' + W + 'px;height:200px;');
+      document.body.appendChild(fr);
+      var d = fr.contentDocument;
+      d.open();
+      d.write('<!DOCTYPE html><html><head><meta charset="utf-8"></head>' +
+        '<body style="margin:0"><div class="shot-root">' + html + '</div></body></html>');
+      d.close();
+      var wrap = d.querySelector('.shot-root');
+      var done = function () {
+        var h = Math.ceil(wrap.getBoundingClientRect().height);
+        document.body.removeChild(fr);
+        res(h || 900);
+      };
+      // 폰트가 붙으면 줄 높이가 달라지므로 폰트 로딩까지 기다린다
+      if (d.fonts && d.fonts.ready) d.fonts.ready.then(done, done);
+      else setTimeout(done, 60);
+    });
   }
 
   function xmlEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
@@ -1296,6 +1316,54 @@
     renderBands();
   });
   renderBands();
+
+  // ── 자동 확인용 훅(개발/테스트 전용) ────────────────────────────────
+  //  ?autotest=cup    : 월드컵을 자동으로 끝까지 답해 결과 화면까지 간다
+  //  ?autotest=full   : 전체 순위 모드로 같은 것
+  //  &shot=1          : 결과 이미지를 만들어 화면 전체를 그 이미지로 바꾼다
+  //                     (헤드리스 크롬 스크린샷으로 '복사된 이미지'를 그대로 검사하려고)
+  //  일반 사용자에겐 영향이 없다(파라미터가 없으면 아무 일도 안 한다).
+  var qs = new URLSearchParams(location.search);
+  if (qs.get('autotest')) {
+    startNew(qs.get('autotest') === 'full' ? 'full' : 'cup');
+    var guard = 0;
+    while (!state.result && state.pending && guard++ < 5000) answer(guard % 3 === 0 ? -1 : 1);
+    if (qs.get('diag')) {
+      // 가로로 삐져나온 요소 찾기 — 화면 폭보다 오른쪽 끝이 튀어나온 것들
+      var vw = document.documentElement.clientWidth, bad = [];
+      Array.prototype.forEach.call(document.querySelectorAll('#screen-result *'), function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width && r.right > vw + 1) {
+          bad.push((el.className || el.tagName) + '@' + Math.round(r.left) + '+' + Math.round(r.width));
+        }
+      });
+      document.title = 'DIAG vw=' + vw + ' sw=' + document.documentElement.scrollWidth
+        + ' | ' + bad.slice(0, 8).join(' , ');
+    }
+    if (qs.get('shot')) {
+      shot().then(function (cv) {
+        document.body.innerHTML = '';
+        document.body.style.margin = '0';
+        var im = new Image();
+        im.style.width = '100%';
+        im.src = cv.toDataURL('image/png');
+        im.onload = function () {
+          document.title = 'SHOT ' + cv.width + 'x' + cv.height;
+          // 글자가 검게 떨어지지 않았는지: 캔버스 위쪽(제목 줄)에 밝은 픽셀이 있어야 한다
+          if (qs.get('colorcheck')) {
+            var g2 = cv.getContext('2d');
+            var d2 = g2.getImageData(0, 40, cv.width, 90).data, light = 0;
+            for (var p = 0; p < d2.length; p += 4) {
+              if (d2[p] > 200 && d2[p + 1] > 200 && d2[p + 2] > 200) light++;
+            }
+            document.title = (light > 200 ? 'TEXTOK ' : 'TEXTBLACK ') + light
+              + ' ' + cv.width + 'x' + cv.height;
+          }
+        };
+        document.body.appendChild(im);
+      });
+    }
+  }
 
   var saved = loadSaved();
   if (saved && saved.answers && saved.answers.length) {

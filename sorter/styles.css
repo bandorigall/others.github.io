@@ -306,6 +306,9 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
   overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch;
 }
 .tb-round { flex: 1 1 0; min-width: 128px; display: flex; flex-direction: column; }
+/* grid/flex 칸은 기본 최소폭이 '콘텐츠 최소폭'이라, 320px 짜리 초상 원본이
+   칸을 밀어내 페이지 전체가 가로로 터진다. 전부 0 으로 풀어준다. */
+.tb-col, .tb-m, .tb-p, .tb-p img, .tb-p b { min-width: 0; }
 .tb-round h4 {
   margin: 0 0 6px; font-size: .74rem; font-weight: 900; color: var(--text-muted);
   text-align: center;
