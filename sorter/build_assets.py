@@ -207,6 +207,7 @@ def main():
         total += os.path.getsize(dst)
         total_th += os.path.getsize(dst_th)
         out.append({
+            "optional": bool(ch.get("optional")),
             "id": cid, "name": ch["name"], "band": ch["bandName"],
             "bandKey": ch["band"], "color": ch["color"],
             "img": f"assets/{cid}.webp", "thumb": f"assets/{cid}_t.webp",

@@ -131,6 +131,9 @@ body {
   background: color-mix(in srgb, var(--band) 18%, var(--bg-card));
 }
 .band:active { transform: scale(.95); }
+/* 부가 캐릭터 — 기본 꺼짐이라 점선으로 구분 */
+.band.optional { border-style: dashed; }
+.band.optional.on { border-style: solid; }
 
 .band-quick { display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 22px; }
 .chip {

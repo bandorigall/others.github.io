@@ -75,8 +75,12 @@
   CHARS.forEach(function (c) {
     if (BAND_ORDER.indexOf(c.bandKey) < 0) BAND_ORDER.push(c.bandKey);
   });
+  // 부가(조연) 캐릭터는 기본 제외. 원하는 사람만 칩을 켜서 넣는다.
+  function isOptionalBand(b) {
+    return CHARS.every(function (c) { return c.bandKey !== b || c.optional; });
+  }
   var picked = {};
-  BAND_ORDER.forEach(function (b) { picked[b] = true; });
+  BAND_ORDER.forEach(function (b) { picked[b] = !isOptionalBand(b); });
 
   function pickedChars() {
     return CHARS.filter(function (c) { return picked[c.bandKey]; });
@@ -90,7 +94,8 @@
       var n = CHARS.filter(function (c) { return c.bandKey === b; }).length;
       var el = document.createElement('button');
       el.type = 'button';
-      el.className = 'band' + (picked[b] ? ' on' : '');
+      el.className = 'band' + (picked[b] ? ' on' : '') +
+        (isOptionalBand(b) ? ' optional' : '');
       el.style.setProperty('--band', info.color);
       el.innerHTML = '<span class="b-dot"></span>' + esc(info.name) +
         '<span class="b-n">' + n + '</span>';
@@ -725,13 +730,17 @@
   });
 
   // ── 초기화 ───────────────────────────────────────────────────────────
-  $('intro-count').textContent = CHARS.length + '명';
+  $('intro-count').textContent = pickedChars().length + '명';
   $('btn-band-all').addEventListener('click', function () {
     BAND_ORDER.forEach(function (b) { picked[b] = true; });
     renderBands();
   });
   $('btn-band-none').addEventListener('click', function () {
     BAND_ORDER.forEach(function (b) { picked[b] = false; });
+    renderBands();
+  });
+  $('btn-band-reset').addEventListener('click', function () {
+    BAND_ORDER.forEach(function (b) { picked[b] = !isOptionalBand(b); });
     renderBands();
   });
   renderBands();
