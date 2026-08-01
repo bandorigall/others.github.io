@@ -282,3 +282,6 @@ sorter — 뱅드림 캐릭터 소터 개발일지
     다음 문제에도 focus 링이 보임. (:hover 는 이미 @media(hover:hover) 로 막혀 있어 무관)
     해결: styles.css 상단에 -webkit-tap-highlight-color:transparent + :focus{outline:none} /
     :focus-visible 에만 링. app.js answer() 첫머리에서 activeElement.blur().
+  - [갈드컵 방지] 저장/복사 이미지에서는 11위 이하(tier-3)를 잘라내고
+    "11위 이하 N명은 비공개" 안내만 남긴다. buildDomCanvas() 의 clone 단계에서 제거하므로
+    화면 순위표는 전체 그대로 보인다. (텍스트 복사는 아직 전체 순위 그대로 — 필요시 별도 처리)

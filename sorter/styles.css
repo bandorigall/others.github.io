@@ -460,6 +460,8 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
 }
 .rank-list .tier-sep-1 { color: #ffd76a; padding-top: 2px; }
 .rank-list .tier-sep-2 { color: #cfc7ee; }
+/* 공유 이미지 전용 — 잘라낸 하위권 자리에 붙는 안내 */
+.rank-list .tier-sep-more { text-align: center; font-weight: 700; letter-spacing: 0; opacity: .75; }
 
 .rank-list li.tier-1 {
   padding: 10px 12px; border-width: 2px; border-left-width: 6px;

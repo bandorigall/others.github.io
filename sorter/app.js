@@ -1048,6 +1048,24 @@
           el.parentNode.removeChild(el);
         });
       });
+    // ★ 공유 이미지에서는 하위권(11위 이하)을 빼고 TOP 10 까지만 남긴다.
+    //   전체 순위를 그대로 박제하면 최하위가 지목돼 갈드컵 소재가 되기 때문.
+    //   (화면에서는 그대로 다 보인다 — 자르는 건 저장/복사 이미지뿐)
+    var cutList = clone.querySelector('.rank-list');
+    if (cutList) {
+      var cut = 0;
+      Array.prototype.forEach.call(cutList.querySelectorAll('.tier-3, .tier-sep-3'), function (el) {
+        if (!el.classList.contains('tier-sep-3')) cut++;
+        el.parentNode.removeChild(el);
+      });
+      if (cut) {
+        var more = document.createElement('li');
+        more.className = 'tier-sep tier-sep-more';
+        more.textContent = '11위 이하 ' + cut + '명은 비공개';
+        cutList.appendChild(more);
+      }
+    }
+
     var foot = document.createElement('p');
     foot.className = 'shot-foot';
     foot.textContent = '뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/';
