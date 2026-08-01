@@ -24,8 +24,6 @@ html, body {
   font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior-y: none;
-  /* 대진표가 넘쳐도 페이지 자체가 좌우로 밀리지 않게(자기 컨테이너 안에서만 스크롤) */
-  overflow-x: hidden;
 }
 
 body {
@@ -36,7 +34,11 @@ body {
   background-attachment: fixed;
 }
 
-.screen { max-width: 1080px; margin: 0 auto; padding: 22px 16px calc(28px + var(--safe-b)); }
+/* 대진표가 넘쳐도 페이지가 좌우로 밀리지 않게 잘라둔다.
+   ★ html/body 에 overflow-x:hidden 을 걸면 모바일에서 세로 스크롤이 통째로 죽는다
+     (2026-08-01 실기기 확인). 반드시 화면 컨테이너에 overflow-x:clip 으로만 걸 것.
+     clip 은 스크롤 컨테이너를 만들지 않아 안전하다. */
+.screen { max-width: 1080px; margin: 0 auto; padding: 22px 16px calc(28px + var(--safe-b)); overflow-x: clip; }
 [hidden] { display: none !important; }
 
 /* ── 버튼 공통 ── */
