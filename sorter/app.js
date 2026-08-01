@@ -10,11 +10,12 @@
  *   full  : 상향식 병합정렬로 60명 전체를 정확히 정렬. 약 280문항.
  *           참고로 60명 전체 순위를 확정하려면 정보이론상 log2(60!)≈273회가
  *           최소이므로, 이보다 크게 줄이는 건 원리적으로 불가능하다.
- *   top10 / top20 : 토너먼트 브래킷을 우승자를 빼면서 반복한다.
- *           이미 답한 비교는 캐시되어 있어, 2위부터는 직전 우승자가 지나간
- *           경로만 새로 물어보게 된다. 상위 K명은 '정확히' 맞으며
- *           TOP10 약 150문항 / TOP20 약 215문항으로 끝난다.
- *           (Elo·스위스 방식도 검토했지만 같은 질문 수에서 정확도가 크게 떨어져 채택하지 않음)
+ *   cup   : 진짜 이상형 월드컵. 단판 토너먼트를 한 번만 돌려 우승자 한 명을 뽑는다.
+ *           순위는 매기지 않고 '32강 → 16강 → … → 결승' 라운드만 보여준다.
+ *           인원이 2의 거듭제곱이 아니면 예선(부전승)으로 먼저 줄인다.
+ *           질문 수는 항상 n-1 (60명이면 59문항). 비김은 쓰지 않는다.
+ *           ※ 예전의 TOP10/TOP20(브래킷 반복으로 상위 K명 정확 산출) 모드는
+ *             2026-08-01 사용자 요청으로 제거했다. 되살리지 말 것.
  *
  * [비김] 답변값 0. 두 캐릭터를 eqLink 로 묶어 이후 병합에서 질문 없이 딸려보낸다.
  *   순위 계산에서 인접한 두 캐릭터의 답이 0이면 같은 순위로 묶는다.
@@ -42,21 +43,26 @@
   var NEED = {};                 // 비교가 필요할 때 던지는 신호 객체
 
   var MODES = {
-    full:  { label: '전체 순위', k: 0 },
-    top20: { label: 'TOP 20',   k: 20 },
-    top10: { label: 'TOP 10',   k: 10 }
+    full: { label: '전체 순위', cup: false },
+    cup:  { label: '월드컵',    cup: true }
   };
 
   /** 진행률 분모(= 예상 최대 질문 수). 인원수 n 에 따라 계산한다.
-   *  full  : 병합정렬 최악 비교 횟수 n*ceil(log2 n) - 2^ceil(log2 n) + 1
-   *  topK  : 브래킷 n-1 회 + 2위부터 우승자 경로 재질문(실측 계수 2.2)
-   *  비김을 쓰면 실제론 이보다 훨씬 적게 끝난다(진행률은 99%에서 멈춰 둔다). */
+   *  full : 병합정렬 최악 비교 횟수 n*ceil(log2 n) - 2^ceil(log2 n) + 1
+   *         (비김을 쓰면 실제론 이보다 훨씬 적게 끝난다 — 진행률은 99%에서 멈춰 둔다)
+   *  cup  : 탈락 토너먼트라 정확히 n-1 회. */
   function estFor(mode, n) {
     if (n < 2) return 1;
+    if (MODES[mode].cup) return n - 1;
     var lg = Math.ceil(Math.log2(n));
-    var k = MODES[mode].k;
-    if (!k) return n * lg - Math.pow(2, lg) + 1;
-    return Math.round((n - 1) + Math.min(k, n) * lg * 2.2);
+    return n * lg - Math.pow(2, lg) + 1;
+  }
+
+  /** 월드컵 본선 시작 라운드(= n 이하의 가장 큰 2의 거듭제곱). 60명이면 32. */
+  function cupTop(n) {
+    var p = 1;
+    while (p * 2 <= n) p *= 2;
+    return p;
   }
 
   var state = {
@@ -115,7 +121,7 @@
     Array.prototype.forEach.call(
       document.querySelectorAll('[data-mode]'), function (el) {
         var m = el.dataset.mode;
-        var few = n < 2 || (MODES[m].k && n <= MODES[m].k);
+        var few = n < 2;
         el.disabled = few;
         // '전체 60위' 라벨도 선택 인원에 맞춘다
         if (m === 'full') {
@@ -125,8 +131,10 @@
         var q = el.querySelector('.m-q');
         if (q) {
           q.textContent = few
-            ? (n < 2 ? '2명 이상 골라주세요' : (MODES[m].k + '명보다 많이 골라주세요'))
-            : '최대 ' + estFor(m, n) + '문항' + (m === 'full' ? ' (비김 쓰면 더 줄어요)' : '');
+            ? '2명 이상 골라주세요'
+            : (MODES[m].cup
+                ? cupTop(n) + '강부터 · 딱 ' + estFor(m, n) + '문항'
+                : '최대 ' + estFor(m, n) + '문항 (비김 쓰면 더 줄어요)');
         }
       });
   }
@@ -230,35 +238,55 @@
     return { done: true, list: arr };
   }
 
-  /** 토너먼트 브래킷 1회 → 우승자 반환. */
-  function bracket(list) {
-    var cur = list;
-    while (cur.length > 1) {
-      var next = [];
-      for (var i = 0; i < cur.length; i += 2) {
-        if (i + 1 >= cur.length) { next.push(cur[i]); continue; }
-        next.push(compare(cur[i], cur[i + 1]) >= 0 ? cur[i] : cur[i + 1]);
-      }
-      cur = next;
-    }
-    return cur[0];
-  }
+  /** 월드컵(단판 토너먼트) — 우승자 한 명만 뽑는다. 순위는 만들지 않는다.
+   *  인원이 2의 거듭제곱이 아니면 먼저 예선을 치러 2의 거듭제곱으로 줄인다.
+   *  (예: 60명 → 예선 28경기 → 32강. 예선을 안 치른 4명은 부전승)
+   *  질문이 필요하면 NEED 에 지금 라운드 정보(round/matchNo/matchTotal)를 실어 던진다. */
+  function runCup() {
+    var round = { size: 0, no: 0, total: 0, prelim: false };
 
-  /** 우승자를 빼면서 브래킷을 K번 반복 → 상위 K명을 정확히 뽑는다. */
-  function runTopK(k) {
-    var pool = state.order.slice();
-    var out = [];
+    function play(a, b) {
+      round.no++;
+      NEED.round = {
+        size: round.size, no: round.no, total: round.total, prelim: round.prelim
+      };
+      return compare(a, b) >= 0 ? a : b;   // 월드컵엔 비김이 없다(0이면 앞쪽 승)
+    }
+
     try {
-      for (var i = 0; i < k && pool.length; i++) {
-        var w = bracket(pool);
-        out.push(w);
-        pool = pool.filter(function (x) { return x !== w; });
+      var cur = state.order.slice();
+      var pow = 1;
+      while (pow * 2 <= cur.length) pow *= 2;
+      var extra = cur.length - pow;          // 예선을 치러야 하는 경기 수
+
+      if (extra > 0) {
+        round.size = cur.length; round.no = 0; round.total = extra; round.prelim = true;
+        var after = [];
+        for (var i = 0; i < extra * 2; i += 2) after.push(play(cur[i], cur[i + 1]));
+        cur = after.concat(cur.slice(extra * 2));   // 나머지는 부전승
+      }
+
+      while (cur.length > 1) {
+        round.size = cur.length; round.no = 0;
+        round.total = cur.length / 2; round.prelim = false;
+        var next = [];
+        for (var j = 0; j < cur.length; j += 2) next.push(play(cur[j], cur[j + 1]));
+        cur = next;
       }
     } catch (e) {
       if (e !== NEED) throw e;
-      return { done: false, pair: NEED.pair };
+      return { done: false, pair: NEED.pair, round: NEED.round };
     }
-    return { done: true, list: out };
+    return { done: true, list: cur };
+  }
+
+  /** '16강' · '결승' 같은 라운드 이름. */
+  function roundLabel(r) {
+    if (!r) return '';
+    if (r.prelim) return '예선';
+    if (r.size === 2) return '결승';
+    if (r.size === 4) return '4강';
+    return r.size + '강';
   }
 
   function estTotal() { return estFor(state.mode, state.order.length); }
@@ -321,8 +349,7 @@
   }
 
   function step() {
-    var k = MODES[state.mode].k;
-    var r = k ? runTopK(k) : runSort();
+    var r = MODES[state.mode].cup ? runCup() : runSort();
     if (r.done) {
       state.result = r.list;
       renderResult();
@@ -330,7 +357,7 @@
       return;
     }
     state.pending = r.pair;
-    renderBattle(r.pair);
+    renderBattle(r.pair, r.round);
     show('battle');
   }
 
@@ -373,7 +400,7 @@
     return (h & 1) === 1;
   }
 
-  function renderBattle(pair) {
+  function renderBattle(pair, round) {
     state.swapped = isSwapped(pair);
     var first = state.swapped ? pair[1] : pair[0];
     var second = state.swapped ? pair[0] : pair[1];
@@ -382,10 +409,22 @@
     setSide('left', L);
     setSide('right', R);
 
-    var pct = Math.min(99, Math.round(state.answers.length / estTotal() * 100));
+    var cup = MODES[state.mode].cup;
+    $('btn-tie').hidden = cup;      // 월드컵엔 비김이 없다
+    var pct = Math.round(state.answers.length / estTotal() * 100);
+    if (!cup) pct = Math.min(99, pct);   // 병합정렬은 끝나는 지점을 정확히 못 잡는다
     $('progress-fill').style.width = pct + '%';
-    $('progress-pct').textContent = pct;
-    $('progress-cnt').textContent = state.answers.length + 1;
+
+    // 월드컵은 진행률 대신 라운드를 보여준다 ('16강 · 3/8경기')
+    if (cup) {
+      $('progress-txt').innerHTML = '<b>' + esc(roundLabel(round)) + '</b> · ' +
+        (round ? round.no + '/' + round.total + '경기' : '');
+      $('battle-q').textContent =
+        round && !round.prelim && round.size === 2 ? '결승! 최애는?' : '더 좋아하는 쪽은?';
+    } else {
+      $('progress-txt').innerHTML = '<b id="progress-pct">' + pct + '</b>% · ' +
+        '<span id="progress-cnt">' + (state.answers.length + 1) + '</span>번째 질문';
+    }
     $('btn-undo').disabled = state.answers.length === 0;
 
     // 다음에 나올 법한 카드 몇 장을 미리 받아둔다(모바일 체감 개선)
@@ -438,12 +477,31 @@
 
   function renderResult() {
     var rows = lastRows = rankedGroups();
+    var cup = MODES[state.mode].cup;
     var d = new Date();
     $('result-date').textContent =
       d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate());
     $('result-qcount').textContent = state.answers.length;
     $('result-mode').textContent = MODES[state.mode].label;
-    $('result-note').hidden = !MODES[state.mode].k;
+    $('result-note').hidden = !cup;
+    $('result-title').textContent = cup ? '내 뱅드림 최애 월드컵 우승' : '내 뱅드림 최애 순위';
+
+    // 월드컵은 우승자 한 명만 크게 띄운다(순위표·시상대 없음)
+    $('champion').hidden = !cup;
+    $('podium').hidden = cup;
+    $('rank-list').hidden = cup;
+    if (cup) {
+      var w = rows[0].ch;
+      var el = $('champion');
+      el.style.setProperty('--band', w.color);
+      el.innerHTML =
+        '<div class="c-crown">우승</div>' +
+        '<img src="' + w.img + '" alt="">' +
+        '<div class="c-name">' + esc(w.name) + '</div>' +
+        '<div class="c-band">' + esc(w.band) + '</div>';
+      clearSaved();
+      return;
+    }
 
     var podium = $('podium');
     podium.innerHTML = '';
@@ -483,6 +541,7 @@
 
   // ── 결과 이미지(캔버스 직접 그리기 — 외부 라이브러리 없음) ─────────────
   function buildCanvas() {
+    if (MODES[state.mode].cup) return buildCupCanvas();
     var rows = lastRows;
     var COLS = rows.length > 30 ? 3 : (rows.length > 12 ? 2 : 1);
     var PER = Math.ceil(rows.length / COLS);
@@ -573,6 +632,75 @@
     return cv;
   }
 
+  /** 월드컵 결과 이미지 — 우승자 한 명만 크게. */
+  function buildCupCanvas() {
+    var ch = lastRows[0].ch;
+    var W = 1080, H = 1080;
+    var cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    var g = cv.getContext('2d');
+
+    var bg = g.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#15121f');
+    bg.addColorStop(.5, '#0e0d14');
+    bg.addColorStop(1, '#1a1428');
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+    var glow = g.createRadialGradient(W / 2, 470, 0, W / 2, 470, 520);
+    glow.addColorStop(0, hexA(ch.color, .34));
+    glow.addColorStop(1, hexA(ch.color, 0));
+    g.fillStyle = glow; g.fillRect(0, 0, W, H);
+
+    g.textAlign = 'center';
+    g.fillStyle = '#9a94b0';
+    g.font = '700 26px "Noto Sans KR", sans-serif';
+    g.fillText('뱅드림 캐릭터 월드컵 · ' + cupTop(state.order.length) + '강', W / 2, 80);
+
+    g.fillStyle = '#ffd76a';
+    g.font = '900 44px "Noto Sans KR", sans-serif';
+    g.fillText('우승', W / 2, 148);
+
+    var im = ch._im;
+    if (im) {
+      var S = 560, x = (W - S) / 2, y = 195;
+      g.save();
+      roundRect(g, x, y, S, S, 28);
+      g.fillStyle = 'rgba(255,255,255,.06)';
+      g.fill();
+      g.strokeStyle = ch.color; g.lineWidth = 5; g.stroke();
+      g.clip();
+      g.drawImage(im, x, y, S, S);
+      g.restore();
+    }
+
+    g.fillStyle = '#ffffff';
+    g.font = '900 62px "Noto Sans KR", sans-serif';
+    g.fillText(ch.name, W / 2, 848);
+    g.fillStyle = ch.color;
+    g.font = '700 30px "Noto Sans KR", sans-serif';
+    g.fillText(ch.band, W / 2, 898);
+
+    var d = new Date();
+    g.fillStyle = '#8b85a3';
+    g.font = '500 22px "Noto Sans KR", sans-serif';
+    g.fillText(d.getFullYear() + '.' + pad(d.getMonth() + 1) + '.' + pad(d.getDate())
+      + ' · ' + state.order.length + '명 · ' + state.answers.length + '경기', W / 2, 968);
+
+    g.fillStyle = '#6f6a85';
+    g.font = '500 19px "Noto Sans KR", sans-serif';
+    g.fillText('뱅드림 캐릭터 소터 · bandorigall.github.io/others.github.io/sorter/',
+      W / 2, H - 38);
+    return cv;
+  }
+
+  /** '#rrggbb' + 알파 → rgba() 문자열. 밴드색을 그라데이션에 쓰려고. */
+  function hexA(hex, a) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex));
+    if (!m) return 'rgba(255,92,158,' + a + ')';
+    var n = parseInt(m[1], 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
   function roundRect(g, x, y, w, h, r) {
     g.beginPath();
     g.moveTo(x + r, y);
@@ -585,13 +713,15 @@
 
   /** 썸네일을 전부 로드한 뒤 캔버스를 만든다(그릴 때 비어 있으면 안 되므로). */
   function withImages() {
+    // 월드컵은 우승자를 크게 그리므로 썸네일 대신 카드 이미지를 쓴다
+    var big = MODES[state.mode].cup;
     return Promise.all(lastRows.map(function (r) {
-      if (r.ch._im) return Promise.resolve();
+      if (r.ch._im && r.ch._imBig === big) return Promise.resolve();
       return new Promise(function (res) {
         var im = new Image();
-        im.onload = function () { r.ch._im = im; res(); };
+        im.onload = function () { r.ch._im = im; r.ch._imBig = big; res(); };
         im.onerror = function () { res(); };   // 한 장 실패해도 나머지는 그린다
-        im.src = r.ch.thumb;
+        im.src = big ? r.ch.img : r.ch.thumb;
       });
     })).then(buildCanvas);
   }
@@ -635,6 +765,15 @@
   }
 
   function copyText() {
+    if (MODES[state.mode].cup) {
+      var w = lastRows[0].ch;
+      copyToClipboard('[뱅드림 캐릭터 월드컵 ' + cupTop(state.order.length) + '강]\n'
+        + '우승 — ' + w.name + ' (' + w.band + ')'
+        + '\n\nbandorigall.github.io/others.github.io/sorter/')
+        .then(function () { toast('결과를 복사했어요'); })
+        .catch(function () { toast('복사 실패'); });
+      return;
+    }
     var byRank = {};
     lastRows.forEach(function (r) {
       (byRank[r.rank] = byRank[r.rank] || []).push(r.ch.name);
@@ -704,7 +843,7 @@
 
     // 시작 화면: 1/2/3 또는 Enter 로 모드 선택
     if (!screens.intro.hidden) {
-      var modeKeys = { '1': 'top10', '2': 'top20', '3': 'full', 'Enter': 'full' };
+      var modeKeys = { '1': 'cup', '2': 'full', 'Enter': 'full' };
       var m = modeKeys[e.key];
       if (m) {
         var btn = document.querySelector('[data-mode="' + m + '"]');
@@ -716,7 +855,10 @@
     if (!screens.battle.hidden) {
       if (keyIs(e, 'left')) { e.preventDefault(); pick('left'); }
       else if (keyIs(e, 'right')) { e.preventDefault(); pick('right'); }
-      else if (keyIs(e, 'tie')) { e.preventDefault(); answer(0); }
+      else if (keyIs(e, 'tie')) {
+        e.preventDefault();
+        if (!MODES[state.mode].cup) answer(0);
+      }
       else if (keyIs(e, 'undo')) { e.preventDefault(); undo(); }
       return;
     }

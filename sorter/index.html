@@ -39,18 +39,13 @@
 
     <p class="mode-title">어디까지 정할까요?</p>
     <div class="mode-list">
-      <button class="mode" data-mode="top10" type="button">
-        <span class="m-name">TOP 10<kbd class="k">1</kbd></span>
+      <button class="mode" data-mode="cup" type="button">
+        <span class="m-name">월드컵<kbd class="k">1</kbd></span>
         <span class="m-q">계산 중…</span>
-        <span class="m-desc">10위까지 정확하게. 가볍게 하고 싶다면 이거.</span>
-      </button>
-      <button class="mode" data-mode="top20" type="button">
-        <span class="m-name">TOP 20<kbd class="k">2</kbd></span>
-        <span class="m-q">계산 중…</span>
-        <span class="m-desc">20위까지 정확하게.</span>
+        <span class="m-desc">토너먼트로 최애 한 명만. 32강 → 16강 → … → 결승, 순위는 안 나와요.</span>
       </button>
       <button class="mode recommended" data-mode="full" type="button">
-        <span class="m-name">전체 60위<em>추천</em></span>
+        <span class="m-name">전체 60위<em>추천</em><kbd class="k">2</kbd></span>
         <span class="m-q">계산 중…</span>
         <span class="m-desc">60명 전원 순위. 질문은 조금 더 늘지만 결과가 제일 알차요.</span>
       </button>
@@ -67,6 +62,8 @@
             · 비김 <kbd>Space</kbd> · 되돌리기 <kbd>Z</kbd></li>
         <li><b>전체</b> 모드에서는 비김을 쓸수록 질문이 확 줄어요.
             (60명 기준 비김 없이 280문항 → 10%면 225, 20%면 200)</li>
+        <li><b>월드컵</b>은 탈락 토너먼트라 비김이 없고, 순위 대신 <b>우승자 한 명</b>만 나와요.
+            (60명이면 예선 → 32강 → … → 결승, 딱 59경기)</li>
         <li>밴드 단위로 최애가 뚜렷할수록 질문이 더 빨리 끝나요.</li>
       </ul>
     </details>
@@ -78,9 +75,9 @@
   <header class="battle-head">
     <div class="progress-line">
       <div class="progress-bar"><i id="progress-fill"></i></div>
-      <span class="progress-txt"><b id="progress-pct">0</b>% · <span id="progress-cnt">0</span>번째 질문</span>
+      <span class="progress-txt" id="progress-txt"><b id="progress-pct">0</b>% · <span id="progress-cnt">0</span>번째 질문</span>
     </div>
-    <p class="battle-q">더 좋아하는 쪽은?</p>
+    <p class="battle-q" id="battle-q">더 좋아하는 쪽은?</p>
   </header>
 
   <div class="arena">
@@ -115,11 +112,12 @@
 <!-- ══════════ 결과 화면 ══════════ -->
 <section id="screen-result" class="screen" hidden>
   <header class="result-head">
-    <h2>내 뱅드림 최애 순위</h2>
+    <h2 id="result-title">내 뱅드림 최애 순위</h2>
     <p class="result-sub"><span id="result-mode"></span> · <span id="result-date"></span> · 질문 <span id="result-qcount">0</span>회</p>
-    <p class="result-note" id="result-note" hidden>선택한 등수까지만 정확하게 가려냈어요. 나머지 캐릭터는 순위를 매기지 않았습니다.</p>
+    <p class="result-note" id="result-note" hidden>월드컵은 우승자만 가려요. 전체 순위가 궁금하면 전체 모드로 해보세요.</p>
   </header>
 
+  <div class="champion" id="champion" hidden></div>
   <div class="podium" id="podium"></div>
   <ol class="rank-list" id="rank-list"></ol>
 
