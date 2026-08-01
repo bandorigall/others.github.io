@@ -442,6 +442,33 @@ body:has(#screen-battle:not([hidden])) .site-footer { display: none; }
 .rank-list .r-name { font-weight: 700; font-size: .9rem; }
 .rank-list .r-band { margin-left: auto; font-size: .7rem; color: var(--text-muted); }
 
+/* ── 순위 차등 강조 (1~3위 / 4~10위 / 나머지) ───────────────────────── */
+.rank-list .tier-sep {
+  grid-column: 1 / -1;
+  background: none; border: 0; padding: 10px 2px 2px;
+  font-size: .72rem; font-weight: 900; letter-spacing: .08em;
+  color: var(--text-muted);
+}
+.rank-list .tier-sep-1 { color: #ffd76a; padding-top: 2px; }
+.rank-list .tier-sep-2 { color: #cfc7ee; }
+
+.rank-list li.tier-1 {
+  padding: 10px 12px; border-width: 2px; border-left-width: 6px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, #ffd76a 35%, transparent) inset;
+}
+.rank-list li.tier-1 .r-num { font-size: 1.15rem; color: #ffd76a; width: 40px; }
+.rank-list li.tier-1 img { width: 56px; height: 56px; }
+.rank-list li.tier-1 .r-name { font-size: 1.05rem; font-weight: 900; }
+
+.rank-list li.tier-2 { padding: 8px 11px; border-left-width: 5px; }
+.rank-list li.tier-2 .r-num { font-size: 1rem; color: var(--text); }
+.rank-list li.tier-2 img { width: 46px; height: 46px; }
+.rank-list li.tier-2 .r-name { font-size: .96rem; font-weight: 800; }
+
+.rank-list li.tier-3 { opacity: .82; }
+/* 2단 배치일 때도 1~3위는 한 줄을 통째로 쓴다 */
+.rank-list li.tier-1 { grid-column: 1 / -1; }
+
 .result-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .result-actions .btn { flex: 1 1 auto; min-width: 140px; }
 
