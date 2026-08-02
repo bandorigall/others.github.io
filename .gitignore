@@ -1,0 +1,9 @@
+# API 키 (공개 리포이므로 절대 커밋 금지)
+.env
+*.env
+
+# 픽토그램 생성 중간 산출물 (final/ 만 배포에 사용)
+kimchikura/heatsafety/out/
+kimchikura/heatsafety/norm/
+__pycache__/
+*.pyc

@@ -1,0 +1,37 @@
+{
+  "style_suffix": "ISO 7001 public information safety sign pictogram, exactly like an emergency exit running-man sign. Bold solid flat silhouette shapes on a plain flat white background. Absolutely no gradients, no shading, no texture, no perspective, no facial features, no text, no letters, no numbers, no logos, no border frame, no drop shadow. Extremely simplified geometric human figure with rounded joints, thick uniform mass, high contrast, instantly readable at 5 meters distance and still readable when shrunk to a thumbnail. Flat vector look, single centered subject, generous white margin.",
+  "panels": [
+    {
+      "id": "01_hydrate",
+      "ko": "물을 자주 마시세요",
+      "prompt": "On a pure white background: a pictogram of a simplified black human figure standing upright and drinking from a tall cylindrical sports water bottle held vertically straight up against its mouth. The bottle is a plain solid blue cylinder with a small cap, held upright, NOT tilted sideways, NOT a wine bottle, NOT a beer bottle, no neck, no shoulders on the bottle. Three solid blue droplet shapes float beside the figure. In the upper right corner a small solid black sun symbol with straight triangular rays. Figure solid black, bottle and droplets solid blue."
+    },
+    {
+      "id": "02_shade_rest",
+      "ko": "그늘·실내에서 쉬세요",
+      "prompt": "On a pure white background: a pictogram of a simplified black human figure sitting and resting under a large solid blue parasol shape that covers it completely. In the upper corner outside the parasol, a solid black sun symbol with straight triangular rays. Figure solid black, parasol solid blue. The background must be plain pure white, not dark, not black, not grey. Do not add any glow, halo, light rays, sky, ground, or scenery."
+    },
+    {
+      "id": "03_warning_signs",
+      "ko": "어지러움·메스꺼움은 위험 신호",
+      "prompt": "A pictogram of a simplified human figure staggering off balance, body leaning sideways, one hand raised to its head. Two large sweat droplet shapes fly off the head. The entire figure is solid bright red to signal overheating and danger. Beside the figure, one bold solid red exclamation mark shape. In the upper corner a small solid red sun symbol with straight triangular rays. Everything red on white, no black."
+    },
+    {
+      "id": "04_help_call",
+      "ko": "쓰러지면 그늘로 옮기고 119",
+      "shade": true,
+      "prompt": "On a pure white background: a pictogram showing exactly two simplified human figures in clear side view. One figure lies flat on its back on the ground, drawn in solid red, its head clearly attached to its body. A second figure, drawn in solid black, kneels beside it holding a solid blue telephone handset to its ear. Nothing else in the image: no umbrella, no parasol, no sun, no ground line, no props. Both figures fully visible, side by side, not overlapping."
+    }
+  ],
+
+  "kit_title": "나올 때 챙기세요",
+  "kit_style": "Single object icon, ISO 7001 public information sign style. One solid flat silhouette centered on a pure white background. No gradients, no shading, no outline, no texture, no perspective, no text, no letters, no numbers, no logos, no border, no drop shadow, no hand holding it, no person. Simple bold geometric shape, instantly recognizable as a thumbnail. Flat vector look, generous white margin.",
+  "kit": [
+    { "id": "k1_water",     "ko": "생수",      "prompt": "A tall plain cylindrical sports water bottle standing upright with a small screw cap, solid blue silhouette." },
+    { "id": "k2_umbrella",  "ko": "양산·우산",  "prompt": "An open umbrella seen from the side: a wide smooth dome canopy on top with a straight vertical shaft below it ending in a small curved J-shaped handle. Solid blue silhouette, fully opened, symmetrical." },
+    { "id": "k3_sunscreen", "ko": "선크림",    "prompt": "A sunscreen squeeze tube standing upright with a flat crimped bottom and a small cap on top, solid black silhouette." },
+    { "id": "k4_cap",       "ko": "모자",      "prompt": "A baseball cap seen from the side with a long curved brim pointing left, solid black silhouette." },
+    { "id": "k5_fan",       "ko": "휴대용 선풍기", "prompt": "A small handheld portable electric fan with a round circular head and a straight vertical handle, solid black silhouette." },
+    { "id": "k6_towel",     "ko": "쿨링타월",  "prompt": "A neatly folded rectangular towel stack seen from the front, solid blue silhouette." }
+  ]
+}
