@@ -848,16 +848,36 @@ tr:last-child td { border-bottom: none; }
 .route-step.move .route-node { gap: 3px; }
 
 /* ---------- 폭염 안전 안내 ---------- */
+/* 다른 섹션과 같은 모양이면 '일반 정보'로 읽혀 그냥 지나친다.
+   붉은 톤 + 경고 배지로 "종류가 다른 정보"임을 먼저 알린다. */
+.heat-section { position: relative; }
+
+.heat-eyebrow {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #ff9aa4;
+  background: rgba(224, 75, 90, .16);
+  border: 1px solid rgba(224, 75, 90, .5);
+  border-radius: 999px;
+  padding: 3px 14px;
+  margin-bottom: 10px;
+}
+.heat-subtitle { border-bottom-color: rgba(224, 75, 90, .35); }
+
 .heat-card {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 4px solid #e04b5a;
+  background:
+    linear-gradient(180deg, rgba(224, 75, 90, .13), rgba(224, 75, 90, .04) 40%, transparent),
+    var(--surface);
+  border: 1px solid rgba(224, 75, 90, .42);
+  border-left: 5px solid #e04b5a;
   border-radius: var(--radius);
   padding: 18px 20px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 18px rgba(224, 75, 90, .14), var(--shadow);
 }
 .heat-body { flex: 1 1 320px; min-width: 0; }
 
