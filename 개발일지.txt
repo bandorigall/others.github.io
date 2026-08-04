@@ -257,3 +257,5 @@ others — 개발일지
   [관련 파일]
     others/kimchikura/fan.html      .share-list 섹션
     others/kimchikura/css/style.css .share-* 스타일
+    - (추가) 현수막+스티커 나눔 / 자체제작 띠부씰 카드에도 같은 방식 썸네일 부착.
+      .card-media(flex) + .share-thumb.lg(140px, 모바일 100px) 사용. 커밋 ab90636.
