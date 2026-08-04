@@ -470,6 +470,54 @@ tr:last-child td { border-bottom: none; }
   color: var(--accent-strong);
 }
 
+/* ---------- 나눔 목록 (썸네일 + 설명 + 원글 링크) ---------- */
+.share-list { list-style: none; margin-top: 10px; }
+.share-list li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.share-list li:first-child { border-top: none; }
+.share-thumb {
+  position: relative;
+  flex: none;
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(127, 127, 127, .12);
+}
+.share-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 이미지가 안 뜰 때(핫링크 차단 등)만 '사진 보기' 문구 노출 */
+.share-thumb-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: .78rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+.share-thumb.noimg .share-thumb-fallback { display: flex; }
+.share-body { flex: 1; min-width: 0; }
+.share-body h4 { font-size: .98rem; margin-bottom: 4px; color: var(--accent-strong); }
+.share-body p { font-size: .88rem; margin-bottom: 8px; }
+.share-date {
+  font-size: .72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+.btn.sm { padding: 5px 12px; font-size: .78rem; }
+@media (max-width: 480px) {
+  .share-thumb { width: 72px; height: 72px; }
+}
+
 /* ---------- 지도 임베드 ---------- */
 .map-embed {
   position: relative;
