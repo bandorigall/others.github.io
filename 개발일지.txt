@@ -235,3 +235,25 @@ others — 개발일지
 
   [관련 파일]
     others/kimchikura/fan.html   나눔 안내 섹션
+
+■ kimchikura — 개인 나눔 목록 카드화 (2026-08-04, 위 항목 후속)
+  [현재 상태]
+    - fan.html 「갤러리 개인 나눔」의 info-list + 하단 btn-row 묶음을
+      항목별 행(.share-list li)으로 재구성: 썸네일 / 제목·날짜·설명 / "원글 보기" 버튼.
+      → 링크가 항목마다 붙어 어느 글이 어느 물품인지 대응됨 (기존엔 버튼이 따로 몰려 있었음).
+    - 썸네일은 DC 원글 og:image 를 referrerpolicy="no-referrer" 로 직접 로드,
+      onerror 시 부모에 .noimg 붙여 "사진 보기" 텍스트 링크로 폴백(이미지 클릭=원본 사진).
+    - css/style.css 에 .share-list/.share-thumb/.share-body/.btn.sm 추가(지도 임베드 섹션 앞).
+    - 커밋/푸시 완료 (54e0de5).
+
+  [다음 할 일]
+    - 배포 후 실제로 DC 이미지가 뜨는지(핫링크 차단 여부) 확인. 전부 막히면
+      썸네일을 로컬 imgs/ 로 내려받아 교체하는 편이 나음.
+
+  [결정사항]
+    - 나눔 항목 추가 시 .share-list 에 li 한 덩어리를 넣는다(하단 버튼 나열로 되돌리지 말 것).
+    - 썸네일 URL 은 원글 HTML 의 og:image 를 그대로 사용.
+
+  [관련 파일]
+    others/kimchikura/fan.html      .share-list 섹션
+    others/kimchikura/css/style.css .share-* 스타일

@@ -504,6 +504,14 @@ tr:last-child td { border-bottom: none; }
   text-align: center;
 }
 .share-thumb.noimg .share-thumb-fallback { display: flex; }
+.share-thumb.lg { width: 140px; height: 140px; }
+/* 카드 안에서 썸네일 + 본문 나란히 */
+.card-media {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 10px;
+}
 .share-body { flex: 1; min-width: 0; }
 .share-body h4 { font-size: .98rem; margin-bottom: 4px; color: var(--accent-strong); }
 .share-body p { font-size: .88rem; margin-bottom: 8px; }
@@ -516,6 +524,7 @@ tr:last-child td { border-bottom: none; }
 .btn.sm { padding: 5px 12px; font-size: .78rem; }
 @media (max-width: 480px) {
   .share-thumb { width: 72px; height: 72px; }
+  .share-thumb.lg { width: 100px; height: 100px; }
 }
 
 /* ---------- 지도 임베드 ---------- */
