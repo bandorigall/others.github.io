@@ -31,7 +31,7 @@ def run(script):
         sys.exit(f"[err] {script} 실패")
 
 
-def patch_html(tmax, feels, rain):
+def patch_html(tmax, feels, rain, humid):
     html = INDEX.read_text(encoding="utf-8")
     today = dt.date.today()
     before = html
@@ -39,7 +39,7 @@ def patch_html(tmax, feels, rain):
     html = re.sub(r'(<span class="heat-temp-num">)\d+(</span>)',
                   rf'\g<1>{tmax:.0f}\g<2>', html)
     html = re.sub(r'(<span class="heat-temp-sub">)[^<]*(</span>)',
-                  rf'\g<1>체감 {feels:.0f}℃ · 강수확률 {rain}%\g<2>', html)
+                  rf'\g<1>체감 {feels:.0f}℃ · 습도 {humid:.0f}% · 강수확률 {rain}%\g<2>', html)
     html = re.sub(r'※ 기온은 \d+월 \d+일 기준 예보이며',
                   f'※ 기온은 {today.month}월 {today.day}일 기준 예보이며', html)
 
@@ -47,7 +47,7 @@ def patch_html(tmax, feels, rain):
         print("[i] index.html 변경 없음 (숫자가 이미 최신이거나 마크업이 바뀜)")
     else:
         INDEX.write_text(html, encoding="utf-8")
-        print(f"[ok] index.html 갱신: 최고 {tmax:.0f}℃ / 체감 {feels:.0f}℃ / 강수 {rain}%")
+        print(f"[ok] index.html 갱신: 최고 {tmax:.0f}℃ / 체감 {feels:.0f}℃ / 습도 {humid:.0f}% / 강수 {rain}%")
 
 
 def main():
@@ -55,14 +55,14 @@ def main():
     import poster
 
     try:
-        tmax, feels, rain = poster.fetch_forecast()
+        tmax, feels, rain, humid = poster.fetch_forecast()
     except Exception as e:
         sys.exit(f"[err] 예보 수신 실패: {e}")
-    print(f"[예보] 최고 {tmax}℃ / 체감 {feels}℃ / 강수 {rain}%")
+    print(f"[예보] 최고 {tmax}℃ / 체감 {feels}℃ / 습도 {humid}% / 강수 {rain}%")
 
     run("poster.py")
     run("webexport.py")
-    patch_html(tmax, feels, rain)
+    patch_html(tmax, feels, rain, humid)
     print("\n완료. 변경사항을 커밋·푸시하세요.")
 
 
