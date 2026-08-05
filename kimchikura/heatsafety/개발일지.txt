@@ -22,6 +22,12 @@
   → 준비물의 "양산·우산"이 결과적으로 정답이 됨(우산 문구 유지·강조 필요할 수 있음).
   → 비 오면 열중증 리스크는 내려가지만 우비·방수 관련 안내가 없음. 공연 직전 재확인 시 검토.
 
+- (2026-08-05) update.py 재실행. 최고 33.1℃ / 체감 38.9℃ (전일과 사실상 동일),
+  ★강수확률 93% → 88%★ (여전히 높음). poster.png·웹경량본·index.html 동기화 후 푸시.
+  → 우산 문구 유지가 여전히 정답. 우비/방수 안내는 이번에도 미추가(공연 직전 최종 판단).
+  ※ update.py는 콘솔 출력에 ℃가 있어 cp949에서 UnicodeEncodeError로 죽는다.
+    반드시 `PYTHONIOENCODING=utf-8 python update.py` 로 실행할 것.
+
 [다음할일]
 ★게시/공연 직전에 반드시: python others/kimchikura/heatsafety/update.py → 커밋·푸시
   (예보 재수신 → poster.png → 웹 경량본 → index.html 숫자까지 한 번에 동기화. 무료)
