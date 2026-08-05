@@ -38,13 +38,15 @@ def fetch_forecast():
         "https://api.open-meteo.com/v1/forecast",
         params={
             "latitude": LAT, "longitude": LON,
-            "daily": "temperature_2m_max,apparent_temperature_max,precipitation_probability_max",
+            "daily": ("temperature_2m_max,apparent_temperature_max,"
+                      "precipitation_probability_max,relative_humidity_2m_mean"),
             "timezone": "Asia/Seoul",
             "start_date": EVENT_DATE, "end_date": EVENT_DATE,
         }, timeout=30)
     r.raise_for_status()
     d = r.json()["daily"]
-    return d["temperature_2m_max"][0], d["apparent_temperature_max"][0], d["precipitation_probability_max"][0]
+    return (d["temperature_2m_max"][0], d["apparent_temperature_max"][0],
+            d["precipitation_probability_max"][0], d["relative_humidity_2m_mean"][0])
 
 
 def font(size):
@@ -74,14 +76,15 @@ def main():
     ap.add_argument("--tmax", type=float)
     ap.add_argument("--feels", type=float)
     ap.add_argument("--rain", type=int)
+    ap.add_argument("--humid", type=int)
     args = ap.parse_args()
 
-    tmax, feels, rain = args.tmax, args.feels, args.rain
+    tmax, feels, rain, humid = args.tmax, args.feels, args.rain, args.humid
     stamp = dt.date.today()
     if not args.no_fetch and tmax is None:
         try:
-            tmax, feels, rain = fetch_forecast()
-            print(f"[예보] 최고 {tmax}C / 체감 {feels}C / 강수 {rain}%")
+            tmax, feels, rain, humid = fetch_forecast()
+            print(f"[예보] 최고 {tmax}C / 체감 {feels}C / 강수 {rain}% / 습도 {humid}%")
         except Exception as e:
             print(f"[warn] 예보 수신 실패({e}) - --tmax/--feels 로 직접 넣으세요")
             return
@@ -131,7 +134,11 @@ def main():
     big = f"당일 예상 최고 {tmax:.0f}℃"
     centered(d, big, fit(d, big, content_w * 0.9, int(weather_h * 0.42)),
              W / 2, y + weather_h * 0.36, "white")
-    small = f"체감 {feels:.0f}℃" + (f"  ·  강수확률 {rain}%" if rain is not None else "")
+    small = f"체감 {feels:.0f}℃"
+    if humid is not None:
+        small += f"  ·  습도 {humid:.0f}%"
+    if rain is not None:
+        small += f"  ·  강수확률 {rain}%"
     centered(d, small, fit(d, small, content_w * 0.8, int(weather_h * 0.2)),
              W / 2, y + weather_h * 0.74, "white")
     y += weather_h + GAP

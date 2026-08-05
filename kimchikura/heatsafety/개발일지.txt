@@ -28,6 +28,11 @@
   ※ update.py는 콘솔 출력에 ℃가 있어 cp949에서 UnicodeEncodeError로 죽는다.
     반드시 `PYTHONIOENCODING=utf-8 python update.py` 로 실행할 것.
 
+- (2026-08-05) ★습도 추가★ Open-Meteo daily에 relative_humidity_2m_mean 추가 수신.
+  poster.fetch_forecast()가 4-튜플(tmax, feels, rain, humid) 반환으로 변경 → update.py도 같이 수정.
+  포스터 붉은 띠 둘째 줄 = "체감 39℃ · 습도 77% · 강수확률 88%", index.html heat-temp-sub도 동일 포맷.
+  poster.py --humid 로 수동 지정 가능. 현재값 습도 77%(체감 39℃의 주범).
+
 [다음할일]
 ★게시/공연 직전에 반드시: python others/kimchikura/heatsafety/update.py → 커밋·푸시
   (예보 재수신 → poster.png → 웹 경량본 → index.html 숫자까지 한 번에 동기화. 무료)
