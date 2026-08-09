@@ -1032,3 +1032,114 @@ tr:last-child td { border-bottom: none; }
 
 /* 라이트박스가 열려 있는 동안 nav.js 플로팅 메뉴를 감춘다 (z-index 최대값이라 위로 뚫고 나옴) */
 body.lb-open #site-nav { display: none; }
+
+/* ── 세트리스트 (index) ───────────────────────── */
+.setlist-order {
+  font-size: .82rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.setlist {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.setlist > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.setlist > summary::-webkit-details-marker { display: none; }
+.setlist > summary:hover { background: var(--surface-2); }
+.setlist[open] > summary {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.setlist-no {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: .75rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.setlist-artist {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: .98rem;
+}
+.setlist-artist em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: .78rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+.setlist-count {
+  flex-shrink: 0;
+  font-size: .75rem;
+  color: var(--text-muted);
+}
+.setlist > summary::after {
+  content: '▾';
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: .8rem;
+  transition: transform .15s ease;
+}
+.setlist[open] > summary::after { transform: rotate(180deg); }
+
+.setlist-songs {
+  list-style: none;
+  counter-reset: setlist;
+  padding: 6px 16px 12px;
+  margin: 0;
+}
+.setlist-songs li {
+  counter-increment: setlist;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+}
+.setlist-songs li:first-child { border-top: none; }
+.setlist-songs li::before {
+  content: counter(setlist);
+  flex-shrink: 0;
+  width: 22px;
+  color: var(--text-muted);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+}
+.setlist-songs.unnum li::before { content: '·'; }
+.setlist-songs .s-title { font-size: .92rem; }
+.setlist-songs .s-note {
+  font-size: .76rem;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+.setlist-note {
+  font-size: .78rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  padding: 0 16px 12px;
+}
+.setlist-section > .setlist-note { padding-left: 0; padding-right: 0; }
