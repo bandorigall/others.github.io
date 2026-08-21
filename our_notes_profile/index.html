@@ -43,6 +43,15 @@ html,body{height:100%;width:100%;font-family:'Noto Serif KR',serif;background:#1
 #back-btn:hover{border-color:var(--band-primary);color:var(--band-primary)}
 #back-btn.visible{display:flex}
 
+#info-link{
+  display:flex;align-items:center;flex-shrink:0;
+  padding:4px 12px;border-radius:14px;text-decoration:none;
+  border:1.5px solid var(--band-primary);background:transparent;color:var(--band-primary);
+  font-family:'M PLUS Rounded 1c',sans-serif;font-size:12px;font-weight:700;white-space:nowrap;
+  transition:background var(--dur),color var(--dur),border-color var(--dur);
+}
+#info-link:hover{background:var(--band-primary);color:#fff}
+
 #member-nav{display:flex;gap:6px;flex:1;overflow-x:auto;scrollbar-width:none;align-items:center}
 #member-nav::-webkit-scrollbar{display:none}
 .member-tab{
@@ -281,6 +290,7 @@ html,body{height:100%;width:100%;font-family:'Noto Serif KR',serif;background:#1
   <div id="header">
     <button id="back-btn" onclick="goBack()">&#8592; 뒤로</button>
     <div class="logo-text">BanG Dream! <span>Our Notes</span></div>
+    <a id="info-link" href="info.html">게임 정보</a>
     <div id="member-nav"></div>
   </div>
 
@@ -976,6 +986,5 @@ function closeImgModal(e) {
 applyTheme('MyGO!!!!!');
 initBandSelector();
 </script>
-<script src="nav.js"></script>
 </body>
 </html>
