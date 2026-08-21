@@ -366,7 +366,7 @@ def build(bands):
 
     # top bar
     w('<div id="top"><div class="wrap">')
-    w('<a class="home" href="index.html">&#8592; 캐릭터 프로필</a>')
+    w('<a class="home" href="index.html">&#8592; 아워노츠</a>')
     w('<nav>'
       '<a href="#tl">타임라인</a><a href="#bands">5밴드</a><a href="#sys">시스템</a>'
       '<a href="#music">수록곡</a><a href="#pre">사전등록</a>'
