@@ -1,0 +1,64 @@
+
+■ 아워노츠 종합 자료 아티팩트 (2026-08-21)
+  [현재 상태]
+    - 공식 사이트(bang-dream-on.bushimo.jp)의 News/System/Music/Movie/Pre-register/
+      character/{mygo,avemujica,yumemita,millsage,ikka-dumb-rock} 전부 curl로 수집.
+    - 공식 X: @bang_dream_on(JP, 126,726F) / @bangdreamon_KR(KR, 13,515F).
+      syndication 타임라인은 entries 빈 배열 → 셀레니움 비headless로 최신 5~7개만 확보.
+      계정 메타는 api.fxtwitter.com/<계정> 한 방으로 취득(레이트리밋 없음).
+    - 방갤 검색(s_type=search_subject_memo, kw=아워노츠) + search_pos 100k 스텝 스캔으로
+      104건 확보(2026-02~08). search_pos 5.8M 이하는 0행 = 인덱싱 하한.
+    - 산출물: 이 폴더의 info.html (자료실 페이지). 생성기 generate_info.py.
+      * 데이터는 generate_info.py 상단 상수(SPECS/TIMELINE/SYSTEM/MUSIC/REWARD/CAMPAIGN/
+        CHANNELS/TOPICS/QUOTES) + our_notes.csv + gall_list.txt(글번호|시각|제목|조회|추천).
+      * 밴드색/로고/순서는 generate_html.py 에서 import — 색상표 이중관리 안 함.
+      * 캐릭터 초상은 CSV '라이브복' 원격 URL 직접 사용(웹페이지라 CSP 제약 없음).
+      * index.html 헤더에 '자료실' 버튼(#info-link) 추가 → info.html, info.html 좌상단에서 복귀.
+      * run.bat 이 generate_html.py + generate_info.py 둘 다 실행하도록 변경.
+      (같은 내용의 1회성 아티팩트: claude.ai/code/artifact/819542ea-059b-412c-be51-5ba5026fcf81)
+  [결정사항]
+    - 밴드 테마색은 generate_html.py 의 BAND 색상표를 그대로 재사용(단일 출처).
+    - 아티팩트는 CSP상 외부 이미지 불가 → 초상은 반드시 리사이즈 후 data-URI.
+  [다음 할 일]
+    - 원하면 build.py 를 이 폴더로 옮겨 others 사이트의 정적 페이지로도 배포.
+
+■ info.html 정보 전용으로 정리 (2026-08-21, 사용자 지시)
+  [결정사항 · 금지]
+    ★방갤 여론/글 목록 섹션은 넣지 말 것. gall_list.txt 도 폴더에서 제거함.
+    ★제목에 미사여구 금지. 페이지 타이틀은 "BanG Dream! Our Notes 정보", h1 도 타이틀 그대로.
+    ★일본어는 '공식 명칭'만. 읽는 법 카타카나(マイゴ/アヴェムジカ/ミルサージュ/いっかだんらん) 금지.
+      → 결과적으로 밴드 일본어 표기는 夢限大みゅーたいぷ, 一家Dumb Rock! 둘만 남음.
+  [현재 상태]
+    - 섹션: 타임라인 / 5밴드 / 시스템 / 수록곡 / 사전등록.
+    - 수록곡 7곡: 青春コンプレックス(오리지널), ホワイトノイズ(Official髭男dism),
+      残酷な天使のテーゼ, オリオンをなぞる, ロウワー, unravel(TK from 凛として時雨), イケナイ太陽.
+    - index.html 헤더 버튼 라벨 '자료실' → '게임 정보'.
+
+■ 중복 제거 + 수록곡 전면 보강 (2026-08-21)
+  [결정사항]
+    ★info.html 에 멤버 개별 카드 만들지 말 것 — index.html(캐릭터 프로필)과 100% 중복.
+      밴드 섹션은 로고 + 사운드 소개(공식 Band 페이지 텍스트) + 라인업 한 줄까지만.
+      멤버 상세는 index.html 로 링크만 건다.
+  [현재 상태]
+    - 수록곡 = 커버 14곡 + 오리지널 곡 수/곡명 표. 출처는 나무위키 '뱅드림! 아워 노트/수록곡'
+      (2026-06 CBT 실측 기준) + CBT 이후 공식 X 발표분(ホワイトノイズ, unravel)에 'CBT 이후 공개' 태그.
+    - ★수정: 青春コンプレックス 는 MyGO 오리지널이 아니라 결속 밴드(봇치 더 록! 1기 OP) 커버다.
+      공식 Music 페이지엔 커버 5곡(제1탄)만 실려 있어 이걸 오리지널로 오독했었음.
+    - 커버곡 밴드별: MyGO 4 / Ave Mujica 3 / 뮤타입 2 / millsage 3 / 일가 2.
+  [관련 파일]
+    generate_info.py 의 MUSIC(커버) · ORIGINAL(오리지널) 상수만 고치면 표가 갱신됨.
+
+■ 밴드별 공식 영상 반영 (2026-08-21)
+  [현재 상태]
+    - 각 밴드 카드 아래 유튜브 썸네일 스트립(.vids). 밴드 위 공통 스트립엔 티저 PV 2편.
+    - 총 16편: 티저 PV(vCtvCf61uUQ) / 티저 PV 제2탄(liul_-0nev4),
+      게임 소개 CM 2편(MyGO·Ave만), 애니메이션 CM 5편, 밴드 소개 영상 5편,
+      스토리 소개 트레일러 2편(millsage·일가 — 신규 2밴드만 존재).
+  [수집 방법 — 재활용]
+    - 공식 /movie/ 와 /movie/page/2/ 의 `<div class="js-youtube" data-id="...">` 에 영상 ID가 박혀 있다.
+      iframe·youtube URL 은 HTML 에 없으니 정규식으로 youtube.com 찾으면 0건 나옴. data-id 를 볼 것.
+    - 사이트 Movie 페이지엔 스토리 트레일러가 아직 없다 → 공식 유튜브 채널
+      UCN-bFIdJM0gQlgX7h6LKcZA 의 /search?query=<키워드> 를 curl 로 받아
+      ytInitialData 에서 videoId+title 재귀 수집(신형 lockupViewModel 구조라 videoRenderer 는 0건).
+  [관련 파일]
+    generate_info.py 의 BAND_MOVIES / PV 상수만 고치면 갱신됨.
