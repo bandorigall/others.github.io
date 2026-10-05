@@ -7,7 +7,8 @@
     "합동·프로젝트·페스 공연은 MyGO!!!!! 담당 파트만 setlist에 기록",
     "capacity는 회장 공칭 최대치(스탠딩/지정 배치에 따라 실제 상이)",
     "6th와 8th는 동일 회장(武蔵野の森総合スポーツプラザ→2025.5 京王アリーナTOKYO 개명)",
-    "2026-07-14 전수 대조: 각 공연 setlist를 공식 개최보고(prtimes)·공식 플레이리스트·anisama 공식·setlist.fm으로 재검증하고 각 항목에 source 추가. 오류 수정: 아니사마2024(날짜·곡), LisAni2025(곡 전부), 6th상하이(2곡 누락), Avoid Note(앙코르 2곡 누락)"
+    "2026-07-14 전수 대조: 각 공연 setlist를 공식 개최보고(prtimes)·공식 플레이리스트·anisama 공식·setlist.fm으로 재검증하고 각 항목에 source 추가. 오류 수정: 아니사마2024(날짜·곡), LisAni2025(곡 전부), 6th상하이(2곡 누락), Avoid Note(앙코르 2곡 누락)",
+    "2026-10-05: 9th LIVE 요코하마 2일 세트리스트(prtimes 개최보고) 반영, 고베 再景編(11/14-15) 추가. LuckyFes'26 세트리스트는 공식 자료 미확보로 upcoming 유지"
   ],
   "sources": [
     "https://bang-dream.com/events/?artist=mygo",
@@ -1358,10 +1359,32 @@
       "venue": "ぴあアリーナMM",
       "city": "요코하마",
       "capacity": 12000,
-      "setlist_status": "upcoming",
-      "setlist": [],
-      "encore": [],
-      "weather": null
+      "setlist_status": "done",
+      "setlist": [
+        "迷路日々",
+        "明弦音",
+        "残痕字",
+        "掌心正銘",
+        "砂寸奏",
+        "静降想",
+        "エガクミライ",
+        "輪符雨",
+        "処救生",
+        "歌いましょう鳴らしましょう",
+        "証命讃歌",
+        "聿日箋秋",
+        "迷星叫",
+        "端程山",
+        "羅永線"
+      ],
+      "encore": [
+        "影色舞",
+        "往欄印"
+      ],
+      "weather": null,
+      "source": "https://prtimes.jp/main/html/rd/p/000009627.000014827.html",
+      "setlist_note": "오프닝 액트 millsage(カーネーションの咲く日に／起死開戦) 제외",
+      "milestone": "「羅永線」 첫 공개, 「残痕字」「証命讃歌」 라이브 초연"
     },
     {
       "no": 9,
@@ -1372,10 +1395,32 @@
       "venue": "ぴあアリーナMM",
       "city": "요코하마",
       "capacity": 12000,
-      "setlist_status": "upcoming",
-      "setlist": [],
-      "encore": [],
-      "weather": null
+      "setlist_status": "done",
+      "setlist": [
+        "孤壊牢",
+        "明弦音",
+        "処救生",
+        "歌いましょう鳴らしましょう",
+        "証命讃歌",
+        "輪符雨",
+        "エガクミライ",
+        "静降想",
+        "残痕字",
+        "掌心正銘",
+        "砂寸奏",
+        "聿日箋秋",
+        "迷星叫",
+        "壱雫空",
+        "羅永線"
+      ],
+      "encore": [
+        "影色舞",
+        "音一会"
+      ],
+      "weather": null,
+      "source": "https://prtimes.jp/main/html/rd/p/000009627.000014827.html",
+      "setlist_note": "오프닝 액트 一家Dumb Rock!(Keep on Riddim／ホーミー・タイッ！！) 제외",
+      "milestone": "「羅永線」 첫 공개, 「残痕字」「証命讃歌」 라이브 초연"
     },
     {
       "no": null,
@@ -1393,6 +1438,36 @@
       "display": {
         "city": "이바라키"
       }
+    },
+    {
+      "no": 9,
+      "type": "solo",
+      "title": "9th LIVE 神戸再景編 Day1",
+      "subtitle": "つなぎ目の向こうに",
+      "date": "2026-11-14",
+      "venue": "ワールド記念ホール",
+      "city": "고베",
+      "capacity": null,
+      "setlist_status": "upcoming",
+      "source": "https://bang-dream.com/events/mygo_9th_hyogo/",
+      "setlist": [],
+      "encore": [],
+      "weather": null
+    },
+    {
+      "no": 9,
+      "type": "solo",
+      "title": "9th LIVE 神戸再景編 Day2",
+      "subtitle": "つなぎ目の向こうに",
+      "date": "2026-11-15",
+      "venue": "ワールド記念ホール",
+      "city": "고베",
+      "capacity": null,
+      "setlist_status": "upcoming",
+      "source": "https://bang-dream.com/events/mygo_9th_hyogo/",
+      "setlist": [],
+      "encore": [],
+      "weather": null
     }
   ],
   "schema": {
