@@ -91,15 +91,26 @@
     floatWrap.innerHTML = FLOAT_HTML;
     document.body.appendChild(floatWrap.firstElementChild);
 
+    var disclaimer = document.createElement("p");
+    disclaimer.className = "site-disclaimer";
+    disclaimer.innerHTML =
+      "이 사이트는 디시인사이드 BanG Dream! 마이너 갤러리 유저가 만든 비공식 팬 안내 페이지이며, " +
+      "WONDERLIVET 주최사(LIVET·원더로크), 부시로드, 예매처, 셔틀 운영사와 관계가 없습니다.<br>" +
+      "일정·티켓·입장·교통 정보는 바뀔 수 있으니 관람 전 반드시 공식 안내와 예매처 공지를 확인하세요. " +
+      "대표곡·세트리스트는 예습용 예상이며 실제 공연과 다를 수 있습니다.<br>" +
+      "이미지·음원·영상의 저작권은 각 권리자에게 있으며, 콜표 등 팬 제작 자료의 권리는 원 작성자에게 있습니다.";
+
     var existingFooter = document.querySelector(".site-footer");
     var credit = document.createElement("div");
     credit.className = "site-credit";
     credit.textContent = "Made by Bangbung Kim";
     if (existingFooter) {
+      existingFooter.appendChild(disclaimer);
       existingFooter.appendChild(credit);
     } else {
       var footer = document.createElement("footer");
       footer.className = "site-footer";
+      footer.appendChild(disclaimer);
       footer.appendChild(credit);
       document.body.appendChild(footer);
     }
