@@ -129,7 +129,7 @@ page = f'''<!DOCTYPE html>
 <body>
   <main class="container">
     <section>
-      <h1 class="section-title">토요일(11/21) 출연진 · 타임테이블</h1>
+      <h1 class="section-title"><span class="nowrap">토요일(11/21)</span> <span class="nowrap">출연진·타임테이블</span></h1>
       <p class="subtitle">WONDER STAGE / LIVET STAGE 번갈아 진행. 시간은 공식 사이트 타임테이블 기준.</p>
       <div class="jump"><a class="btn" href="#mygo">MyGO!!!!! 13:35</a><a class="btn" href="#roselia">Roselia 16:10</a></div>
       <img class="poster" src="imgs/timetable_day2.webp" alt="11/21 타임테이블 (공식)">
