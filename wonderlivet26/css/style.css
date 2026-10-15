@@ -1195,3 +1195,15 @@ main li > a { display: inline-block; padding: 6px 0; }
   .shuttle-table th, .shuttle-table td { padding: 7px 5px; font-size: .8rem; }
   .shuttle-table td:first-child { min-width: 0; width: 38%; }
 }
+
+/* ── 콜 가이드: 로젤 콜표 팝업 ── */
+.chips .chip-btn { font: inherit; color: var(--text); background: var(--surface-2); border: 1px solid var(--accent); border-radius: 999px; padding: 0 14px; min-height: 40px; cursor: pointer; }
+.chips li:has(.chip-btn) { padding: 0; border: 0; background: none; }
+.chips .chip-btn:hover, .chips .chip-btn:focus-visible { background: var(--accent-soft); }
+.chips li.chip-off { opacity: .6; }
+.call-actions { padding: 10px 20px 0; }
+.call-body p { margin: 0; line-height: 1.7; }
+.call-body .c-call { color: #ff6b6b; font-weight: 700; }
+.call-body .c-call2 { color: #c9a2ff; font-weight: 700; }
+.call-body .c-hl { background: #5a3a1c; color: #ffd9b8; padding: 1px 6px; font-weight: 700; }
+@media (max-width: 600px) { .call-overlay .lyrics-box { width: 100%; max-width: none; height: 100%; max-height: none; border-radius: 0; } }
