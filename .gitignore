@@ -7,3 +7,8 @@ kimchikura/heatsafety/out/
 kimchikura/heatsafety/norm/
 __pycache__/
 *.pyc
+
+# 기밀: 마이고 콜표 (공개 리포라 절대 커밋 금지)
+마이고내한/콜표/
+# 작업용 일지 (콜 내용 등 포함, 비공개)
+개발일지.txt
