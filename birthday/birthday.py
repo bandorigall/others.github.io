@@ -79,7 +79,20 @@ def make_link_html(text_id):
     # 데이터가 없을 때: 높이를 맞춰주기 위해 빈 div나 span에 패딩을 줌
     if not text_id or text_id.lower() == "nan" or text_id == "":
         return '<div style="padding: 12px 0; color: #ccc;">-</div>'
-    
+
+    # 한 칸에 글이 여러 개(걸파·아워노츠 둘 다 있는 캐릭터): "걸파:6718116/아워노츠:6718034"
+    if "/" in text_id:
+        links = []
+        for part in text_id.split("/"):
+            label, _, no = part.partition(":")
+            links.append(
+                f'<a href="{BASE_URL.format(no.strip())}" '
+                f'style="display: block; width: 100%; padding: 6px 0; '
+                f'color: #0000FF; font-weight: bold; text-decoration: none;">'
+                f'{label.strip()} 보기</a>'
+            )
+        return "".join(links)
+
     url = BASE_URL.format(text_id)
     
     # [핵심] 
