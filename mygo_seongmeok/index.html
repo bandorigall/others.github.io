@@ -3,280 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>마이고 성먹음</title>
-<meta name="description" content="원더리벳 2026 내한 기간 MyGO!!!!! 성우들이 한국에서 먹고 간 것 모음">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<title>MyGO!!!!! 성먹음</title>
+<meta name="description" content="원더리벳 2026 내한 기간 MyGO!!!!! 성우들이 한국에서 먹고 간 곳">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 :root {
-  --paper: #f4efe4;
-  --card: #fbf8f1;
-  --ink: #26221e;
-  --sub: #6f665b;
-  --line: #d9cfbe;
-  --accent: #a8433a;
-  --tag: #e9e0cf;
+  --bg: #ffffff;
+  --fg: #111111;
+  --mute: #8a8a8a;
+  --line: #ececec;
+  --hover: #f6f6f6;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #1c1a17;
-    --card: #24211d;
-    --ink: #ece5d8;
-    --sub: #a99f90;
-    --line: #3a352e;
-    --accent: #d77a6e;
-    --tag: #322d27;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #1c1a17;
-  --card: #24211d;
-  --ink: #ece5d8;
-  --sub: #a99f90;
-  --line: #3a352e;
-  --accent: #d77a6e;
-  --tag: #322d27;
+  :root { --bg: #111111; --fg: #ededed; --mute: #7d7d7d; --line: #262626; --hover: #191919; }
 }
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html, body { margin: 0; height: 100%; }
 body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 15px;
-  line-height: 1.65;
+  background: var(--bg); color: var(--fg);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  font-size: 14px; line-height: 1.6;
+  letter-spacing: -0.01em;
   word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: 720px; margin: 0 auto; padding: 56px 16px 80px; }
+a { color: inherit; }
 
-header .kicker {
-  font-size: 12px;
-  letter-spacing: .08em;
-  color: var(--sub);
-}
-header h1 {
-  font-family: "Gowun Batang", serif;
-  font-weight: 700;
-  font-size: clamp(30px, 7vw, 44px);
-  line-height: 1.25;
-  margin: 10px 0 14px;
-}
-header h1 em { font-style: normal; color: var(--accent); }
-header p { margin: 0; color: var(--sub); max-width: 34em; }
+.app { display: grid; grid-template-columns: 440px 1fr; height: 100vh; }
+.side { overflow-y: auto; border-right: 1px solid var(--line); }
+#map { height: 100%; background: var(--hover); }
 
-.who {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  margin: 28px 0 8px;
-}
-.who button {
-  font: inherit; font-size: 13px;
-  padding: 5px 12px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
-  border-radius: 999px;
-  cursor: pointer;
-}
-.who button[aria-pressed="true"] {
-  background: var(--ink); color: var(--paper); border-color: var(--ink);
-}
+.head { padding: 40px 32px 24px; }
+.head h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; }
+.head p { margin: 6px 0 0; color: var(--mute); font-size: 13px; }
 
-h2 {
-  font-family: "Gowun Batang", serif;
-  font-size: 20px;
-  margin: 44px 0 4px;
-  display: flex; align-items: baseline; gap: 10px;
+.tabs { display: flex; gap: 18px; padding: 0 32px; border-bottom: 1px solid var(--line); }
+.tabs button {
+  font: inherit; font-size: 13px; color: var(--mute);
+  background: none; border: 0; padding: 10px 0; margin-bottom: -1px;
+  border-bottom: 1px solid transparent; cursor: pointer;
 }
-h2 small { font-family: "IBM Plex Sans KR", sans-serif; font-size: 12px; color: var(--sub); font-weight: 400; }
+.tabs button.on { color: var(--fg); border-bottom-color: var(--fg); }
 
-ol.list { list-style: none; margin: 0; padding: 0; counter-reset: n; }
-ol.list > li {
-  counter-increment: n;
-  position: relative;
-  padding: 22px 0 22px 44px;
+.group { padding: 28px 32px 6px; font-size: 12px; color: var(--mute); }
+
+.card {
+  display: grid; grid-template-columns: 22px 1fr; gap: 0 12px;
+  padding: 16px 32px; cursor: default;
   border-top: 1px solid var(--line);
 }
-ol.list > li:last-child { border-bottom: 1px solid var(--line); }
-ol.list > li::before {
-  content: counter(n, decimal-leading-zero);
-  position: absolute; left: 0; top: 24px;
-  font-family: "Gowun Batang", serif;
-  font-size: 15px; color: var(--accent);
-}
-ol.list > li[hidden] { display: none; }
+.group + .card { border-top: 0; }
+.card.pin { cursor: pointer; }
+.card.pin:hover, .card.on { background: var(--hover); }
+.card[hidden] { display: none; }
+.no { font-size: 12px; color: var(--mute); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.card.on .no { color: var(--fg); }
+.t { font-size: 15px; font-weight: 600; margin: 0; }
+.t i { font-style: normal; font-weight: 400; font-size: 12px; color: var(--mute); margin-left: 6px; }
+.d { margin: 2px 0 0; color: var(--mute); font-size: 13px; }
+.e { margin: 8px 0 0; }
+.q { margin: 6px 0 0; font-size: 13px; color: var(--mute); }
+.s { margin: 10px 0 0; font-size: 12px; color: var(--mute); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.s a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.s a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-.name {
-  font-family: "Gowun Batang", serif;
-  font-size: 19px; font-weight: 700;
-  margin: 0;
-}
-.guess {
-  display: inline-block;
-  font-family: "IBM Plex Sans KR", sans-serif;
-  font-size: 11px; font-weight: 500;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 0 6px; margin-left: 6px;
-  border-radius: 3px;
-  vertical-align: 3px;
-}
-.meta { color: var(--sub); font-size: 13px; margin: 2px 0 8px; }
-.ate { margin: 0 0 6px; }
-.note { margin: 0 0 10px; font-size: 13.5px; color: var(--sub); }
-.people { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; }
-.people span {
-  font-size: 12px; background: var(--tag);
-  padding: 1px 8px; border-radius: 3px;
-}
+.foot { padding: 28px 32px 40px; font-size: 12px; color: var(--mute); border-top: 1px solid var(--line); }
+.foot p { margin: 0 0 4px; }
 
-.src { margin: 0; padding: 0; list-style: none; font-size: 13px; }
-.src li { display: flex; gap: 10px; padding: 2px 0; }
-.src .k { flex: 0 0 64px; color: var(--sub); }
-.src li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
-@media (max-width: 480px) {
-  ol.list > li { padding-left: 34px; }
-  .src li { flex-direction: column; gap: 0; padding: 4px 0; }
-  .src .k { flex: none; font-size: 11.5px; }
+.mk {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--fg);
+  font: 600 11px/20px "Pretendard Variable", sans-serif; text-align: center;
+  font-variant-numeric: tabular-nums;
 }
-.src a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--line); }
-.src a:hover { text-decoration-color: var(--accent); }
+.mk.on { background: var(--fg); color: var(--bg); }
+.leaflet-container { font-family: inherit; }
+.leaflet-tile-pane { filter: grayscale(1) contrast(.92) brightness(1.04); }
+@media (prefers-color-scheme: dark) {
+  .leaflet-tile-pane { filter: grayscale(1) invert(1) contrast(.85) brightness(.9); }
+}
+.leaflet-control-attribution { font-size: 10px; }
+.leaflet-bar a { border-radius: 0 !important; }
 
-footer {
-  margin-top: 48px;
-  font-size: 12.5px; color: var(--sub);
+@media (max-width: 820px) {
+  .app { display: flex; flex-direction: column; height: auto; }
+  #map { order: -1; position: sticky; top: 0; height: 42vh; flex: none; z-index: 1000; border-bottom: 1px solid var(--line); }
+  .side { overflow: visible; border-right: 0; }
+  .head { padding: 28px 16px 18px; }
+  .tabs, .group, .foot { padding-left: 16px; padding-right: 16px; }
+  .card { padding: 14px 16px; }
 }
-footer p { margin: 0 0 6px; }
-footer a { color: inherit; }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<header>
-  <div class="kicker">WONDERLIVET 2026 · 2026.11.20 – 11.22</div>
-  <h1>마이고는 한국에서<br><em>뭘 먹고</em> 갔을까</h1>
-  <p>성우 본인이 올린 글·사진을 먼저, 그다음 인스타 스토리, 마지막으로 방갤에서 가게를 찾아낸 글 순서로 출처를 달았습니다. 가게 이름을 사진으로 맞춘 곳은 <span class="guess" style="margin-left:0;vertical-align:1px">추정</span> 표시를 했습니다.</p>
-</header>
-
-<div class="who" role="group" aria-label="성우별 보기">
-  <button type="button" data-who="" aria-pressed="true">전체</button>
-  <button type="button" data-who="코코" aria-pressed="false">하야시 코코</button>
-  <button type="button" data-who="린" aria-pressed="false">타테이시 린</button>
-  <button type="button" data-who="히나" aria-pressed="false">아오키 히나</button>
+<div class="app">
+  <aside class="side">
+    <div class="head">
+      <h1>MyGO!!!!! 성먹음</h1>
+      <p>원더리벳 2026 · 2026.11.20 – 11.22</p>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button type="button" class="on" data-who="">전체</button>
+      <button type="button" data-who="코코">하야시 코코</button>
+      <button type="button" data-who="린">타테이시 린</button>
+      <button type="button" data-who="히나">아오키 히나</button>
+    </nav>
+    <div id="list"></div>
+    <div class="foot">
+      <p>출처는 성우 본인 X, 인스타 스토리 캡처, 방갤 글 순서.</p>
+      <p>가게를 사진으로 맞춘 곳은 추정. 마지막 갱신 2026.11.22</p>
+    </div>
+  </aside>
+  <div id="map"></div>
 </div>
 
-<h2>식당 <small>밥 먹은 곳</small></h2>
-<ol class="list">
-
-  <li data-who="코코 린 히나">
-    <p class="name">천지연 일산점<span class="guess">추정</span></p>
-    <p class="meta">경기 고양시 일산 · 11월 20일 저녁</p>
-    <p class="ate">돼지갈비, 물냉면</p>
-    <p class="note">불판·반찬·냉면 고명이 사진과 같아서 찾은 체인 고깃집. 지점은 공연장 근처라 일산점으로 본 것.</p>
-    <div class="people"><span>하야시 코코</span><span>타테이시 린</span><span>아오키 히나</span></div>
-    <ul class="src">
-      <li><span class="k">인스타</span><span>아오키 히나 스토리 「昨日は美味しいお肉を食べました」 <a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638496">캡처</a> · 코코 스토리 냉면 <a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=639212">캡처</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638398">#638398 가게 찾은 글</a> · <a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638368">#638368 린 갈비 사진</a></span></li>
-      <li><span class="k">지도</span><span><a href="https://map.kakao.com/?q=%EC%B2%9C%EC%A7%80%EC%97%B0%20%EC%9D%BC%EC%82%B0">카카오맵에서 검색</a></span></li>
-    </ul>
-  </li>
-
-  <li data-who="코코">
-    <p class="name">능동미나리 성수점</p>
-    <p class="meta">서울 성동구 성수동</p>
-    <p class="ate">미나리 요리</p>
-    <p class="note">뒷배경과 벽의 메뉴 가격까지 사진과 일치.</p>
-    <div class="people"><span>하야시 코코</span></div>
-    <ul class="src">
-      <li><span class="k">본인 X</span><span><a href="https://x.com/cocohayashi515/status/2124493155898986601">「한국 여행의 추억~ 맛있는 거 잔뜩 먹었어요!」</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=639457">#639457</a> · <a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=639454">#639454</a></span></li>
-      <li><span class="k">지도</span><span><a href="https://place.map.kakao.com/134670855">카카오맵</a></span></li>
-    </ul>
-  </li>
-
-  <li data-who="코코">
-    <p class="name">이랑닭한마리칼국수</p>
-    <p class="meta">서울 성동구 성수동</p>
-    <p class="ate">닭한마리 칼국수</p>
-    <div class="people"><span>하야시 코코</span></div>
-    <ul class="src">
-      <li><span class="k">본인 X</span><span><a href="https://x.com/cocohayashi515/status/2124493155898986601">「한국 여행의 추억~」 같은 트윗</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=639454">#639454</a></span></li>
-      <li><span class="k">지도</span><span><a href="https://map.kakao.com/?q=%EC%9D%B4%EB%9E%91%EB%8B%AD%ED%95%9C%EB%A7%88%EB%A6%AC%EC%B9%BC%EA%B5%AD%EC%88%98">카카오맵에서 검색</a></span></li>
-    </ul>
-  </li>
-
-  <li data-who="코코">
-    <p class="name">스타벅스 스타필드마켓 킨텍스점<span class="guess">추정</span></p>
-    <p class="meta">경기 고양시 일산</p>
-    <p class="ate">아이스 음료, 케이크</p>
-    <p class="note">사진 뒤 파란 천장 장식을 보고 짐작한 매장.</p>
-    <div class="people"><span>하야시 코코</span></div>
-    <ul class="src">
-      <li><span class="k">본인 X</span><span><a href="https://x.com/cocohayashi515/status/2124493155898986601">「한국 여행의 추억~」 같은 트윗</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=639460">#639460</a></span></li>
-    </ul>
-  </li>
-
-</ol>
-
-<h2>간식 <small>편의점·공연장</small></h2>
-<ol class="list">
-
-  <li data-who="코코">
-    <p class="name">칠성사이다 + 참붕어빵</p>
-    <p class="meta">11월 21일 공연 당일</p>
-    <div class="people"><span>하야시 코코</span></div>
-    <ul class="src">
-      <li><span class="k">본인 X</span><span><a href="https://x.com/cocohayashi515/status/2123960968250347564">「안녕하세요~! 열심히 할 거야아~♡」</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638542">#638542</a></span></li>
-    </ul>
-  </li>
-
-  <li data-who="코코">
-    <p class="name">호떡, 소떡소떡</p>
-    <p class="meta">원더리벳 케이터링 부스 · 11월 21일</p>
-    <p class="note">「포장마차처럼 꾸며진 케이터링 부스에서 직접 눈앞에서 구워주셨어요!! 붕어빵이랑 김밥도 먹었는데 전부 다 너무 맛있었어요」</p>
-    <div class="people"><span>하야시 코코</span></div>
-    <ul class="src">
-      <li><span class="k">인스타</span><span>코코 스토리 <a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638895">캡처 (방갤 #638895)</a></span></li>
-    </ul>
-  </li>
-
-  <li data-who="린">
-    <p class="name">바나나맛우유</p>
-    <p class="meta">11월 21일 아침</p>
-    <div class="people"><span>타테이시 린</span></div>
-    <ul class="src">
-      <li><span class="k">본인 X</span><span><a href="https://x.com/ttisrn_0710/status/2123941716873171038">「おはようございます！本日 #WONDERLIVET2026 楽しみましょう♩」</a></span></li>
-      <li><span class="k">방갤</span><span><a href="https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=638476">#638476</a></span></li>
-    </ul>
-  </li>
-
-</ol>
-
-<footer>
-  <p>방도리 성우 갤러리 성먹음 글을 모아 정리. 마지막 갱신 2026.11.22</p>
-  <p>빠진 곳이나 틀린 곳은 방갤에 알려 주세요.</p>
-</footer>
-
-</div>
 <script>
-(function () {
-  var btns = document.querySelectorAll('.who button');
-  var items = document.querySelectorAll('ol.list > li');
-  btns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var w = b.getAttribute('data-who');
-      btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      items.forEach(function (li) {
-        li.hidden = !!w && li.getAttribute('data-who').split(' ').indexOf(w) < 0;
-      });
-    });
+var DC = 'https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=';
+var COCO_TRIP = 'https://x.com/cocohayashi515/status/2124493155898986601';
+
+var ITEMS = [
+  { g: '식당', t: '천지연 일산점', guess: true, d: '고양 일산동구 무궁화로 359 · 11.20 저녁',
+    e: '돼지갈비, 물냉면', who: ['코코', '린', '히나'],
+    q: '불판·반찬·냉면 고명이 사진과 일치. 체인이라 지점은 공연장 근처로 본 것.',
+    ll: [37.67782072, 126.79914158],
+    src: [['아오키 히나 스토리', DC + 638496], ['코코 스토리', DC + 639212], ['린 사진', DC + 638368], ['가게 찾은 글', DC + 638398], ['카카오맵', 'https://place.map.kakao.com/837442126']] },
+  { g: '식당', t: '능동미나리 성수점', d: '서울 성동구 연무장길 42',
+    e: '미나리 요리', who: ['코코'],
+    q: '뒷배경과 메뉴 가격까지 일치.',
+    ll: [37.54276077, 127.05395304],
+    src: [['코코 X', COCO_TRIP], ['방갤 #639457', DC + 639457], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/134670855']] },
+  { g: '식당', t: '이랑닭한마리칼국수', d: '서울 성동구 성수이로7길 7',
+    e: '닭한마리 칼국수', who: ['코코'],
+    ll: [37.53968003, 127.05443397],
+    src: [['코코 X', COCO_TRIP], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/1425512946']] },
+  { g: '식당', t: '스타벅스', sub: '스타필드마켓 일산점', guess: true, d: '고양 일산서구 킨텍스로 171',
+    e: '아이스 음료, 케이크', who: ['코코'],
+    q: '사진 뒤 파란 천장 장식으로 짐작한 매장.',
+    ll: [37.66158296, 126.74406532],
+    src: [['코코 X', COCO_TRIP], ['방갤 #639460', DC + 639460]] },
+  { g: '간식', t: '호떡, 소떡소떡', d: '원더리벳 케이터링 부스 · 킨텍스 제2전시장 · 11.21',
+    e: '붕어빵, 김밥도', who: ['코코'],
+    q: '「포장마차처럼 꾸며진 케이터링 부스에서 직접 눈앞에서 구워주셨어요」',
+    ll: [37.664472, 126.7418147],
+    src: [['코코 스토리', DC + 638895]] },
+  { g: '간식', t: '칠성사이다, 참붕어빵', d: '11.21 공연 당일',
+    who: ['코코'],
+    src: [['코코 X', 'https://x.com/cocohayashi515/status/2123960968250347564'], ['방갤 #638542', DC + 638542]] },
+  { g: '간식', t: '바나나맛우유', d: '11.21 아침',
+    who: ['린'],
+    src: [['린 X', 'https://x.com/ttisrn_0710/status/2123941716873171038'], ['방갤 #638476', DC + 638476]] }
+];
+var NAMES = { '코코': '하야시 코코', '린': '타테이시 린', '히나': '아오키 히나' };
+
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+var list = document.getElementById('list');
+var html = '', lastG = '', n = 0;
+ITEMS.forEach(function (it, i) {
+  if (it.g !== lastG) { html += '<div class="group" data-g="' + it.g + '">' + it.g + '</div>'; lastG = it.g; }
+  it.no = it.ll ? ++n : null;
+  html += '<div class="card' + (it.ll ? ' pin' : '') + '" data-i="' + i + '">' +
+    '<div class="no">' + (it.no ? String(it.no).padStart(2, '0') : '–') + '</div><div>' +
+    '<p class="t">' + esc(it.t) + (it.sub ? '<i>' + esc(it.sub) + '</i>' : '') + (it.guess ? '<i>추정</i>' : '') + '</p>' +
+    '<p class="d">' + esc(it.d) + ' · ' + it.who.map(function (w) { return NAMES[w]; }).join(', ') + '</p>' +
+    (it.e ? '<p class="e">' + esc(it.e) + '</p>' : '') +
+    (it.q ? '<p class="q">' + esc(it.q) + '</p>' : '') +
+    '<p class="s">' + it.src.map(function (s) { return '<a href="' + s[1] + '" target="_blank" rel="noopener">' + esc(s[0]) + '</a>'; }).join('') + '</p>' +
+    '</div></div>';
+});
+list.innerHTML = html;
+var cards = list.querySelectorAll('.card');
+
+var map = null, markers = {};
+function setActive(i, fly) {
+  cards.forEach(function (c) { c.classList.toggle('on', +c.dataset.i === i); });
+  Object.keys(markers).forEach(function (k) {
+    var el = markers[k].getElement();
+    if (el) el.firstChild.classList.toggle('on', +k === i);
   });
-})();
+  if (fly && map && ITEMS[i].ll) map.flyTo(ITEMS[i].ll, 16, { duration: 0.6 });
+}
+
+try {
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  map = L.map('map', { zoomControl: true, attributionControl: true, scrollWheelZoom: true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+  var pts = [];
+  ITEMS.forEach(function (it, i) {
+    if (!it.ll) return;
+    var m = L.marker(it.ll, { icon: L.divIcon({ className: '', html: '<div class="mk">' + it.no + '</div>', iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(map);
+    m.on('click', function () {
+      setActive(i, false);
+      list.querySelector('.card[data-i="' + i + '"]').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    markers[i] = m; pts.push(it.ll);
+  });
+  map.fitBounds(pts, { padding: [40, 40] });
+} catch (e) { document.getElementById('map').style.display = 'none'; }
+
+cards.forEach(function (c) {
+  c.addEventListener('click', function (ev) {
+    if (ev.target.closest('a')) return;
+    var i = +c.dataset.i;
+    if (ITEMS[i].ll) setActive(i, true);
+  });
+});
+
+document.getElementById('tabs').addEventListener('click', function (ev) {
+  var b = ev.target.closest('button'); if (!b) return;
+  var w = b.dataset.who;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  var vis = [];
+  cards.forEach(function (c) {
+    var it = ITEMS[+c.dataset.i], show = !w || it.who.indexOf(w) >= 0;
+    c.hidden = !show;
+    if (markers[c.dataset.i]) {
+      if (show) { markers[c.dataset.i].addTo(map); vis.push(it.ll); } else map.removeLayer(markers[c.dataset.i]);
+    }
+  });
+  list.querySelectorAll('.group').forEach(function (g) {
+    var any = false, el = g.nextElementSibling;
+    while (el && el.classList.contains('card')) { if (!el.hidden) any = true; el = el.nextElementSibling; }
+    g.hidden = !any;
+  });
+  if (map && vis.length) map.fitBounds(vis, { padding: [40, 40], maxZoom: 15 });
+});
 </script>
 </body>
 </html>
