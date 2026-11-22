@@ -69,9 +69,9 @@ a { color: inherit; }
 .s a { text-decoration: none; border-bottom: 1px solid var(--line); }
 .s a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-.ph { display: none; gap: 8px; margin-top: 14px; overflow-x: auto; }
-.card.on .ph { display: flex; }
-.ph img { height: 240px; width: auto; display: block; border: 1px solid var(--line); }
+.ph { display: none; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 14px; }
+.card.on .ph { display: grid; }
+.ph img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; background: var(--line); }
 
 .leaflet-popup-content-wrapper { border-radius: 0; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
 .leaflet-popup-content { margin: 0; width: 160px !important; }
@@ -156,13 +156,13 @@ var ITEMS = [
   { g: '식당', t: '이랑닭한마리칼국수', d: '서울 성동구 성수이로7길 7',
     e: '닭한마리 칼국수', who: ['코코'],
     ll: [37.53968003, 127.05443397],
-    img: ['img/kalguksu.jpg'],
+    img: ['img/kalguksu.jpg', 'img/kalguksu2.jpg', 'img/kalguksu3.jpg'],
     src: [['코코 X', COCO_TRIP], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/1425512946']] },
   { g: '식당', t: '스타벅스', sub: '스타필드마켓 일산점', guess: true, d: '고양 일산서구 킨텍스로 171',
     e: '아이스 음료, 케이크', who: ['코코'],
     q: '사진 뒤 파란 천장 장식으로 짐작한 매장.',
     ll: [37.66158296, 126.74406532],
-    img: ['img/starbucks.jpg'],
+    img: ['img/starbucks.jpg', 'img/starbucks2.jpg', 'img/starbucks3.jpg', 'img/starbucks4.jpg'],
     src: [['코코 X', COCO_TRIP], ['방갤 #639460', DC + 639460]] },
   { g: '간식', t: '칠성사이다 제로, 참붕어빵', d: '11.21 공연 당일',
     who: ['코코'],
