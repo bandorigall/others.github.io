@@ -79,6 +79,16 @@ a { color: inherit; }
 .pp img { width: 160px; height: 160px; object-fit: cover; display: block; }
 .pp b { display: block; padding: 7px 10px; font-size: 12px; font-weight: 600; color: #111; }
 
+.ph img, .pp img { cursor: zoom-in; }
+.lb {
+  position: fixed; inset: 0; z-index: 5000;
+  background: rgba(0,0,0,.86);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px; cursor: zoom-out;
+}
+.lb.on { display: flex; }
+.lb img { max-width: 100%; max-height: 100%; display: block; }
+
 .foot { padding: 28px 32px 40px; font-size: 12px; color: var(--mute); border-top: 1px solid var(--line); }
 .foot p { margin: 0 0 4px; }
 
@@ -124,6 +134,7 @@ a { color: inherit; }
   </aside>
   <div id="map"></div>
 </div>
+<div class="lb" id="lb"><img alt=""></div>
 
 <script>
 var DC = 'https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=';
@@ -219,6 +230,18 @@ try {
   });
   map.fitBounds(pts, { padding: [40, 40] });
 } catch (e) { document.getElementById('map').style.display = 'none'; }
+
+var lb = document.getElementById('lb');
+function closeLb() { lb.classList.remove('on'); }
+lb.addEventListener('click', closeLb);
+document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeLb(); });
+document.addEventListener('click', function (ev) {
+  var im = ev.target.closest('.ph img, .pp img');
+  if (!im) return;
+  ev.stopPropagation();
+  lb.firstChild.src = im.getAttribute('src');
+  lb.classList.add('on');
+}, true);
 
 cards.forEach(function (c) {
   c.addEventListener('click', function (ev) {
