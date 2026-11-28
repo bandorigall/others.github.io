@@ -147,25 +147,28 @@ a { color: inherit; }
 <script>
 var DC = 'https://gall.dcinside.com/mgallery/board/view/?id=bandress&no=';
 var COCO_TRIP = 'https://x.com/cocohayashi515/status/2124493155898986601';
+var COCO_IG = 'https://www.instagram.com/p/DgFl1V8I1J6/';
+var COCO_VLOG = 'https://www.instagram.com/p/DgFmpKfhfvE/';
+var HINA_IG = 'https://www.instagram.com/p/DgDEGDAE_lZ/';
 
 var ITEMS = [
   { g: '식당', t: '천지연 일산점', guess: true, addr: '경기 고양시 일산동구 무궁화로 359', d: '11.20 저녁',
     e: '돼지갈비, 물냉면', who: ['코코', '린', '히나'],
     q: '불판·반찬·냉면 고명이 사진과 일치. 체인이라 지점은 공연장 근처로 본 것.',
     ll: [37.67782072, 126.79914158],
-    img: ['img/chunji_rin.jpg', 'img/chunji_coco.jpg'],
-    src: [['린 스토리', DC + 638368], ['코코 스토리', DC + 639212], ['아오키 히나 스토리', DC + 638496], ['가게 찾은 글', DC + 638398], ['카카오맵', 'https://place.map.kakao.com/837442126']] },
+    img: ['img/chunji_rin.jpg', 'img/chunji_coco.jpg', 'img/chunji_hina.jpg', 'img/chunji_hina2.jpg'],
+    src: [['린 스토리', DC + 638368], ['코코 스토리', DC + 639212], ['아오키 히나 스토리', DC + 638496], ['아오키 히나 인스타', HINA_IG], ['가게 찾은 글', DC + 638398], ['카카오맵', 'https://place.map.kakao.com/837442126']] },
   { g: '식당', t: '능동미나리 성수점', addr: '서울 성동구 연무장길 42',
     e: '미나리 요리', who: ['코코'],
     q: '뒷배경과 메뉴 가격까지 일치.',
     ll: [37.54276077, 127.05395304],
-    img: ['img/minari.jpg'],
-    src: [['코코 X', COCO_TRIP], ['방갤 #639457', DC + 639457], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/134670855']] },
+    img: ['img/minari.jpg', 'img/minari2.jpg'],
+    src: [['코코 X', COCO_TRIP], ['코코 인스타', COCO_IG], ['코코 브이로그', COCO_VLOG], ['방갤 #639457', DC + 639457], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/134670855']] },
   { g: '식당', t: '이랑닭한마리칼국수', addr: '서울 성동구 성수이로7길 7',
     e: '닭한마리 칼국수', who: ['코코'],
     ll: [37.53968003, 127.05443397],
-    img: ['img/kalguksu.jpg', 'img/kalguksu2.jpg', 'img/kalguksu3.jpg'],
-    src: [['코코 X', COCO_TRIP], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/1425512946']] },
+    img: ['img/kalguksu.jpg', 'img/kalguksu2.jpg', 'img/kalguksu3.jpg', 'img/kalguksu4.jpg'],
+    src: [['코코 X', COCO_TRIP], ['코코 인스타', COCO_IG], ['코코 브이로그', COCO_VLOG], ['방갤 #639454', DC + 639454], ['카카오맵', 'https://place.map.kakao.com/1425512946']] },
   { g: '식당', t: '스타벅스', sub: '스타필드마켓 일산점', guess: true, addr: '경기 고양시 일산서구 킨텍스로 171', copyName: '스타벅스 스타필드마켓 일산점',
     e: '아이스 음료, 케이크', who: ['코코'],
     q: '사진 뒤 파란 천장 장식으로 짐작한 매장.',
@@ -177,7 +180,7 @@ var ITEMS = [
     q: '김치볶음밥과 접시가 가게 리뷰 사진과 일치.',
     ll: [37.565824, 126.8000811],
     img: ['img/jeongtable.jpg'],
-    src: [['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/1089797099']] },
+    src: [['아오키 히나 인스타', HINA_IG], ['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/1089797099']] },
   { g: '간식', t: '칠성사이다 제로, 참붕어빵', d: '11.21 공연 당일',
     who: ['코코'],
     img: ['img/cider.jpg'],
@@ -186,12 +189,22 @@ var ITEMS = [
     who: ['린'],
     img: ['img/banana.jpg'],
     src: [['린 X', 'https://x.com/ttisrn_0710/status/2123941716873171038'], ['방갤 #638476', DC + 638476]] },
+  { g: '간식', t: '메가커피', d: '11.22 성수, 브이로그 14:44',
+    who: ['코코'],
+    q: '어느 지점인지는 모름.',
+    img: ['img/megacoffee.jpg'],
+    src: [['코코 브이로그', COCO_VLOG]] },
+  { g: '간식', t: '소금빵', d: '11.22 성수, 브이로그 17:50',
+    who: ['코코'],
+    q: '"미나리곰탕이랑 소금빵이 맛있었어요". 빵집은 모름.',
+    img: ['img/saltbread.jpg'],
+    src: [['코코 인스타', COCO_IG], ['코코 브이로그', COCO_VLOG]] },
   { g: '장소', t: '무신사 메가스토어 성수', guess: true, addr: '서울 성동구 성수이로 62',
-    e: '쇼핑, 2층 안경 코너', who: ['히나'],
-    q: '근처 무신사 스탠다드 성수와는 위치가 조금 다름.',
+    e: '쇼핑, 2층 안경 코너', who: ['히나', '코코'],
+    q: '근처 무신사 스탠다드 성수와는 위치가 조금 다름. 코코 브이로그 13:16 건물 외관도 같음.',
     ll: [37.5402409, 127.0558476],
     img: ['img/musinsa.jpg', 'img/musinsa2.jpg'],
-    src: [['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/2073901136']] }
+    src: [['아오키 히나 인스타', HINA_IG], ['코코 브이로그', COCO_VLOG], ['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/2073901136']] }
 ];
 var NAMES = { '코코': '하야시 코코', '린': '타테이시 린', '히나': '아오키 히나' };
 
