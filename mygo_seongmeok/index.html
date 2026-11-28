@@ -47,6 +47,18 @@ a { color: inherit; }
 }
 .tabs button.on { color: var(--fg); border-bottom-color: var(--fg); }
 
+.trips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 14px 32px 0; font-size: 12px; color: var(--mute); }
+.trips span { margin-right: 4px; }
+.trips button {
+  font: inherit; font-size: 12px; color: var(--mute); background: none; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 3px; padding: 4px 9px;
+}
+.trips button:hover { color: var(--fg); border-color: var(--fg); }
+.trips button.on { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+.cap { margin: 10px 32px 0; font-size: 12px; color: var(--mute); }
+.group[hidden] { display: none; }
+.ar { width: 20px; height: 20px; line-height: 20px; text-align: center; font-size: 19px; color: var(--fg); text-shadow: 0 0 3px var(--bg), 0 0 3px var(--bg); }
+
 .group { padding: 28px 32px 6px; font-size: 12px; color: var(--mute); }
 
 .card {
@@ -116,7 +128,8 @@ a { color: inherit; }
   #map { order: -1; position: sticky; top: 0; height: 42vh; flex: none; z-index: 1000; border-bottom: 1px solid var(--line); }
   .side { overflow: visible; border-right: 0; }
   .head { padding: 28px 16px 18px; }
-  .tabs, .group, .foot { padding-left: 16px; padding-right: 16px; }
+  .tabs, .trips, .group, .foot { padding-left: 16px; padding-right: 16px; }
+  .cap { margin-left: 16px; margin-right: 16px; }
   .card { padding: 14px 16px; }
 }
 </style>
@@ -134,6 +147,12 @@ a { color: inherit; }
       <button type="button" data-who="린">타테이시 린</button>
       <button type="button" data-who="히나">아오키 히나</button>
     </nav>
+    <nav class="trips" id="trips">
+      <span>지난 방한</span>
+      <button type="button" data-trip="rin2410">린 2024.10 여행</button>
+      <button type="button" data-trip="coco2412">코코 2024.12 아시아투어</button>
+    </nav>
+    <p class="cap" id="cap" hidden></p>
     <div id="list"></div>
     <div class="foot">
       <p>출처는 성우 본인 X, 인스타 스토리 캡처, 방갤 글 순서.</p>
@@ -150,6 +169,7 @@ var COCO_TRIP = 'https://x.com/cocohayashi515/status/2124493155898986601';
 var COCO_IG = 'https://www.instagram.com/p/DgFl1V8I1J6/';
 var COCO_VLOG = 'https://www.instagram.com/p/DgFmpKfhfvE/';
 var HINA_IG = 'https://www.instagram.com/p/DgDEGDAE_lZ/';
+var RIN_YT = 'https://youtu.be/RN9jLLgd9es?t=';
 
 var ITEMS = [
   { g: '식당', t: '천지연 일산점', guess: true, addr: '경기 고양시 일산동구 무궁화로 359', d: '11.20 저녁',
@@ -204,8 +224,95 @@ var ITEMS = [
     q: '근처 무신사 스탠다드 성수와는 위치가 조금 다름. 코코 브이로그 13:16 건물 외관도 같음.',
     ll: [37.5402409, 127.0558476],
     img: ['img/musinsa.jpg', 'img/musinsa2.jpg'],
-    src: [['아오키 히나 인스타', HINA_IG], ['코코 브이로그', COCO_VLOG], ['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/2073901136']] }
+    src: [['아오키 히나 인스타', HINA_IG], ['코코 브이로그', COCO_VLOG], ['방갤 #639578', DC + 639578], ['네이버지도', 'https://map.naver.com/p/entry/place/2073901136']] },
+
+  // 지난 방한: trip 값이 있으면 아래 버튼을 눌렀을 때만 나온다(배열 순서 = 시간 순서)
+  { trip: 'rin2410', g: '1일차', t: '구르미한복 경복궁점', addr: '서울 종로구 효자로 5', d: '2024.10 초',
+    e: '한복 대여', who: ['린'],
+    ll: [37.57649997, 126.97406469],
+    img: ['img/rin24_gurumi.jpg'],
+    src: [['린 유튜브 1:08', RIN_YT + 68], ['카카오맵', 'https://place.map.kakao.com/631697198']] },
+  { trip: 'rin2410', g: '1일차', t: '경복궁', addr: '서울 종로구 사직로 161',
+    e: '한복 입고 관람, 국립민속박물관 앞', who: ['린'],
+    ll: [37.57761329, 126.97689787],
+    img: ['img/rin24_gyeongbok.jpg', 'img/rin24_gyeongbok2.jpg'],
+    src: [['린 X', 'https://x.com/ttisrn_0710/status/1843973752465555715'], ['린 유튜브 1:24', RIN_YT + 84]] },
+  { trip: 'rin2410', g: '1일차', t: '호떡, 컵 아이스크림',
+    who: ['린'],
+    q: '가게는 모름. 경복궁에서 북촌으로 가는 길.',
+    img: ['img/rin24_hotteok.jpg'],
+    src: [['린 유튜브 1:48', RIN_YT + 108]] },
+  { trip: 'rin2410', g: '1일차', t: '북촌한옥마을', addr: '서울 종로구 북촌로 53',
+    who: ['린'],
+    ll: [37.58176815, 126.98481245],
+    img: ['img/rin24_bukchon.jpg'],
+    src: [['린 유튜브 1:58', RIN_YT + 118], ['카카오맵', 'https://place.map.kakao.com/781129546']] },
+  { trip: 'rin2410', g: '1일차', t: '저녁: 산낙지, 육회',
+    e: '카스 맥주와 함께', who: ['린'],
+    q: '가게는 모름.',
+    img: ['img/rin24_dinner.jpg'],
+    src: [['린 유튜브 2:26', RIN_YT + 146]] },
+  { trip: 'rin2410', g: '2일차', t: '아침: 설렁탕류',
+    who: ['린'],
+    q: '가게는 모름.',
+    img: ['img/rin24_soup.jpg'],
+    src: [['린 유튜브 3:00', RIN_YT + 180]] },
+  { trip: 'rin2410', g: '2일차', t: '명동 쇼핑', addr: '서울 중구 퇴계로 지하 126 (명동역)', copyName: '명동역',
+    who: ['린'],
+    q: '명동역에서 내려 쇼핑. 핀은 명동역.',
+    ll: [37.56096527, 126.98640235],
+    img: ['img/rin24_myeongdong.jpg'],
+    src: [['린 유튜브 3:04', RIN_YT + 184]] },
+  { trip: 'rin2410', g: '2일차', t: '스시로', sub: '명동성당점', guess: true, addr: '서울 중구 명동길 58', copyName: '스시로 명동성당점',
+    e: '회전초밥', who: ['린'],
+    q: '간판만 나옴. 명동에 있던 날이라 명동 지점으로 본 것.',
+    ll: [37.56374691, 126.98560049],
+    img: ['img/rin24_sushiro.jpg'],
+    src: [['린 유튜브 3:34', RIN_YT + 214]] },
+  { trip: 'rin2410', g: '2일차', t: '간장게장',
+    who: ['린'],
+    q: '가게는 모름.',
+    img: ['img/rin24_gejang.jpg'],
+    src: [['린 유튜브 3:40', RIN_YT + 220]] },
+  { trip: 'rin2410', g: '2일차', t: '브레디포스트', sub: 'BREADYPOST',
+    e: '프레첼, 홍차', who: ['린'],
+    q: '접시 로고로 가게는 확인. 지점은 모름(명동점일 가능성).',
+    img: ['img/rin24_bready.jpg', 'img/rin24_bready2.jpg'],
+    src: [['린 유튜브 4:18', RIN_YT + 258]] },
+  { trip: 'rin2410', g: '2일차', t: '여의도한강공원', guess: true, addr: '서울 영등포구 여의동로 330',
+    e: '편의점 즉석 라면', who: ['린'],
+    q: '"한강으로 이동". 미디어아트 큐브는 2024 서울라이트 한강 빛섬축제(10.4~13, 여의도)로 본 것.',
+    ll: [37.5263886, 126.93512932],
+    img: ['img/rin24_hangang.jpg', 'img/rin24_ramen.jpg'],
+    src: [['린 유튜브 5:20', RIN_YT + 320], ['카카오맵', 'https://place.map.kakao.com/10952963']] },
+  { trip: 'rin2410', g: '3일차', t: '별마당도서관', sub: '스타필드 코엑스몰', addr: '서울 강남구 영동대로 513', copyName: '별마당도서관',
+    who: ['린'],
+    ll: [37.51019286, 127.06015941],
+    img: ['img/rin24_library.jpg'],
+    src: [['린 유튜브 6:40', RIN_YT + 400], ['카카오맵', 'https://place.map.kakao.com/2104663194']] },
+  { trip: 'rin2410', g: '3일차', t: '돌솥비빔밥',
+    who: ['린'],
+    q: '가게는 모름. 이 뒤 공항.',
+    img: ['img/rin24_bibimbap.jpg'],
+    src: [['린 유튜브 7:12', RIN_YT + 432]] },
+
+  { trip: 'coco2412', g: '12.14 Day1', t: '바나나맛우유', d: '아침',
+    who: ['코코'],
+    img: ['img/coco24_banana.jpg'],
+    src: [['코코 X', 'https://x.com/cocohayashi515/status/1867734644139209061']] },
+  { trip: 'coco2412', g: '12.14 Day1', t: '고려대학교 화정체육관', addr: '서울 성북구 안암로 145',
+    e: 'LoveLive! Series Asia Tour 2024 서울 공연', who: ['코코'],
+    q: '12.14~15 양일 공연, Day1 배웅회. 본인 인스타 "初めてのソウル！"(사진은 전부 대기실).',
+    ll: [37.59266942, 127.02488789],
+    img: ['img/coco24_hall.jpg'],
+    src: [['코코 인스타', 'https://www.instagram.com/p/DEPMpdSzWyi/'], ['이벤터노트', 'https://www.eventernote.com/events/385049'], ['카카오맵', 'https://place.map.kakao.com/13314631']] },
+  { trip: 'coco2412', g: '12.15 Day2', t: '삼계탕',
+    who: ['코코'],
+    q: '"サムゲタンですよ、せつ菜さん". 가게는 모름.',
+    img: ['img/coco24_samgye.jpg'],
+    src: [['코코 X', 'https://x.com/cocohayashi515/status/1868180720906285261']] }
 ];
+var TRIPS = { rin2410: '타테이시 린 · 2024.10 여행', coco2412: '하야시 코코 · 2024.12 러브라이브 아시아투어' };
 var NAMES = { '코코': '하야시 코코', '린': '타테이시 린', '히나': '아오키 히나' };
 
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -213,10 +320,11 @@ function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&
 function cp(text) { return '<button type="button" class="cp" data-copy="' + esc(text) + '">복사</button>'; }
 
 var list = document.getElementById('list');
-var html = '', lastG = '', n = 0;
+var html = '', lastG = '', cnt = {};
 ITEMS.forEach(function (it, i) {
-  if (it.g !== lastG) { html += '<div class="group" data-g="' + it.g + '">' + it.g + '</div>'; lastG = it.g; }
-  it.no = it.ll ? ++n : null;
+  var key = it.trip || '';
+  if (key + it.g !== lastG) { html += '<div class="group" data-g="' + it.g + '">' + it.g + '</div>'; lastG = key + it.g; }
+  it.no = it.ll ? (cnt[key] = (cnt[key] || 0) + 1) : null;
   html += '<div class="card' + (it.ll || it.img ? ' pin' : '') + '" data-i="' + i + '">' +
     '<div class="no">' + (it.no ? String(it.no).padStart(2, '0') : '–') + '</div><div>' +
     '<p class="t">' + esc(it.t) + (it.sub ? '<i>' + esc(it.sub) + '</i>' : '') + (it.guess ? '<i>추정</i>' : '') +
@@ -257,13 +365,14 @@ try {
   var pts = [];
   ITEMS.forEach(function (it, i) {
     if (!it.ll) return;
-    var m = L.marker(it.ll, { icon: L.divIcon({ className: '', html: '<div class="mk">' + it.no + '</div>', iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(map);
+    var m = L.marker(it.ll, { icon: L.divIcon({ className: '', html: '<div class="mk">' + it.no + '</div>', iconSize: [22, 22], iconAnchor: [11, 11] }) });
+    if (!it.trip) m.addTo(map);
     m.bindPopup(popupHtml(it), { closeButton: false, offset: [0, -8], autoPanPadding: [24, 24] });
     m.on('click', function () {
       setActive(i, false);
       list.querySelector('.card[data-i="' + i + '"]').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
-    markers[i] = m; pts.push(it.ll);
+    markers[i] = m; if (!it.trip) pts.push(it.ll);
   });
   map.fitBounds(pts, { padding: [40, 40] });
 } catch (e) { document.getElementById('map').style.display = 'none'; }
@@ -308,14 +417,29 @@ cards.forEach(function (c) {
   });
 });
 
-document.getElementById('tabs').addEventListener('click', function (ev) {
-  var b = ev.target.closest('button'); if (!b) return;
-  var w = b.dataset.who;
-  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+var state = { who: '', trip: '' }, route = null;
+// 동선: 점선 + 구간 가운데 화살표(화면 좌표로 각도 계산, 줌 바뀌면 다시 그림)
+function drawRoute(pts) {
+  if (route) { map.removeLayer(route); route = null; }
+  if (!map || pts.length < 2) return;
+  var col = getComputedStyle(document.body).color;
+  route = L.layerGroup([L.polyline(pts, { color: col, weight: 2, opacity: 0.7, dashArray: '5 6' })]).addTo(map);
+  for (var k = 0; k + 1 < pts.length; k++) {
+    var a = map.latLngToLayerPoint(pts[k]), b = map.latLngToLayerPoint(pts[k + 1]);
+    var deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+    var mid = map.layerPointToLatLng(L.point((a.x + b.x) / 2, (a.y + b.y) / 2));
+    route.addLayer(L.marker(mid, { interactive: false, keyboard: false, icon: L.divIcon({ className: '',
+      html: '<div class="ar" style="transform:rotate(' + deg + 'deg)">&#10148;</div>', iconSize: [20, 20], iconAnchor: [10, 10] }) }));
+  }
+}
+var routePts = [];
+function apply(fit) {
   var vis = [];
   cards.forEach(function (c) {
-    var it = ITEMS[+c.dataset.i], show = !w || it.who.indexOf(w) >= 0;
+    var it = ITEMS[+c.dataset.i];
+    var show = (state.trip ? it.trip === state.trip : !it.trip) && (!state.who || it.who.indexOf(state.who) >= 0);
     c.hidden = !show;
+    if (!show && c.classList.contains('on')) setActive(-1, false);
     if (markers[c.dataset.i]) {
       if (show) { markers[c.dataset.i].addTo(map); vis.push(it.ll); } else map.removeLayer(markers[c.dataset.i]);
     }
@@ -325,8 +449,34 @@ document.getElementById('tabs').addEventListener('click', function (ev) {
     while (el && el.classList.contains('card')) { if (!el.hidden) any = true; el = el.nextElementSibling; }
     g.hidden = !any;
   });
-  if (map && vis.length) map.fitBounds(vis, { padding: [40, 40], maxZoom: 15 });
+  routePts = state.trip ? vis : [];
+  drawRoute(routePts);
+  var cap = document.getElementById('cap');
+  cap.hidden = !state.trip;
+  if (state.trip) cap.textContent = TRIPS[state.trip] + ' · 번호와 화살표는 시간 순서. 위치가 없는 곳은 목록에만.';
+  if (map && fit && vis.length) map.fitBounds(vis, { padding: [40, 40], maxZoom: 15 });
+}
+if (map) map.on('zoomend', function () { drawRoute(routePts); });
+
+document.getElementById('tabs').addEventListener('click', function (ev) {
+  var b = ev.target.closest('button'); if (!b) return;
+  state.who = b.dataset.who;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+  apply(true);
 });
+document.getElementById('trips').addEventListener('click', function (ev) {
+  var b = ev.target.closest('button'); if (!b) return;
+  state.trip = state.trip === b.dataset.trip ? '' : b.dataset.trip;
+  this.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x.dataset.trip === state.trip); });
+  apply(true);
+});
+// 주소 뒤 #rin2410 처럼 붙이면 그 여행을 켠 채로 연다
+var h0 = location.hash.slice(1);
+if (TRIPS[h0]) {
+  state.trip = h0;
+  document.querySelectorAll('#trips button').forEach(function (x) { x.classList.toggle('on', x.dataset.trip === h0); });
+}
+apply(!!TRIPS[h0]);
 </script>
 </body>
 </html>
