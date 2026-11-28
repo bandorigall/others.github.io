@@ -92,6 +92,7 @@ a { color: inherit; }
 .ph { display: none; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 14px; }
 .card.on .ph { display: grid; }
 .ph img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; background: var(--line); }
+.ph.wide img { aspect-ratio: 16 / 9; }
 
 .leaflet-popup-content-wrapper { border-radius: 0; padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
 .leaflet-popup-content { margin: 0; width: 160px !important; }
@@ -277,7 +278,7 @@ var ITEMS = [
   { trip: 'rin2410', g: '2일차', t: '브레디포스트', sub: 'BREADYPOST',
     e: '프레첼, 홍차', who: ['린'],
     q: '접시 로고로 가게는 확인. 지점은 모름(명동점일 가능성).',
-    img: ['img/rin24_bready.jpg', 'img/rin24_bready2.jpg'],
+    img: ['img/rin24_bready.jpg', 'img/rin24_bready2.jpg', 'img/rin24_bready3.jpg'],
     src: [['린 유튜브 4:18', RIN_YT + 258]] },
   { trip: 'rin2410', g: '2일차', t: '여의도한강공원', guess: true, addr: '서울 영등포구 여의동로 330',
     e: '편의점 즉석 라면', who: ['린'],
@@ -325,6 +326,7 @@ ITEMS.forEach(function (it, i) {
   var key = it.trip || '';
   if (key + it.g !== lastG) { html += '<div class="group" data-g="' + it.g + '">' + it.g + '</div>'; lastG = key + it.g; }
   it.no = it.ll ? (cnt[key] = (cnt[key] || 0) + 1) : null;
+  if (it.img && it.img.every(function (p) { return /rin24_(?!gyeongbok)/.test(p); })) it.wide = true;  // 영상 캡처는 16:9 그대로
   html += '<div class="card' + (it.ll || it.img ? ' pin' : '') + '" data-i="' + i + '">' +
     '<div class="no">' + (it.no ? String(it.no).padStart(2, '0') : '–') + '</div><div>' +
     '<p class="t">' + esc(it.t) + (it.sub ? '<i>' + esc(it.sub) + '</i>' : '') + (it.guess ? '<i>추정</i>' : '') +
@@ -334,7 +336,7 @@ ITEMS.forEach(function (it, i) {
     (it.e ? '<p class="e">' + esc(it.e) + '</p>' : '') +
     (it.q ? '<p class="q">' + esc(it.q) + '</p>' : '') +
     '<p class="s">' + it.src.map(function (s) { return '<a href="' + s[1] + '" target="_blank" rel="noopener">' + esc(s[0]) + '</a>'; }).join('') + '</p>' +
-    (it.img ? '<div class="ph">' + it.img.map(function (p) { return '<img src="' + p + '" alt="" loading="lazy">'; }).join('') + '</div>' : '') +
+    (it.img ? '<div class="ph' + (it.wide ? ' wide' : '') + '">' + it.img.map(function (p) { return '<img src="' + p + '" alt="" loading="lazy">'; }).join('') + '</div>' : '') +
     '</div></div>';
 });
 list.innerHTML = html;
