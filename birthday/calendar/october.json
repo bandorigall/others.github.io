@@ -1,0 +1,135 @@
+[
+ {
+  "type": "char",
+  "date": "10-01",
+  "name": "오쿠사와 미사키",
+  "ja": "奥沢 美咲",
+  "band": "Hello, Happy World!",
+  "color": "#DD33CC",
+  "img": "img/char_10-01_45.png"
+ },
+ {
+  "type": "char",
+  "date": "10-04",
+  "name": "마하시 미쿠",
+  "ja": null,
+  "band": "一家Dumb Rock!",
+  "color": "#D95A3C",
+  "img": "img/char_10-04_46.png"
+ },
+ {
+  "type": "va",
+  "date": "10-10",
+  "name": "오오츠카 사에",
+  "ja": "大塚紗英",
+  "role": "하나조노 타에",
+  "band": "Poppin'Party",
+  "x": "Sae_Otsuka",
+  "img": "img/va_10-10_sae_otsuka.jpg"
+ },
+ {
+  "type": "va",
+  "date": "10-12",
+  "name": "이토 미쿠",
+  "ja": "伊藤美来",
+  "role": "츠루마키 코코로",
+  "band": "Hello, Happy World!",
+  "x": "InfoItomiku",
+  "img": "img/va_10-12_infoitomiku.jpg"
+ },
+ {
+  "type": "char",
+  "date": "10-17",
+  "name": "시로카네 린코",
+  "ja": "白金 燐子",
+  "band": "Roselia",
+  "color": "#BBBBBB",
+  "img": "img/char_10-17_47.png"
+ },
+ {
+  "type": "va",
+  "date": "10-17",
+  "name": "아이바 아이나",
+  "ja": "相羽あいな",
+  "role": "미나토 유키나",
+  "band": "Roselia",
+  "x": "aibaaiai",
+  "img": "img/va_10-17_aibaaiai.jpg"
+ },
+ {
+  "type": "va",
+  "date": "10-19",
+  "name": "Ayasa",
+  "ja": "Ayasa",
+  "role": "야시오 루이",
+  "band": "Morfonica",
+  "x": "AyAsA_violin",
+  "img": "img/va_10-19_ayasa_violin.jpg"
+ },
+ {
+  "type": "char",
+  "date": "10-23",
+  "name": "우에하라 히마리",
+  "ja": "上原 ひまり",
+  "band": "Afterglow",
+  "color": "#FF9999",
+  "img": "img/char_10-23_48.png"
+ },
+ {
+  "type": "char",
+  "date": "10-24",
+  "name": "이즈미 호우카",
+  "ja": null,
+  "band": "millsage",
+  "color": "#5AA9C7",
+  "img": "img/char_10-24_49.png"
+ },
+ {
+  "type": "va",
+  "date": "10-24",
+  "name": "사쿠라가와 메구",
+  "ja": "櫻川めぐ",
+  "role": "우다가와 아코",
+  "band": "Roselia",
+  "x": "sakuragawa_megu",
+  "img": "img/va_10-24_sakuragawa_megu.jpg"
+ },
+ {
+  "type": "va",
+  "date": "10-24",
+  "name": "하나미야 니나",
+  "ja": "花宮初奈",
+  "role": "야쿠라 요모기",
+  "band": "一家Dumb Rock!",
+  "x": "hanamiya_nina",
+  "img": "img/va_10-24_hanamiya_nina.jpg"
+ },
+ {
+  "type": "va",
+  "date": "10-25",
+  "name": "니시모토 리미",
+  "ja": "西本りみ",
+  "role": "우시고메 리미",
+  "band": "Poppin'Party",
+  "x": "rimi_nsmt",
+  "img": "img/va_10-25_rimi_nsmt.jpg"
+ },
+ {
+  "type": "char",
+  "date": "10-26",
+  "name": "미나토 유키나",
+  "ja": "湊 友希那",
+  "band": "Roselia",
+  "color": "#881188",
+  "img": "img/char_10-26_50.png"
+ },
+ {
+  "type": "char",
+  "date": "10-27",
+  "name": "이치가야 아리사",
+  "ja": "市ヶ谷 有咲",
+  "band": "Poppin'Party",
+  "color": "#AA66DD",
+  "img": "img/char_10-27_51.png"
+ }
+]
